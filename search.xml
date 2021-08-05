@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>My First Post</title>
-    <url>/2021/08/03/My-First-Post/</url>
-    <content><![CDATA[<p>My first blog in zzhbrr.github.io.</p>
-<p>yeah!!</p>
+    <title>Diary 2021.8</title>
+    <url>/2021/08/04/Diary-2021-8/</url>
+    <content><![CDATA[<h2 id="8-4"><a href="#8-4" class="headerlink" title="8.4"></a>8.4</h2><p>今天休息，起床就下午了…然后搭了一天博客，初见成效。</p>
+<p>明天再看看怎么装修吧。</p>
+<p>昨天本来搭得差不多了，渲染的时候被自己给搞崩了，今天重新来的….</p>
 <span id="more"></span>
-
 ]]></content>
       <categories>
-        <category>Other</category>
+        <category>Life</category>
+        <category>Diary</category>
       </categories>
+      <tags>
+        <tag>Diary</tag>
+      </tags>
   </entry>
   <entry>
     <title>Hello World</title>
@@ -33,19 +37,15 @@
 ]]></content>
   </entry>
   <entry>
-    <title>Diary 2021.8</title>
-    <url>/2021/08/04/Diary-2021-8/</url>
-    <content><![CDATA[<h2 id="8-4"><a href="#8-4" class="headerlink" title="8.4"></a>8.4</h2><p>今天休息，起床就下午了…然后搭了一天博客，初见成效。</p>
-<p>明天再看看怎么装修吧。</p>
-<p>昨天本来搭得差不多了，渲染的时候被自己给搞崩了，今天重新来的….</p>
+    <title>My First Post</title>
+    <url>/2021/08/03/My-First-Post/</url>
+    <content><![CDATA[<p>My first blog in zzhbrr.github.io.</p>
+<p>yeah!!</p>
 <span id="more"></span>
+
 ]]></content>
       <categories>
-        <category>Life</category>
-        <category>Diary</category>
+        <category>Other</category>
       </categories>
-      <tags>
-        <tag>Diary</tag>
-      </tags>
   </entry>
 </search>
