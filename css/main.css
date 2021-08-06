@@ -1104,6 +1104,31 @@ pre .javascript .function {
 .use-motion .menu-item {
   opacity: 0;
 }
+.book-mark-link {
+  border-bottom: none;
+  display: inline-block;
+  position: fixed;
+  right: 30px;
+  top: -10px;
+  transition: 0.3s;
+}
+@media (max-width: 991px) {
+  .book-mark-link {
+    display: none;
+  }
+}
+.book-mark-link::before {
+  color: #222;
+  content: '\f02e';
+  font-size: 32px;
+  line-height: 1;
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+.book-mark-link:hover,
+.book-mark-link-fixed {
+  top: -2px;
+}
 .sidebar {
   background: #222;
   bottom: 0;
@@ -1169,7 +1194,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #f1d77f;
+  background: #ff8613;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2239,6 +2264,13 @@ ul.breadcrumb li + li:last-child {
   color: #ccc;
   margin: auto;
 }
+mjx-container[jax="CHTML"][display="true"],
+.has-jax {
+  overflow: auto hidden;
+}
+mjx-container + br {
+  display: none;
+}
 .header {
   margin: 0 auto;
   position: relative;
@@ -2536,4 +2568,63 @@ ul.breadcrumb li + li:last-child {
 }
 .links-of-blogroll-item {
   padding: 0;
+}
+body {
+  background-image: url("https://i.loli.net/2021/08/06/O7zmuLesQXyS6HG.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 50% 50%;
+}
+.site-meta {
+  padding: 20px 0px;
+  color: #f8f8ff;
+}
+.sidebar p,
+.sidebar span,
+.sidebar a {
+  color: #511a4b;
+}
+.main-inner {
+  background: #fff;
+  opacity: 0.95;
+}
+.header-inner {
+  opacity: 0.95;
+  z-index: 10;
+}
+.post {
+  margin-top: 60px;
+  margin-bottom: 60px;
+  padding: 25px;
+  -webkit-box-shadow: 0 0 5px rgba(202,203,203,0.5);
+  -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
+}
+/* webkit, opera, IE9 */
+::selection {
+  background: #00c4b6;
+  color: #f7f7f7;
+}
+/* firefox */
+::-moz-selection {
+  background: #00c4b6;
+  color: #f7f7f7;
+}
+.posts-expand .post-title-link::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #a2a3b9;
+  visibility: hidden;
+  -webkit-transform: scaleX(0);
+  -moz-transform: scaleX(0);
+  -ms-transform: scaleX(0);
+  -o-transform: scaleX(0);
+  transform: scaleX(0);
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0s;
 }
