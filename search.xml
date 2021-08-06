@@ -12,6 +12,23 @@
       </categories>
   </entry>
   <entry>
+    <title>Diary 2021.8</title>
+    <url>/2021/08/04/Diary-2021-8/</url>
+    <content><![CDATA[<h2 id="section">8.4</h2>
+<p>今天休息，起床就下午了...然后搭了一天博客，初见成效。</p>
+<p>明天再看看怎么装修吧。</p>
+<p>昨天本来搭得差不多了，渲染的时候被自己给搞崩了，今天重新来的....</p>
+<span id="more"></span>
+]]></content>
+      <categories>
+        <category>Life</category>
+        <category>Diary</category>
+      </categories>
+      <tags>
+        <tag>Diary</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>test</title>
     <url>/2021/08/06/test/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="看起来不太对哦" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -29,23 +46,6 @@
       <categories>
         <category>Other</category>
       </categories>
-  </entry>
-  <entry>
-    <title>Diary 2021.8</title>
-    <url>/2021/08/04/Diary-2021-8/</url>
-    <content><![CDATA[<h2 id="section">8.4</h2>
-<p>今天休息，起床就下午了...然后搭了一天博客，初见成效。</p>
-<p>明天再看看怎么装修吧。</p>
-<p>昨天本来搭得差不多了，渲染的时候被自己给搞崩了，今天重新来的....</p>
-<span id="more"></span>
-]]></content>
-      <categories>
-        <category>Life</category>
-        <category>Diary</category>
-      </categories>
-      <tags>
-        <tag>Diary</tag>
-      </tags>
   </entry>
   <entry>
     <title>Hello World</title>
