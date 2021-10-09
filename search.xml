@@ -166,4 +166,18 @@ Markdown里Note的使用方法
         <category>Love</category>
       </categories>
   </entry>
+  <entry>
+    <title>Study Diary</title>
+    <url>/2021/10/09/Study-Diary/</url>
+    <content><![CDATA[<p>学习笔记</p>
+<span id="more"></span>
+]]></content>
+      <categories>
+        <category>Life</category>
+        <category>Diary</category>
+      </categories>
+      <tags>
+        <tag>学习笔记</tag>
+      </tags>
+  </entry>
 </search>
