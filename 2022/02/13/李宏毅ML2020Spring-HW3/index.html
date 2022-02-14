@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-loading-bar.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zzhbrr.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="李宏毅2020年春季机器学习课程HW3 食物分类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="李宏毅ML2020Spring HW3">
+<meta property="og:url" content="https://zzhbrr.github.io/2022/02/13/%E6%9D%8E%E5%AE%8F%E6%AF%85ML2020Spring-HW3/index.html">
+<meta property="og:site_name" content="zZh的小窝">
+<meta property="og:description" content="李宏毅2020年春季机器学习课程HW3 食物分类">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-13T13:37:53.000Z">
+<meta property="article:modified_time" content="2022-02-13T14:02:12.909Z">
+<meta property="article:author" content="zZhBr">
+<meta property="article:tag" content="深度学习">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://zzhbrr.github.io/2022/02/13/%E6%9D%8E%E5%AE%8F%E6%AF%85ML2020Spring-HW3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>李宏毅ML2020Spring HW3 | zZh的小窝</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">zZh的小窝</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录无聊而有趣的生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>留言板</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zzhbrr.github.io/2022/02/13/%E6%9D%8E%E5%AE%8F%E6%AF%85ML2020Spring-HW3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zZhBr">
+      <meta itemprop="description" content="喜欢活在梦想里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zZh的小窝">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          李宏毅ML2020Spring HW3
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-13 21:37:53 / 修改时间：22:02:12" itemprop="dateCreated datePublished" datetime="2022-02-13T21:37:53+08:00">2022-02-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/02/13/%E6%9D%8E%E5%AE%8F%E6%AF%85ML2020Spring-HW3/" class="post-meta-item leancloud_visitors" data-flag-title="李宏毅ML2020Spring HW3" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/02/13/%E6%9D%8E%E5%AE%8F%E6%AF%85ML2020Spring-HW3/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/02/13/%E6%9D%8E%E5%AE%8F%E6%AF%85ML2020Spring-HW3/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>李宏毅2020年春季机器学习课程HW3 食物分类</p>
+<span id="more"></span>
+<p>数据特点是：带标签的数据量小，有大量无标签数据。</p>
+<p>任务:</p>
+<ol type="1">
+<li>对带标签数据进行数据增强</li>
+<li>对无标签数据采取自监督学习</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torchvision.transforms <span class="keyword">as</span> transforms</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> ConcatDataset, DataLoader, Subset, Dataset</span><br><span class="line"><span class="keyword">from</span> torchvision.datasets <span class="keyword">import</span> DatasetFolder</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">train_tfm = transforms.Compose([</span><br><span class="line">    transforms.Resize((<span class="number">128</span>, <span class="number">128</span>)),</span><br><span class="line">    transforms.ToTensor(),</span><br><span class="line">])</span><br><span class="line">train_tfm1 = transforms.Compose([</span><br><span class="line">    transforms.Resize((<span class="number">128</span>, <span class="number">128</span>)),</span><br><span class="line">    transforms.ToTensor(),</span><br><span class="line">    transforms.RandomErasing(p=<span class="number">0.8</span>), <span class="comment"># 注意！RandomErasing不能处理PIL图像，只能先转换为Tensor再处理</span></span><br><span class="line">    transforms.RandomRotation(degrees=<span class="number">30</span>), <span class="comment"># 随机旋转+-30度</span></span><br><span class="line">    transforms.RandomHorizontalFlip(p=<span class="number">0.9</span>), <span class="comment"># 左右翻转</span></span><br><span class="line">])</span><br><span class="line"><span class="comment"># 对测试数据不需要进行转换</span></span><br><span class="line">test_tfm = transforms.Compose([</span><br><span class="line">    transforms.Resize((<span class="number">128</span>, <span class="number">128</span>)),</span><br><span class="line">    transforms.ToTensor(),</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">batch_size = <span class="number">128</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对于数据按文件分好类的情况，直接使用DatasetFolder可以方便地进行处理</span></span><br><span class="line"><span class="comment"># loader是读取文件时进行的操作，输入地址，输出图像</span></span><br><span class="line"><span class="comment"># transform是在dataset getitem()的时候进行的</span></span><br><span class="line"></span><br><span class="line">train_set0 = DatasetFolder(<span class="string">&quot;../input/ml2021springhw3/food-11/training/labeled&quot;</span>, loader=<span class="keyword">lambda</span> x: Image.<span class="built_in">open</span>(x), extensions=<span class="string">&quot;jpg&quot;</span>, transform=train_tfm)</span><br><span class="line">train_set1 = DatasetFolder(<span class="string">&quot;../input/ml2021springhw3/food-11/training/labeled&quot;</span>, loader=<span class="keyword">lambda</span> x: Image.<span class="built_in">open</span>(x), extensions=<span class="string">&quot;jpg&quot;</span>, transform=train_tfm1)</span><br><span class="line">train_set = train_set0 + train_set1 </span><br><span class="line"><span class="comment"># Dataset的+被重载了，用ConcatDataset重载的，+相当于ConcatDataset</span></span><br><span class="line"><span class="comment"># 将原始图像和增强过的图像拼在一起当做训练数据</span></span><br><span class="line"></span><br><span class="line">valid_set = DatasetFolder(<span class="string">&quot;../input/ml2021springhw3/food-11/validation&quot;</span>, loader=<span class="keyword">lambda</span> x: Image.<span class="built_in">open</span>(x), extensions=<span class="string">&quot;jpg&quot;</span>, transform=test_tfm)</span><br><span class="line">unlabeled_set = DatasetFolder(<span class="string">&quot;../input/ml2021springhw3/food-11/training/unlabeled&quot;</span>, loader=<span class="keyword">lambda</span> x: Image.<span class="built_in">open</span>(x), extensions=<span class="string">&quot;jpg&quot;</span>, transform=train_tfm)</span><br><span class="line">test_set = DatasetFolder(<span class="string">&quot;../input/ml2021springhw3/food-11/testing&quot;</span>, loader=<span class="keyword">lambda</span> x: Image.<span class="built_in">open</span>(x), extensions=<span class="string">&quot;jpg&quot;</span>, transform=test_tfm)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Construct data loaders.</span></span><br><span class="line">train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=<span class="literal">True</span>, num_workers=<span class="number">2</span>, pin_memory=<span class="literal">True</span>)</span><br><span class="line">valid_loader = DataLoader(valid_set, batch_size=batch_size, shuffle=<span class="literal">True</span>, num_workers=<span class="number">2</span>, pin_memory=<span class="literal">True</span>)</span><br><span class="line">test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+<p>网络结构：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Classifier</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(Classifier, self).__init__()</span><br><span class="line">        <span class="comment"># The arguments for commonly used modules:</span></span><br><span class="line">        <span class="comment"># torch.nn.Conv2d(in_channels, out_channels, kernel_size, stride, padding)</span></span><br><span class="line">        <span class="comment"># torch.nn.MaxPool2d(kernel_size, stride, padding)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># input image size: [3, 128, 128]</span></span><br><span class="line">        self.cnn_layers = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">3</span>, <span class="number">64</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>),</span><br><span class="line">            nn.BatchNorm2d(<span class="number">64</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.MaxPool2d(<span class="number">2</span>, <span class="number">2</span>, <span class="number">0</span>),</span><br><span class="line"></span><br><span class="line">            nn.Conv2d(<span class="number">64</span>, <span class="number">128</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>),</span><br><span class="line">            nn.BatchNorm2d(<span class="number">128</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.MaxPool2d(<span class="number">2</span>, <span class="number">2</span>, <span class="number">0</span>),</span><br><span class="line"></span><br><span class="line">            nn.Conv2d(<span class="number">128</span>, <span class="number">256</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>),</span><br><span class="line">            nn.BatchNorm2d(<span class="number">256</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.MaxPool2d(<span class="number">2</span>, <span class="number">2</span>, <span class="number">0</span>),</span><br><span class="line">            </span><br><span class="line">            nn.Conv2d(<span class="number">256</span>, <span class="number">512</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>),</span><br><span class="line">            nn.BatchNorm2d(<span class="number">512</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.MaxPool2d(<span class="number">2</span>, <span class="number">2</span>, <span class="number">0</span>),</span><br><span class="line">            </span><br><span class="line">            nn.Conv2d(<span class="number">512</span>, <span class="number">1024</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>),</span><br><span class="line">            nn.BatchNorm2d(<span class="number">1024</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.MaxPool2d(<span class="number">2</span>, <span class="number">2</span>, <span class="number">0</span>),</span><br><span class="line">        )</span><br><span class="line">        self.fc_layers = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">1024</span> * <span class="number">4</span> * <span class="number">4</span>, <span class="number">1024</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Dropout(<span class="number">0.5</span>),</span><br><span class="line">            nn.Linear(<span class="number">1024</span>, <span class="number">512</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Dropout(<span class="number">0.5</span>),</span><br><span class="line">            nn.Linear(<span class="number">512</span>, <span class="number">11</span>)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        x = self.cnn_layers(x)</span><br><span class="line">        x = x.flatten(<span class="number">1</span>)</span><br><span class="line">        x = self.fc_layers(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
+<p>构建pseudodataset</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">pseudo_dataset</span>(<span class="params">Dataset</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, features, labels</span>):</span></span><br><span class="line">        self.x = features</span><br><span class="line">        self.y = labels</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span>(<span class="params">self, index</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.x[index], self.y[index].item(),</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(self.x)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_pseudo_labels</span>(<span class="params">dataset, model, threshold=<span class="number">0.65</span></span>):</span></span><br><span class="line">    device = <span class="string">&quot;cuda&quot;</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">&quot;cpu&quot;</span></span><br><span class="line">    <span class="comment"># 先构建无标签数据的dataloader</span></span><br><span class="line">    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=<span class="literal">False</span>, num_workers=<span class="number">2</span>, pin_memory=<span class="literal">True</span>)</span><br><span class="line">    model.<span class="built_in">eval</span>()</span><br><span class="line">    <span class="comment"># 定义softmax函数</span></span><br><span class="line">    softmax = nn.Softmax(dim=-<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">    features, labels = [], []</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> batch <span class="keyword">in</span> tqdm(dataloader):</span><br><span class="line">        img, _ = batch</span><br><span class="line">        <span class="comment"># 使用 torch.no_grad() 加速前向传播的速度</span></span><br><span class="line">        <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">            logits = model(img.to(device))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 对输出的logits用softmax算出概率分布</span></span><br><span class="line">        probs = softmax(logits)</span><br><span class="line"></span><br><span class="line">        maxp, pos = torch.<span class="built_in">max</span>(probs, dim=-<span class="number">1</span>) <span class="comment"># 找到batch中每个图像的最大概率和类别</span></span><br><span class="line">        <span class="keyword">for</span> i, Img <span class="keyword">in</span> <span class="built_in">enumerate</span>(img):</span><br><span class="line">            <span class="keyword">if</span> maxp[i] &gt;= threshold: <span class="comment"># 如果每个最大概率超过阈值，则赋予其标签</span></span><br><span class="line">                features.append(Img.cpu())</span><br><span class="line">                labels.append(pos[i].cpu())</span><br><span class="line">     </span><br><span class="line">    psedodataset = pseudo_dataset(features, labels) <span class="comment"># 构建pseudodataset</span></span><br><span class="line">        </span><br><span class="line">    model.train()</span><br><span class="line">    <span class="keyword">return</span> psedodataset</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">try_gpu</span>(<span class="params">i=<span class="number">0</span></span>):</span></span><br><span class="line">    <span class="keyword">if</span> torch.cuda.device_count() &gt;= i + <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> torch.device(<span class="string">f&#x27;cuda:<span class="subst">&#123;i&#125;</span>&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> torch.device(<span class="string">&#x27;cpu&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>训练</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">model = Classifier().to(device=try_gpu())</span><br><span class="line"></span><br><span class="line">model = torch.load(<span class="string">&#x27;./verssion1.model&#x27;</span>).to(device=try_gpu())</span><br><span class="line"></span><br><span class="line">criterion = nn.CrossEntropyLoss()</span><br><span class="line"></span><br><span class="line">optimizer = torch.optim.Adam(model.parameters(), lr=<span class="number">0.0003</span>, weight_decay=<span class="number">1e-4</span>)</span><br><span class="line"></span><br><span class="line">n_epochs = <span class="number">80</span></span><br><span class="line"></span><br><span class="line">do_semi = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">lst_valid_acc = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(n_epochs):</span><br><span class="line">    <span class="comment"># 根据上一个epoch的validdata的acc，大于0.6才做自监督学习</span></span><br><span class="line">    <span class="keyword">if</span> lst_valid_acc &gt; <span class="number">0.6</span>:</span><br><span class="line">        do_semi = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        do_semi = <span class="literal">False</span></span><br><span class="line">        </span><br><span class="line">    <span class="keyword">if</span> do_semi:</span><br><span class="line">        pseudo_set = get_pseudo_labels(unlabeled_set, model, threshold=<span class="number">0.65</span>)</span><br><span class="line">        concat_dataset = ConcatDataset([train_set, pseudo_set])</span><br><span class="line">        <span class="comment"># 注意：DataLoader里面的Dataset一定不能放进GPU中，否则多线程时候就会出错！！</span></span><br><span class="line">        train_loader = DataLoader(concat_dataset, batch_size=batch_size, shuffle=<span class="literal">True</span>, num_workers=<span class="number">2</span>, pin_memory=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=<span class="literal">True</span>, num_workers=<span class="number">2</span>, pin_memory=<span class="literal">True</span>)</span><br><span class="line">    <span class="comment"># ---------- Training ----------</span></span><br><span class="line">    model.train()</span><br><span class="line"></span><br><span class="line">    train_loss = []</span><br><span class="line">    train_accs = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> batch <span class="keyword">in</span> tqdm(train_loader):</span><br><span class="line">        imgs, labels = batch</span><br><span class="line">        logits = model(imgs.to(device=try_gpu()))</span><br><span class="line">        loss = criterion(logits, labels.to(device=try_gpu()))</span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 进行梯度剪裁</span></span><br><span class="line">        grad_norm = nn.utils.clip_grad_norm_(model.parameters(), max_norm=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">        optimizer.step()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 计算这一个batch的准确率</span></span><br><span class="line">        acc = (logits.argmax(dim=-<span class="number">1</span>) == labels.to(device=try_gpu())).<span class="built_in">float</span>().mean()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 记录loss和axx</span></span><br><span class="line">        train_loss.append(loss.item())</span><br><span class="line">        train_accs.append(acc)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 平均loss和acc</span></span><br><span class="line">    train_loss = <span class="built_in">sum</span>(train_loss) / <span class="built_in">len</span>(train_loss)</span><br><span class="line">    train_acc = <span class="built_in">sum</span>(train_accs) / <span class="built_in">len</span>(train_accs)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[ Train | <span class="subst">&#123;epoch + <span class="number">1</span>:03d&#125;</span>/<span class="subst">&#123;n_epochs:03d&#125;</span> ] loss = <span class="subst">&#123;train_loss:<span class="number">.5</span>f&#125;</span>, acc = <span class="subst">&#123;train_acc:<span class="number">.5</span>f&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ---------- Validation ----------</span></span><br><span class="line">    model.<span class="built_in">eval</span>()</span><br><span class="line"></span><br><span class="line">    valid_loss = []</span><br><span class="line">    valid_accs = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> batch <span class="keyword">in</span> tqdm(valid_loader):</span><br><span class="line"></span><br><span class="line">        imgs, labels = batch</span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">          logits = model(imgs.to(device=try_gpu()))</span><br><span class="line"></span><br><span class="line">        loss = criterion(logits, labels.to(device=try_gpu()))</span><br><span class="line"></span><br><span class="line">        acc = (logits.argmax(dim=-<span class="number">1</span>) == labels.to(device=try_gpu())).<span class="built_in">float</span>().mean()</span><br><span class="line"></span><br><span class="line">        valid_loss.append(loss.item())</span><br><span class="line">        valid_accs.append(acc)</span><br><span class="line"></span><br><span class="line">    valid_loss = <span class="built_in">sum</span>(valid_loss) / <span class="built_in">len</span>(valid_loss)</span><br><span class="line">    valid_acc = <span class="built_in">sum</span>(valid_accs) / <span class="built_in">len</span>(valid_accs)</span><br><span class="line">    lst_valid_acc = valid_acc</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Print the information.</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[ Valid | <span class="subst">&#123;epoch + <span class="number">1</span>:03d&#125;</span>/<span class="subst">&#123;n_epochs:03d&#125;</span> ] loss = <span class="subst">&#123;valid_loss:<span class="number">.5</span>f&#125;</span>, acc = <span class="subst">&#123;valid_acc:<span class="number">.5</span>f&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>训练完模型，对测试数据进行预测</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">model.<span class="built_in">eval</span>()</span><br><span class="line"></span><br><span class="line">predictions = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> batch <span class="keyword">in</span> tqdm(test_loader):</span><br><span class="line">    imgs, labels = batch</span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        logits = model(imgs.to(device=try_gpu()))</span><br><span class="line">    predictions.extend(logits.argmax(dim=-<span class="number">1</span>).cpu().numpy().tolist())</span><br><span class="line">    </span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;./predict.csv&quot;</span>, <span class="string">&quot;w&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(<span class="string">&quot;Id,Category\n&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> i, pred <span class="keyword">in</span>  <span class="built_in">enumerate</span>(predictions):</span><br><span class="line">         f.write(<span class="string">f&quot;<span class="subst">&#123;i&#125;</span>,<span class="subst">&#123;pred&#125;</span>\n&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>最终提交后private的准确率仅来到了0.70412，离strong baseline还有很远距离，但实在没有心情train它了。</p>
+<p>train不起来真难受555.</p>
+
+    </div>
+
+    
+    
+    
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢阅读-------------</div>
+    
+</div>
+  
+</div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 深度学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/30/Pytorch%E6%95%B0%E6%8D%AE%E8%BD%BD%E5%85%A5%E5%AD%A6%E4%B9%A0/" rel="prev" title="Pytorch数据载入学习">
+      <i class="fa fa-chevron-left"></i> Pytorch数据载入学习
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zZhBr"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">zZhBr</p>
+  <div class="site-description" itemprop="description">喜欢活在梦想里</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zzhbrr" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zzhbrr" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1376447388@qq.com" title="E-Mail → mailto:1376447388@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">true</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">31k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">28 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'cRtd9punVLqi5GYkAPSBclk0-MdYXbMMI',
+      appKey     : 'fVU893r9eA7PxOX6jbUHiJP9',
+      placeholder: "输入你的评论\n昵称为必填项目，输入QQ号可以直接获取用户名和头像\n填写了email可以收到回复通知",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
