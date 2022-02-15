@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>My First Post</title>
+    <url>/2021/08/03/My-First-Post/</url>
+    <content><![CDATA[<p>My first blog in zzhbrr.github.io.</p>
+<p>yeah!!</p>
+<span id="more"></span>
+]]></content>
+      <categories>
+        <category>Other</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Diary 2021.8</title>
     <url>/2021/08/04/Diary-2021-8/</url>
-    <content><![CDATA[<h2 id="section">8.4</h2>
-<p>今天休息，起床就下午了...然后搭了一天博客，初见成效。</p>
+    <content><![CDATA[<h2 id="8-4"><a href="#8-4" class="headerlink" title="8.4"></a>8.4</h2><p>今天休息，起床就下午了…然后搭了一天博客，初见成效。</p>
 <p>明天再看看怎么装修吧。</p>
-<p>昨天本来搭得差不多了，渲染的时候被自己给搞崩了，今天重新来的....</p>
+<p>昨天本来搭得差不多了，渲染的时候被自己给搞崩了，今天重新来的….</p>
 <span id="more"></span>
-<h3 id="section-1">8.7</h3>
-<p>今天下午队伍自己找了套题做，演了一下午。</p>
+<h3 id="8-7"><a href="#8-7" class="headerlink" title="8.7"></a>8.7</h3><p>今天下午队伍自己找了套题做，演了一下午。</p>
 <p>晚上继续配置博客。</p>
 <p>弄好了分类里的子分类404问题，原来要在父分类里加一篇文章才行。</p>
 <p>搞了文章隐藏功能，并没有用插件。</p>
@@ -30,30 +39,23 @@
   <entry>
     <title>HDU7047 Link With Balls</title>
     <url>/2021/08/10/HDU7047-Link-With-Balls/</url>
-    <content><![CDATA[<center>
-组合数学，思维
-</center>
+    <content><![CDATA[<center>组合数学，思维</center>
+
 <span id="more"></span>
-<h3 id="题目描述">题目描述</h3>
-<p>There were a lot of balls in the factory of Ball Illusion Technology(BIT). Link, a boy, went there to get some balls, but suddenly, he found that there were too many ways to get balls.</p>
-<p>There are <span class="math inline">\(2n\)</span>​​ buckets in the factory. Link may get <span class="math inline">\(kx\)</span>​​ balls from the <span class="math inline">\(2x-1^{th}\)</span>​ ​bucket, where $k $ ​​is a non-negtive integer. He may also get at most <span class="math inline">\(x\)</span>​ balls from the <span class="math inline">\(2x^{th}\)</span>​ ​bucket.</p>
-<p>Link wanted to get <span class="math inline">\(m\)</span>​ balls, and he wondered how many ways there were to take out exactly <span class="math inline">\(m\)</span> balls. While Link is calculating the answer, he wants you to calculate it as well, and you should output the answer modulo <span class="math inline">\(10^9+7\)</span>.</p>
-<h3 id="输入">输入</h3>
-<p>The input consists of multiple test cases.</p>
-<p>The first line contains an integer <span class="math inline">\(T (1≤T≤10^5)\)</span>​​ -- the number of test cases.</p>
-<p>Each test case contains two integers <span class="math inline">\(n\)</span>​ and <span class="math inline">\(m\)</span><span class="math inline">\((1≤n,m≤10^6)\)</span>​.</p>
-<h3 id="输出">输出</h3>
-<p>For each test case, print the answer modulo <span class="math inline">\(10^9+7\)</span> in a single line.</p>
-<h3 id="中文题意">中文题意</h3>
-<p>有<span class="math inline">\(2n\)</span>个篮子，对于偶数篮子<span class="math inline">\(2x\)</span>，可以任意从中取不超过<span class="math inline">\(x\)</span>个球。对于奇数篮子<span class="math inline">\(2x-1\)</span>，只能取<span class="math inline">\(kx\)</span>个球，其中<span class="math inline">\(k \geq 0\)</span>。问从中取出<span class="math inline">\(m\)</span>个球的方案数。</p>
-<h3 id="题解">题解</h3>
-<p>比赛的时候将奇数偶数分开考虑了，导致不能在规定时间内求出答案。</p>
-<p>将可以取<span class="math inline">\(0\sim k-1\)</span>​​个球的篮子，与能取<span class="math inline">\(k\)</span>的倍数个球的篮子合并，合并之后的篮子能取任意多的球，并且方案唯一。</p>
-<p>这时得到了<span class="math inline">\(n\)</span>个可以取任意个球的篮子，还有一个可以取<span class="math inline">\(0\sim n\)</span>​​个球的篮子。​​</p>
-<p>于是枚举<span class="math inline">\(0\sim n\)</span>的篮子中取了多少球，剩下取的球可以用插板法。</p>
-<p>答案就是<span class="math inline">\(\sum_{i=0}^{n}C_{m-i+n-1}^{n-1}\)</span>​，即为<span class="math inline">\(C_{m+n}^{n}-C_{m-1}^{n}\)</span>​。</p>
-<h3 id="代码">代码</h3>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> int long long</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> mod = <span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ksm</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> res = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(y) &#123;</span><br><span class="line">        <span class="keyword">if</span> (y &amp; <span class="number">1</span>) res = res * x % mod;</span><br><span class="line">        x = x * x % mod;</span><br><span class="line">        y &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> fac[<span class="number">2000006</span>], inv[<span class="number">2000005</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">C</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> m)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n &lt; m) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> fac[n] * inv[m] % mod * inv[n-m] % mod;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    fac[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">2000000</span>; i ++) fac[i] = fac[i - <span class="number">1</span>] * i  % mod;</span><br><span class="line">    inv[<span class="number">2000000</span>] = <span class="built_in">ksm</span>(fac[<span class="number">2000000</span>], mod - <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1999999</span>; i &gt;= <span class="number">0</span>; i --)</span><br><span class="line">        inv[i] = inv[i + <span class="number">1</span>] * (i + <span class="number">1</span>) % mod;</span><br><span class="line">    <span class="keyword">int</span> T;</span><br><span class="line">    cin &gt;&gt; T;</span><br><span class="line">    <span class="keyword">int</span> n, m;</span><br><span class="line">    <span class="keyword">while</span>(T--) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%lld%lld&quot;</span>, &amp;n, &amp;m);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, ((<span class="built_in">C</span>(m+n, n) - <span class="built_in">C</span>(m<span class="number">-1</span>, n)) % mod + mod) % mod);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>There were a lot of balls in the factory of Ball Illusion Technology(BIT). Link, a boy, went there to get some balls, but suddenly, he found that there were too many ways to get balls.</p>
+<p>There are $2n$​​ buckets in the factory. Link may get $kx$​​ balls from the $2x-1^{th}$​ ​bucket, where $k $ ​​is a non-negtive integer. He may also get at most $x$​ balls from the $2x^{th}$​ ​bucket.</p>
+<p>Link wanted to get $m$​ balls, and he wondered how many ways there were to take out exactly $m$ balls. While Link is calculating the answer, he wants you to calculate it as well, and you should output the answer modulo $10^9+7$.</p>
+<h3 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h3><p>The input consists of multiple test cases.</p>
+<p>The first line contains an integer $T (1≤T≤10^5)$​​ — the number of test cases.</p>
+<p>Each test case contains two integers $n$​ and $m$$(1≤n,m≤10^6)$​.</p>
+<h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><p>For each test case, print the answer modulo $10^9+7$ in a single line.</p>
+<h3 id="中文题意"><a href="#中文题意" class="headerlink" title="中文题意"></a>中文题意</h3><p>有$2n$个篮子，对于偶数篮子$2x$，可以任意从中取不超过$x$个球。对于奇数篮子$2x-1$，只能取$kx$个球，其中$k \geq 0$。问从中取出$m$个球的方案数。</p>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>比赛的时候将奇数偶数分开考虑了，导致不能在规定时间内求出答案。</p>
+<p>将可以取$0\sim k-1$​​个球的篮子，与能取$k$的倍数个球的篮子合并，合并之后的篮子能取任意多的球，并且方案唯一。</p>
+<p>这时得到了$n$个可以取任意个球的篮子，还有一个可以取$0\sim n$​​个球的篮子。​​</p>
+<p>于是枚举$0\sim n$的篮子中取了多少球，剩下取的球可以用插板法。</p>
+<p>答案就是$\sum_{i=0}^{n}C_{m-i+n-1}^{n-1}$​，即为$C_{m+n}^{n}-C_{m-1}^{n}$​。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> int long long</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> mod = <span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ksm</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> res = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(y) &#123;</span><br><span class="line">        <span class="keyword">if</span> (y &amp; <span class="number">1</span>) res = res * x % mod;</span><br><span class="line">        x = x * x % mod;</span><br><span class="line">        y &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> fac[<span class="number">2000006</span>], inv[<span class="number">2000005</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">C</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> m)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n &lt; m) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> fac[n] * inv[m] % mod * inv[n-m] % mod;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    fac[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">2000000</span>; i ++) fac[i] = fac[i - <span class="number">1</span>] * i  % mod;</span><br><span class="line">    inv[<span class="number">2000000</span>] = <span class="built_in">ksm</span>(fac[<span class="number">2000000</span>], mod - <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1999999</span>; i &gt;= <span class="number">0</span>; i --)</span><br><span class="line">        inv[i] = inv[i + <span class="number">1</span>] * (i + <span class="number">1</span>) % mod;</span><br><span class="line">    <span class="keyword">int</span> T;</span><br><span class="line">    cin &gt;&gt; T;</span><br><span class="line">    <span class="keyword">int</span> n, m;</span><br><span class="line">    <span class="keyword">while</span>(T--) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%lld%lld&quot;</span>, &amp;n, &amp;m);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, ((<span class="built_in">C</span>(m+n, n) - <span class="built_in">C</span>(m<span class="number">-1</span>, n)) % mod + mod) % mod);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Algorithm</category>
@@ -67,89 +69,30 @@
   <entry>
     <title>Life</title>
     <url>/2021/08/07/Life/</url>
-    <content><![CDATA[
-]]></content>
+    <content><![CDATA[]]></content>
       <categories>
         <category>Life</category>
       </categories>
   </entry>
   <entry>
-    <title>My First Post</title>
-    <url>/2021/08/03/My-First-Post/</url>
-    <content><![CDATA[<p>My first blog in zzhbrr.github.io.</p>
-<p>yeah!!</p>
+    <title>Hello World</title>
+    <url>/2021/08/03/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <span id="more"></span>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
-      <categories>
-        <category>Other</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Pytorch数据载入学习</title>
-    <url>/2022/01/30/Pytorch%E6%95%B0%E6%8D%AE%E8%BD%BD%E5%85%A5%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<center>
-Dataset, Sampler, DataLoader, DataLoaderIter简单分析
-</center>
-<span id="more"></span>
-<h3 id="一dataset">一、Dataset</h3>
-<p>torch.utils.data.Dataset是一个抽象类，所有其他类的数据集类都是它的子类，所有子类都应该重载len和getitem。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dataset</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span>(<span class="params">self, index</span>):</span></span><br><span class="line">        <span class="keyword">raise</span> NotImplementedError</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">raise</span> NotImplementedError</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__add__</span>(<span class="params">self, other</span>):</span></span><br><span class="line">        <span class="keyword">return</span> ConcatDataset([self, other])</span><br></pre></td></tr></table></figure>
-<p>其子类中，torch.utils.data.TensorDataset，是将数据封装成tensor的数据集，每一个样本通过索引张量来获得。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TensorDataset</span>(<span class="params">Dataset</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, *tensor</span>):</span></span><br><span class="line">        <span class="keyword">assert</span> <span class="built_in">all</span>(tensors[<span class="number">0</span>].size(<span class="number">0</span>) == tensor.size(<span class="number">0</span>) <span class="keyword">for</span> tensor <span class="keyword">in</span> tensors) <span class="comment"># 要保证每一个张量的第一维大小相同（即数量）</span></span><br><span class="line">        self.tensors = tensors <span class="comment"># 把数据封装成一个张量</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span>(<span class="params">self, index</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">tuple</span>(tensor[index] <span class="keyword">for</span> tensor <span class="keyword">in</span> tensors) <span class="comment"># 返回张量在第index层的切片，即所有数据的第index个组合成的张量</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.tensors[<span class="number">0</span>].size(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="二sampler">二、Sampler</h3>
-<p>torch.utils.data.Sampler 是负责生成Dataset的索引的类。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sampler</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, data_source</span>):</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span>(<span class="params">self</span>):</span> <span class="comment"># 返回一个迭代器，每个都是“一系列”数据的索引</span></span><br><span class="line">        <span class="keyword">raise</span> NotImplementedError</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span> <span class="comment"># 表示返回的迭代器的长度</span></span><br><span class="line">        <span class="keyword">raise</span> NotImplementedError</span><br></pre></td></tr></table></figure>
-<p>Sampler有子类SequentialSampler和RandomSampler，定义如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 顺序采样</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SequentialSampler</span>(<span class="params">Sampler</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, data_source</span>):</span></span><br><span class="line">        self.data_source = data_source</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">iter</span>(<span class="built_in">range</span>(<span class="built_in">len</span>(self.data_source)))</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(self.data_source)</span><br><span class="line"><span class="comment"># 随机采样</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RandomSampler</span>(<span class="params">Sampler</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, data_source</span>):</span></span><br><span class="line">        self.data_source = data_source</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">iter</span>(torch.randperm(<span class="built_in">len</span>(self.data_source)).long()) <span class="comment"># 随机生成一个排列</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(self.data_source)</span><br></pre></td></tr></table></figure>
-<p>torch.utils.data.BatchSampler是基于Sampler来构造的，用来生成批量索引。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BatchSampler</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, sampler, batch_size, drop_last</span>):</span> <span class="comment"># 参数sampler, batch_size(每一批次大小), drop_last(如果最后一个批次没满，是否丢掉最后一批次)</span></span><br><span class="line">        self.sampler = sampler  </span><br><span class="line">        self.batch_size = batch_size</span><br><span class="line">        self.drop_last = drop_last</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span>(<span class="params">self</span>):</span></span><br><span class="line">        batch = []</span><br><span class="line">        <span class="keyword">for</span> idx <span class="keyword">in</span> self.sampler:</span><br><span class="line">            batch.append(idx) <span class="comment"># 根据sampler的索引，将数据装入一个batch中</span></span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(batch) == self.batch_size:</span><br><span class="line">                <span class="keyword">yield</span> batch</span><br><span class="line">                batch = []</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(batch) &gt; <span class="number">0</span> <span class="keyword">and</span> <span class="keyword">not</span> self.drop_last:</span><br><span class="line">            <span class="keyword">yield</span> batch</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">if</span> self.drop_last:</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">len</span>(self.sampler) // self.batch_size</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> (<span class="built_in">len</span>(self.sampler) + self.batch_size - <span class="number">1</span>) // self.batch_size</span><br></pre></td></tr></table></figure>
-<p>drop_last的例子:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">list</span>(BatchSampler(<span class="built_in">range</span>(<span class="number">10</span>), batch_size=<span class="number">3</span>, drop_last=<span class="literal">False</span>))</span><br><span class="line">        [[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>], [<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>], [<span class="number">9</span>]]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">list</span>(BatchSampler(<span class="built_in">range</span>(<span class="number">10</span>), batch_size=<span class="number">3</span>, drop_last=<span class="literal">True</span>))</span><br><span class="line">        [[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>], [<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]]</span><br></pre></td></tr></table></figure>
-<p>batchsampler的其他例子</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.utils.data.sampler <span class="keyword">import</span> BatchSampler</span><br><span class="line">[x <span class="keyword">for</span> x <span class="keyword">in</span> BatchSampler(<span class="built_in">range</span>(<span class="number">10</span>), batch_size=<span class="number">3</span>, drop_last=<span class="literal">False</span>)]</span><br><span class="line">Out[<span class="number">9</span>]: [[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>], [<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>], [<span class="number">9</span>]]</span><br><span class="line">[x <span class="keyword">for</span> x <span class="keyword">in</span> BatchSampler(RandomSampler(<span class="built_in">range</span>(<span class="number">10</span>)), batch_size=<span class="number">3</span>, drop_last=<span class="literal">False</span>)]</span><br><span class="line">Out[<span class="number">15</span>]: [[<span class="number">1</span>, <span class="number">3</span>, <span class="number">7</span>], [<span class="number">9</span>, <span class="number">2</span>, <span class="number">0</span>], [<span class="number">5</span>, <span class="number">4</span>, <span class="number">6</span>], [<span class="number">8</span>]]</span><br></pre></td></tr></table></figure>
-<h3 id="三dataloader">三、DataLoader</h3>
-<p>torch.utils.data.DataLoader 负责加载数据，支持多进程。</p>
-<p>其接口定义如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">DataLoader(dataset, batch_size=<span class="number">1</span>, shuffle=<span class="literal">False</span>, sampler=<span class="literal">None</span>,</span><br><span class="line">           batch_sampler=<span class="literal">None</span>, num_workers=<span class="number">0</span>, collate_fn=<span class="literal">None</span>,</span><br><span class="line">           pin_memory=<span class="literal">False</span>, drop_last=<span class="literal">False</span>, timeout=<span class="number">0</span>,</span><br><span class="line">           worker_init_fn=<span class="literal">None</span>, *, prefetch_factor=<span class="number">2</span>,</span><br><span class="line">           persistent_workers=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
-<p>dataset是加载的数据集。</p>
-<p>batch_size是每个batch加载数据的多少。</p>
-<p>shuffle设置为True的时候，调用RandomSampler进行随机索引。</p>
-<p>sampler是从数据集中提取样本的策略，如果指定了sampler，则shuffle参数必须为False。</p>
-<p>batch_sampler与sampler类似，每次返回一个批次的索引，如果指定了batch_sampler，则batch_size和shuffle必须与之相符合。</p>
-<p>num_workers是数据加载的子进程数。</p>
-<p>collate_fn是一个callable的函数，将Map-style dataset取出的batch_size个数据（tuple类型，每个tuple长度为2，其中第一个是数据，第二个是标签）整合成一个list，这个list的长度为2，一个是batch_size个数据组成的FloatTensor，一个是batch_size个标签组成的longTensor。</p>
-<p>pin_memory如果为True，则 DataLoader 在将张量返回之前将其复制到 CUDA 固定的内存中。</p>
-<p>drop_last，如果最后一个batch没满，是否要丢掉。</p>
-<p>timeout，如果为正，则为从 worker 收集 batch 的超时值，应始终为非负数，超过这个时间还没读取到数据的话就会报错</p>
-<p>worker_init_fn 是callable的函数，如果不为 None，它将会被每个 worker 子进程调用，以 worker id ([0, num_workers - 1] 内的整形) 为输入。</p>
-<p>prefetch_factor是每个 worker 提前加载 的 sample 数量，默认为2。</p>
-<p>persistent_workers 如果为 True，dataloader 将不会终止 worker 进程，直到 dataset 迭代完成。</p>
-<p><strong>collate_fn</strong></p>
-<p>当collate_fn作用于数据样本列表，将输入样本整理为一个 batch时（不是只处理一个数据时），通常做以下3件事：</p>
-<ol type="1">
-<li>添加新的维度（第一维）</li>
-<li>自动将numpy数组和python数值转换为tensor</li>
-<li>保留数据结构</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DataLoader</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, dataset, batch_size=<span class="number">1</span>, shuffle=<span class="literal">False</span>, sampler=<span class="literal">None</span>, batch_sampler=<span class="literal">None</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">                 num_workers=<span class="number">0</span>, collate_fn=default_collate, pin_memory=<span class="literal">False</span>, drop_last=<span class="literal">False</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">                 timeout=<span class="number">0</span>, worker_init_fn=<span class="literal">None</span></span>):</span></span><br><span class="line">        self.dataset = dataset</span><br><span class="line">        self.batch_size = batch_size</span><br><span class="line">        self.num_workers = num_workers</span><br><span class="line">        self.collate_fn = collate_fn</span><br><span class="line">        self.pin_memory = pin_memory</span><br><span class="line">        self.drop_last = drop_last</span><br><span class="line">        self.timeout = timeout</span><br><span class="line">        self.worker_init_fn = worker_init_fn</span><br><span class="line">        <span class="keyword">if</span> timeout &lt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">&#x27;timeout option should be non-negative&#x27;</span>)</span><br><span class="line">        <span class="comment"># 检测是否存在参数冲突</span></span><br><span class="line">        <span class="keyword">if</span> batch_sampler <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">if</span> batch_size &gt; <span class="number">1</span> <span class="keyword">or</span> shuffle <span class="keyword">or</span> sampler <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">or</span> drop_last:</span><br><span class="line">                <span class="keyword">raise</span> ValueError(<span class="string">&#x27;batch_sampler is mutually exclusive with &#x27;</span></span><br><span class="line">                                 <span class="string">&#x27;batch_size, shuffle, sampler, and drop_last&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> sampler <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> shuffle:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">&#x27;sampler is mutually exclusive with shuffle&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> self.num_workers &lt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">&#x27;num_workers cannot be negative; &#x27;</span></span><br><span class="line">                             <span class="string">&#x27;use num_workers=0 to disable multiprocessing.&#x27;</span>)</span><br><span class="line">        <span class="comment"># 在此处会强行指定一个 BatchSampler</span></span><br><span class="line">        <span class="keyword">if</span> batch_sampler <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="comment"># 在此处会强行指定一个 Sampler</span></span><br><span class="line">            <span class="keyword">if</span> sampler <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">                <span class="keyword">if</span> shuffle:</span><br><span class="line">                    sampler = RandomSampler(dataset)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    sampler = SequentialSampler(dataset)</span><br><span class="line">            batch_sampler = BatchSampler(sampler, batch_size, drop_last)</span><br><span class="line">        <span class="comment"># 使用自定义的采样器和批采样器</span></span><br><span class="line">        self.sampler = sampler</span><br><span class="line">        self.batch_sampler = batch_sampler</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># 调用Pytorch的多线程迭代器加载数据</span></span><br><span class="line">        <span class="keyword">return</span> DataLoaderIter(self)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(self.batch_sampler)</span><br></pre></td></tr></table></figure>
-<h3 id="三dataloaderiter">三、DataLoaderIter</h3>
-<p>在调用iter(DataLoader)的时候，返回了DataLoaderIter。</p>
-<p>（只看了单线程，多线程还不会）</p>
-<p>定义如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DataLoaderIter</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="string">&quot;Iterates once over the DataLoader&#x27;s dataset, as specified by the sampler&quot;</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, loader</span>):</span></span><br><span class="line">        self.dataset = loader.dataset</span><br><span class="line">        self.collate_fn = loader.collate_fn</span><br><span class="line">        self.batch_sampler = loader.batch_sampler</span><br><span class="line">        self.num_workers = loader.num_workers</span><br><span class="line">        self.pin_memory = loader.pin_memory <span class="keyword">and</span> torch.cuda.is_available()</span><br><span class="line">        self.timeout = loader.timeout</span><br><span class="line">        self.done_event = threading.Event()</span><br><span class="line"> </span><br><span class="line">        self.sample_iter = <span class="built_in">iter</span>(self.batch_sampler) <span class="comment"># DataLoaderIter比DataLoader多了sample_iter</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span> self.num_workers &gt; <span class="number">0</span>: <span class="comment"># 后面就都是处理多线程的了</span></span><br><span class="line">            self.worker_init_fn = loader.worker_init_fn</span><br><span class="line">            self.index_queue = multiprocessing.SimpleQueue()</span><br><span class="line">            self.worker_result_queue = multiprocessing.SimpleQueue()</span><br><span class="line">            self.batches_outstanding = <span class="number">0</span></span><br><span class="line">            self.worker_pids_set = <span class="literal">False</span></span><br><span class="line">            self.shutdown = <span class="literal">False</span></span><br><span class="line">            self.send_idx = <span class="number">0</span></span><br><span class="line">            self.rcvd_idx = <span class="number">0</span></span><br><span class="line">            self.reorder_dict = &#123;&#125;</span><br><span class="line"> </span><br><span class="line">            base_seed = torch.LongTensor(<span class="number">1</span>).random_()[<span class="number">0</span>]</span><br><span class="line">            self.workers = [</span><br><span class="line">                multiprocessing.Process(</span><br><span class="line">                    target=_worker_loop,</span><br><span class="line">                    args=(self.dataset, self.index_queue, self.worker_result_queue, self.collate_fn,</span><br><span class="line">                          base_seed + i, self.worker_init_fn, i))</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(self.num_workers)]</span><br><span class="line"> </span><br><span class="line">            <span class="keyword">if</span> self.pin_memory <span class="keyword">or</span> self.timeout &gt; <span class="number">0</span>:</span><br><span class="line">                self.data_queue = queue.Queue()</span><br><span class="line">                self.worker_manager_thread = threading.Thread(</span><br><span class="line">                    target=_worker_manager_loop,</span><br><span class="line">                    args=(self.worker_result_queue, self.data_queue, self.done_event, self.pin_memory,</span><br><span class="line">                          torch.cuda.current_device()))</span><br><span class="line">                self.worker_manager_thread.daemon = <span class="literal">True</span></span><br><span class="line">                self.worker_manager_thread.start()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                self.data_queue = self.worker_result_queue</span><br><span class="line"> </span><br><span class="line">            <span class="keyword">for</span> w <span class="keyword">in</span> self.workers:</span><br><span class="line">                w.daemon = <span class="literal">True</span>  <span class="comment"># ensure that the worker exits on process exit</span></span><br><span class="line">                w.start()</span><br><span class="line"> </span><br><span class="line">            _update_worker_pids(<span class="built_in">id</span>(self), <span class="built_in">tuple</span>(w.pid <span class="keyword">for</span> w <span class="keyword">in</span> self.workers))</span><br><span class="line">            _set_SIGCHLD_handler()</span><br><span class="line">            self.worker_pids_set = <span class="literal">True</span></span><br><span class="line"> </span><br><span class="line">            <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span> * self.num_workers):</span><br><span class="line">                self._put_indices()</span><br><span class="line">                </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__next__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">if</span> self.num_workers == <span class="number">0</span>:  <span class="comment"># 如果是单线程</span></span><br><span class="line">            indices = <span class="built_in">next</span>(self.sample_iter) <span class="comment"># 生成一个批次数据的索引</span></span><br><span class="line">            batch = self.collate_fn([self.dataset[i] <span class="keyword">for</span> i <span class="keyword">in</span> indices]) <span class="comment"># 用collate_fn将这些数据打包成一个长度为2的list</span></span><br><span class="line">            <span class="keyword">if</span> self.pin_memory:</span><br><span class="line">                batch = pin_memory_batch(batch)</span><br><span class="line">            <span class="keyword">return</span> batch <span class="comment"># 返回这个批次数据</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment"># 后面都是多线程了</span></span><br><span class="line">        <span class="keyword">if</span> self.rcvd_idx <span class="keyword">in</span> self.reorder_dict:</span><br><span class="line">            batch = self.reorder_dict.pop(self.rcvd_idx)</span><br><span class="line">            <span class="keyword">return</span> self._process_next_batch(batch)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span> self.batches_outstanding == <span class="number">0</span>:</span><br><span class="line">            self._shutdown_workers()</span><br><span class="line">            <span class="keyword">raise</span> StopIteration</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">assert</span> (<span class="keyword">not</span> self.shutdown <span class="keyword">and</span> self.batches_outstanding &gt; <span class="number">0</span>)</span><br><span class="line">            idx, batch = self._get_batch()</span><br><span class="line">            self.batches_outstanding -= <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> idx != self.rcvd_idx:</span><br><span class="line">                self.reorder_dict[idx] = batch</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">return</span> self._process_next_batch(batch)     </span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_get_batch</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">if</span> self.timeout &gt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">return</span> self.data_queue.get(<span class="literal">True</span>, self.timeout)</span><br><span class="line">            <span class="keyword">except</span> queue.Empty:</span><br><span class="line">                <span class="keyword">raise</span> RuntimeError(<span class="string">&#x27;DataLoader timed out after &#123;&#125; seconds&#x27;</span>.<span class="built_in">format</span>(self.timeout))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> self.data_queue.get()        </span><br><span class="line">        </span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">_process_next_batch</span>(<span class="params">self, batch</span>):</span></span><br><span class="line">        self.rcvd_idx += <span class="number">1</span></span><br><span class="line">        self._put_indices()</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(batch, ExceptionWrapper):</span><br><span class="line">            <span class="keyword">raise</span> batch.exc_type(batch.exc_msg)</span><br><span class="line">        <span class="keyword">return</span> batch</span><br><span class="line">    </span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">_put_indices</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">assert</span> self.batches_outstanding &lt; <span class="number">2</span> * self.num_workers</span><br><span class="line">        indices = <span class="built_in">next</span>(self.sample_iter, <span class="literal">None</span>)</span><br><span class="line">        <span class="keyword">if</span> indices <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        self.index_queue.put((self.send_idx, indices))</span><br><span class="line">        self.batches_outstanding += <span class="number">1</span></span><br><span class="line">        self.send_idx += <span class="number">1</span>    </span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>深度学习</tag>
-      </tags>
   </entry>
   <entry>
     <title>Study Diary</title>
     <url>/2021/10/09/Study-Diary/</url>
-    <content><![CDATA[<center>
-<p>学习笔记&lt;/&gt;</p>
+    <content><![CDATA[<p><center>学习笔记&lt;/\center&gt;</p>
 <span id="more"></span>
 ]]></content>
       <categories>
@@ -161,50 +104,10 @@ Dataset, Sampler, DataLoader, DataLoaderIter简单分析
       </tags>
   </entry>
   <entry>
-    <title>World of her</title>
-    <url>/2021/08/16/World-of-her/</url>
-    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="看起来不太对哦" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="249fba52ff136f0119d5a9873bf5118fc2d6ceb853e2d850bbc233bfb756ac4c">42cd1a953feac0305aec47d330cbfe5e012f1e8aaae4a0ad2ada67ccb9180540c4df27dfb55f0b5ffafdbbc3c8c21caae6ad21004332cc31528051fdfb8d89063f0ebfd6bcd6d6d899804a9998e5a121c3c6b2eb0e30c83cf342872ce6305483af32b04e6eded48b43cdb43ccca6e6f2085e78582d42e66cfe159ab787915caa82e45c1d1ce478d7b348973e7e147eb8c47d7dae6b8bfa607f4592aa0d8c7b65168a4b179fd5b4972afbf93d0eb0934f093cc5f97ddc59878c29ac72e0c93885fe2a1e821196e2d230c52219bc94770b4fee34434ce2234398a87d7e2a2ef8e209a1c940282aa0b7e76eef03d0930131d69b02f345e8b854bb9ea97ebb59a1d15eac85ce1f9b6351d41522ce7435fd0d6fa8f229f6ee4e52d9056e57e094a7debd297e37245a5b4fb4684ea12f9f737c96b04f1cf3f20144a25f14959605ab453dae50ed43fafaff0dc1b4c9bfa5d505caeccdccf9e6d393e67ded7ee8247e0facd34d59f8cb25db1e5cff7f130bd54c884f2cb9e08b2f04d094cf9782c5f9f632bee30644d8c298763005ef8a006c2c103f3bac01a58264043b4d3b7a8230bcc82cf2e0c9556d3b3887650c0c56626ca9443646e94884d175ff975632007c59989786e0aa87f216a1aa79c37bebedc16b3a6ec81e46fed461078c3817716ac0682808896eea5292b1cde59a15273b94ee2fc2a3d5aa914830c2d5feb36f6f2f</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">输入密码哦</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
-      <categories>
-        <category>Life</category>
-        <category>Love</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/08/03/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<span id="more"></span>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>test</title>
     <url>/2021/08/06/test/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="看起来不太对哦" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="f0cfef0a20b659adc697669f67c2734c34b659900fb9c3bca307dd12d7bd39f3">165d50f05814027fb7fe5e4ae8a088d82c98dfea6f096eac251fce5e9b63411fc5f7df8be7a97e5209db707eb8b7651d662da1aca57f6e7f487c12e4f7b1c875a58a8c965564e40ccfac09a5c8b0a6d88986e60ee7cef2064b812c479e2236943ce6cbe9d95bc64c618239441fba688d7f209203be97b132ae99de656c490583d062eb125ec1087839d33281da7b52950d969f4ebf4e331255f7d1e2a1d718724ec7bc9a69308fbb04dc9efe67c9665973ad3df6354ae9453a791cc74f3ebb350e3649fe71e91122ba56efa8ebe0e28faae118ffdf1b920c085bd0f976ce3b5ef7d02424128f03916d163071d1e1210c16875a8e4b076a8c03bbcc826cf3e7268022373a6686d50985d86ecd5f7fc0911c8c5e99532759f453e1f4852fa0d98e8f9459f983eb657b3e1b69a5a4aa5693473b1404031b00247f534879b0c9d5ad6e6e2b8fe65a82f5be2e08a02c9b722b33947ed44eda3133548c28b15bb9e4ee0ac7efb5979ecb684d16d32420481e548dc50e0974f9c7081d0fb5d4d5124779fac92e3af536920e5deb9a212d42065778ba6087cb6650643108ecfed8d8a3a65d9e8855e51db80f93c8b27d96d71cdd7c6dde415c1a869fec00fef931aefa601a7bf25b9164d8bad0cc0af54d8b1b9b5b0006f350847eb2bf04486a6010f4acca2e5975f8b088f3b72637cba5e721cedc37b4822d2b1c21bc00d7f807909b05412b39ce130e5bc54cf3949f2ad98dc9e5e894f9d20568533ed996cd2a5440c5f5306ee98a935beeb2ed44ec3ec52c53291692247b73eb9b6cdd476266902544927007a209534204316146d763efc01ee3352527009541ebdab1ce3929b30d9465b45d095237ba899e2827b7760d7d45337b654fe868948b081fe9a6b42c6cfb95cf1e52472584c79e5826ba150dccb3af9d368be64a2297fa583ece1b87739e89bf9778d2014fd91496a91c221fe3d03492b14c75111ce7daf20f343eec8ef365ea3ced0a0fe552f49618eb630c0abe1c5e5c5af95c4e9a98570ddc3b63a65d745b9841f51dca6aca58e9490007f6ba16be6c537227cfc779314f2a7ca371f3842f9ba5c0e5c4fe686f89b08286afca3486ec4a3bdc08f2f22d01c1825f656efb138293cced912514e2e7d13d21fbfa9b72d09228b42fce309fc74cecacd21f28326a1e8391bf65abb8b0f92e3dfa922b9a779e849506313d20e81e273fc0f3fa8442ee3bc13f6395b0477afbc7923f31d42be3d0c9c2a2f3779a5862365c5c0bc9e493b47b51cd910f6745a741a03d2587863b7b30298e74dc3dae40a3466e4daf2925a133e6f2dbc1d08a34c604cec408f1c3cc109b681aa8f21a35552f45cb5fd16885e18e2c25ec3a9efeb53a9a035a54801a5d1492d8ca051d6ee43f18df3ea984f585c48075c7f0fd5427509c259f4f16d1bfb04bffd69cbc2e073e6827d5fe451bb40f12f436b901d4f97fbb0f632aaeb2faf72750d41e43caae30e8dc887b75aaa8b08df3d2e83008f16dad718c311456c61aedb87c4b317c3792539bd1e9450313d9847ed05f0ff19218f89f61651499c4a93be671466715c920ab35f36cc454d1feff0b5d0bc1cae79cba2f0a437879de6c16a73997631993f1bfa2ff473d3e874d207bcf12689c71f1e10d31ff56e4724177f9c1770e9dbcd25441287c379f198c1e5b9720baa3ff2f192b568561397759dff75ee5d0f663cf405a4818209297b7c7bf262d16a95508276572de868021f7cda15c14d188762b009b1a04ee9b90dba8ef77c2e9fef94425c46910a4e047af8cdb95634b70efb3681e6e87889be2c3bd46c6c2ba2a0f0f036cefa7e6c805f71f7ba332009779e7b6b2ffd86cc910ef8eb1e130e31a4b262bf3620b64ae736059b9ed40e3ce5683e6dc6ecd921835b6136d8a043479529e97cef08fb39bdfd95a6d82d3203f3a927bb9acfba93290e75ce7ad806dcd8f3dceac7562092e2a1a9bf4d2b3b527d8e91c61647afbf07470af194920721aff0d90af45061a0855f53c1f607c66fc53f420f3a6ee2d60bd465ce97976b77b072fa794fe335f5bbc381a44cf15c3038a97d5ee4361092c49d5bf91eada3b1f139628df702950ebecbffc4272380130501491b7314f93e6724854c0c48b20b5931aa37af9a5dceaa56ad10a23cab3a2507abb8a6cd6c675f5b339174a2d3f213693cc89c1ef3552de4f8ab5e396e5cc941546f629d255418912b8df611feda9ca355f44bf214b8feb39e1e55772c70410ade4e59d96f66fc6ee2eae92dc3b31603d17eec94ecaa62c3e6db0f84593915bacf715db84cda39de5a8e032e684381095eaeca1a61bb9e903c6030bc228d94e831552c3dc937c68cf91ca84eaa25ca51337c5f622765fa84263762f0a83e48c814dca3662951d7e9885cc003f1954cbc7b73061e5b568b525f2085914ec9449aba95ce84e58f940182b67952316671bf77e13589b40600c55a07f70fdbcf1bd34268d3ecc42b1265bc969648c7c41da48cd44aefecf37d63bec033794d8563bd581da3531ad855f7cac5634c90e35f9137d35397a9c0672543917f4ab0fdec93f00e1b3753755005b668ccefddffae0ed5f23675d7f82ce37c75b9cccc793f107ab2a6ba9c7798a157087db53a6b36ddc25ba04440c59d90e65f1763693b1dfe7bc6272fd850f45ffcd65afefc4fce8e91b530822d32a9f14e09816f3ef76ffeda81be00bedc8e938fe338285dc4c21def025e97957e8b61d6f894dfdbf0209d746de8d4d5c29116f821cde7711c270c179c9a398c8d96372d8aa30807d1c921473c93171e130a9fa5b739c6b711358a03b215cdf2dd7c1cb0d1e60e48a36f86bc70681f6cbdb0bb926831bd6f719a6a2854b9b3be91602ef42a8cf0d60ce799916ef699f7365d50d9cce16c2aa6f6396436ce392e52662ec588d9bbb4d2842d686cbeb3cfffdf5dd7ab368bf77c1455de7c123e38ad01961cc973954df82623087a206c2be1ef9992a4636c5a67cd346ca1307b309b2edad5eca37ac6152bf34ead4009517f739a5199f7484fff933aa901972cc8b5464e54582fdb48dd2108b698d2c36056166834b2a67342386d50bb9bd337b2b7109e369f21d156d403ee11face14a97aa69c0d48ef728941b5521fe9afe936f68d213e27128dab9c6da5aa0244421c3d9f34e0500c8a9eb7165d4642010f99c5c45cf5c18265b51aa35d00f0ad5bff6d1d6bca70e5d3b68d2bc2d664a0a0b54d8a0964629384d928c6c96ec4533f19cf8b0c30e09b988cbec11875753a441355d01215bc49f1923a888f136ff0fd506cec162dbb453fe7014565ff9647cc9a304a1e4b224a16ab9446d37a5d079bdb7796e4d13ea617ff5017bcab4d29566be83c27abf525c7962ad1a15057959c71dbe6edc304498df82eb3bb794e9e0b9cdede2dc12be9cc8f726434647</script>
+  <script id="hbeData" type="hbeData" data-hmacdigest="88b009637e3a2135a42531510294f07827044dc528500dd144bdcb874a3b0f30">165d50f05814027fb7fe5e4ae8a088d82c98dfea6f096eac251fce5e9b63411fc5f7df8be7a97e5209db707eb8b7651d662da1aca57f6e7f487c12e4f7b1c875a58a8c965564e40ccfac09a5c8b0a6d88986e60ee7cef2064b812c479e2236943ce6cbe9d95bc64c618239441fba688d7f209203be97b132ae99de656c490583d062eb125ec1087839d33281da7b52950d969f4ebf4e331255f7d1e2a1d718724ec7bc9a69308fbb04dc9efe67c9665973ad3df6354ae9453a791cc74f3ebb350e3649fe71e91122ba56efa8ebe0e28faae118ffdf1b920c085bd0f976ce3b5ef7d02424128f03916d163071d1e1210c16875a8e4b076a8c03bbcc826cf3e7268022373a6686d50985d86ecd5f7fc0911c8c5e99532759f453e1f4852fa0d98e8f9459f983eb657b3e1b69a5a4aa5693473b1404031b00247f534879b0c9d5ad6e6e2b8fe65a82f5be2e08a02c9b722b33947ed44eda3133548c28b15bb9e4ee0ac7efb5979ecb684d16d32420481e548dc50e0974f9c7081d0fb5d4d5124779fac92e3af536920e5deb9a212d42065778ba6087cb6650643108ecfed8d8a3a65d9e8855e51db80f93c8b27d96d71cdd7c6dde415c1a869fec00fef931aefa601a7bf25b9164d8bad0cc0af54d8b1b9b5b0006f350847eb2bf04486a6010f4acca2e5975f8b088f3b72637cba5e721cedc37b4822d2b1c21bc00d7f807909b05412b39ce130e5bc54cf3949f2ad98dc9e5e894f9d20568533ed996cd2a5440c5f5306ee98a935beeb2ed44ec3ec52c53291692247b73eb9b6cdd476266902544927007a209534204316146d763efc01ee3352527009541ebdab1ce3929b30d9465b45d095237ba899e2827b7760d7d45337b654fe868948b081fe9a6b42c6cfb95cf1e52472584c79e5826ba150dccb3af9d368be64a2297fa583ece1b87739e89bf9778d2014fd91496a91c221fe3d03492b14c75111ce7daf20f343eec8ef365ea3ced0a0fe552f49618eb630c0abe1c5e5c5af95c4e9a98570ddc3b63a65d745b9841f51dca6aca58e9490007f6ba16be6c537227cfc779314f2a7ca371f3842f9ba5c0e5c4fe686f89b08286afca3486ec4a3bdc08f2f22d01c1825f656efb138293cced912514e2e7d13d21fbfa9b72d09228b42fce309fc74cecacd21f28326a1e8391bf65abb8b0f92e3dfa922b9a779e849506313d20e81e273fc0f3fa8442ee3bc13f6395b0477afbc7923f31d42be3d0c9c2a2f3779a5862365c5c0bc9e493b47b51cd910f6745a741a03d2587863b7b30298e74dc3dae40a3466e4daf2925a133e6f2dbc1d08a34c604cec408f1c3cc109b681aa8f21a35552f45cb5fd16885e18e2c25ec3a9efeb53a9a035a54801a5d1492d8ca051d6ee43f18df3ea984f585c48075c7f0fd5427509c259f4f16d1bfb04bffd69cbc2e073e6827d5fe451bb40f12f436b901d4f97fbb0f632aaeb2faf72750d41e43caae30e8dc887b75aaa8b08df3d2e83008f16dad718c311456c61aedb87c4b317c3792539bd1e9450313d9847ed05f0ff19218f89f61651499c4a93be671466715c920ab35f36cc454d1feff0b5d0bc1cae79cba2f0a437879de6c16a73997631993f1bfa2ff473d3e874d207bcf12689c71f1e10d31ff56e4724177f9c1770e9dbcd25441287c379f198c1e5b9720baa3ff2f192b568561397759dff75ee5d0f663cf405a4818209297b7c7bf262d16a95508276572de868021f7cda15c14d188762b009b1a04ee9b90dba8ef77c2e9fef94425c46910a4e047af8cdb95634b70efb3681e6e87889be2c3bd46c6c2ba2a0f0f036cefa7e6c805f71f7ba332009779e7b6b2ffd86cc910ef8eb1e130e31a4b262bf3620b64ae736059b9ed40e3ce5683e6dc6ecd921835b6136d8a043479529e97cef08fb39bdfd95a6d82d3203f3a927bb9acfba93290e75ce7ad806dcd8f3dceac7562092e2a1a9bf4d2b3b527d8e91c61647afbf07470af194920721aff0d90af45061a0855f53c1f607c66fc53f420f3a6ee2d60bd465ce97976b77b072fa794fe335f5bbc381a44cf15c3038a97d5ee4361092c49d5bf91eada3b1f139628df702950ebecbffc4272380130501491b7314f93e6724854c0c48b20b5931aa37af9a5dceaa56ad10a23cab3a2507abb8a6cd6c675f5b339174a2d3f213693cc89c1ef3552de4f8ab5e396e5cc941546f629d255418912b8df611feda9ca355f44bf214b8feb39e1e55772c70410ade4e59d96f66fc6ee2eae92dc3b31603d17eec94ecaa62c3e6db0f84593915bacf715db84cda39de5a8e032e684381095eaeca1a61bb9e903c6030bc228d94e831552c3dc937c68cf91ca84eaa25ca51337c5f622765fa84263762f0a83e48c814dca3662951d7e9885cc003f1954cbc7b73061e5b568b525f2085914ec9449aba95ce84e58f940182b67952316671bf77e13589b40600c55a07f70fdbcf1bd34268d3ecc42b1265bc969648c7c41da48cd44aefecf37d63bec033794d8563bd581da3531ad855f7cac5634c90e35f9137d35397a9c0672543917f4ab0fdec93f00e1b3753755005b668ccefddffae0ed5f23675d7f82ce37c75b9cccc793f107ab2a6ba9c7798a157087db53a6b36ddc25ba04440c59d90e65f1763693b1dfe7bc6272fd850f45ffcd65afefc4fce8e91b530822d32a9f14e09816f3ef76ffeda81be00bedc8e938fe338285dc4c21def025e97957e8b61d6f894dfdbf0209d746de8d4d5c29116f821cde7711c270c179c9a398c8d96372d8aa30807d1c921473c93171e130a9fa5b739c6b711358a03b215cdf2dd7c1cb0d1e60e48a36f86bc70681f6cbdb0bb926831bd6f719a6a2854b9b3be91602ef42a8cf0d60ce799916ef699f7365d50d9cce16c2aa6f6396436ce392e52662ec588d9bbb4d2842d686cbeb3cfffdf5dd7ab368bf77c1455de7c123e38ad01961cc973954df82623087a206c2be1ef9992a4636c5a67cd346ca1307b309b2edad5eca37ac6152bf34ead4009517f739a5199f7484fff933aa901972cc8b5464e54582fdb48dd2108b698d2c36056166834b2a67342386d50bb9bd337b2b7109e369f21d156d403ee11face14a97aa69c0d48ef728941b5521fe9afe936f68d213e27128dab9c6da5aa0244421c3d9f34e0500c8a9eb7165d464b21552c41976678463d5c365f56f8090d1bbc2480306e6777e3bb248b3ddab2927d68f24e5e19902026d71b1b8aa5a972fcf4556ca9af34e06093505ded8fa4c720113217cb911e8ab9036145afd7cfc76f4171c25af8483b88fab60700eb6fded1904282d3871ceb1b961dd11b34ab243c8b8bbb5b0cd6fb37c41680c7e26403ab3d3fcee33f3914e14800b6c2d8af12933409e6015d1a32b4d00f28624cc3f</script>
   <div class="hbe hbe-content">
     <div class="hbe hbe-input hbe-input-default">
       <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
@@ -220,34 +123,78 @@ Dataset, Sampler, DataLoader, DataLoaderIter简单分析
       </categories>
   </entry>
   <entry>
-    <title>博客中Note的使用方法</title>
-    <url>/2021/08/07/%E5%8D%9A%E5%AE%A2%E4%B8%ADNote%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<center>
-Markdown里Note的使用方法
-</center>
-<span id="more"></span>
-<h3 id="配置">配置</h3>
-<p>打开主题的_config.yml</p>
-<p>修改配置为</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"># Note tag (bs-callout)</span><br><span class="line">note:</span><br><span class="line">  # Note tag style values:</span><br><span class="line">  #  - simple    bs-callout old alert style. Default.</span><br><span class="line">  #  - modern    bs-callout new (v2-v3) alert style.</span><br><span class="line">  #  - flat      flat callout style with background, like on Mozilla or StackOverflow.</span><br><span class="line">  #  - disabled  disable all CSS styles import of note tag.</span><br><span class="line">  style: flat</span><br><span class="line">  icons: false</span><br><span class="line">  # Offset lighter of background in % for modern and flat styles (modern: -12 | 12; flat: -18 | 6).</span><br><span class="line">  # Offset also applied to label tag variables. This option can work with disabled note tag.</span><br><span class="line">  light_bg_offset: 0</span><br><span class="line">  border_radius: 3</span><br></pre></td></tr></table></figure>
-<p>其中style是note的风格</p>
-<h3 id="在markdown中使用方法">在markdown中使用方法</h3>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">&#123;% note class<span class="emphasis">_name %&#125;内容&#123;% endnote %&#125;</span></span><br></pre></td></tr></table></figure>
-<p>其中class_name可以是</p>
-<ul>
-<li>default</li>
-<li>primary</li>
-<li>success</li>
-<li>info</li>
-<li>warning</li>
-<li>danger</li>
-</ul>
-<p>效果分别为</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0phbmtpbmdXb24vSmFua2luZ1dvbi5naXRodWIuaW8vbWFzdGVyLzIwMTkvaGV4b25vdGUvMTU0NzY2Mzk2MTcxMy5wbmc?x-oss-process=image/format,png" /></p>
+    <title>交叉熵</title>
+    <url>/2022/01/26/%E4%BA%A4%E5%8F%89%E7%86%B5/</url>
+    <content><![CDATA[<p><strong>信息量</strong>定义$f(x)=-log_2x$，表明信息量的多少，x是概率，通俗来说概率越小信息量越大。</p>
+<p><strong>熵</strong>的定义是信息量的期望，即$H(P)=\sum _{i=1}^{m}p_i*f(p_i)$</p>
+<p><strong>相对熵(KL散度)</strong>是两个系统“差距”， 比如以P为基准，与Q相差多少：$D_{KL}(P||Q)=\sum_{i=1}^{m}p_i<em>(f_Q(q_i)-f_p(p_i))=\sum_{i=1}^{m}p_i</em>(-log_2q_i)-\sum_{i=1}^{m}p_i(-log_2p_i)$</p>
+<p>后面一项是P的熵，前面一项是P与Q的交叉熵</p>
+<p><strong>交叉熵</strong> $H(P, Q)=\sum_{i=1}^{m}p_i(-log_2q_i)=-\sum_{i=1}^{n}(y_ilog_2\hat{y_i}+(1-y_i)log_2(1-\hat{y_i}))$</p>
 ]]></content>
       <categories>
-        <category>Other</category>
+        <category>深度学习</category>
       </categories>
+      <tags>
+        <tag>深度学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pytorch数据载入学习</title>
+    <url>/2022/01/30/Pytorch%E6%95%B0%E6%8D%AE%E8%BD%BD%E5%85%A5%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<center> Dataset, Sampler, DataLoader, DataLoaderIter简单分析
+</center>
+
+
+<span id="more"></span>
+<h3 id="一、Dataset"><a href="#一、Dataset" class="headerlink" title="一、Dataset"></a>一、Dataset</h3><p>torch.utils.data.Dataset是一个抽象类，所有其他类的数据集类都是它的子类，所有子类都应该重载len和getitem。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dataset</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span>(<span class="params">self, index</span>):</span></span><br><span class="line">        <span class="keyword">raise</span> NotImplementedError</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">raise</span> NotImplementedError</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__add__</span>(<span class="params">self, other</span>):</span></span><br><span class="line">        <span class="keyword">return</span> ConcatDataset([self, other])</span><br></pre></td></tr></table></figure>
+<p>其子类中，torch.utils.data.TensorDataset，是将数据封装成tensor的数据集，每一个样本通过索引张量来获得。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TensorDataset</span>(<span class="params">Dataset</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, *tensor</span>):</span></span><br><span class="line">        <span class="keyword">assert</span> <span class="built_in">all</span>(tensors[<span class="number">0</span>].size(<span class="number">0</span>) == tensor.size(<span class="number">0</span>) <span class="keyword">for</span> tensor <span class="keyword">in</span> tensors) <span class="comment"># 要保证每一个张量的第一维大小相同（即数量）</span></span><br><span class="line">        self.tensors = tensors <span class="comment"># 把数据封装成一个张量</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span>(<span class="params">self, index</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">tuple</span>(tensor[index] <span class="keyword">for</span> tensor <span class="keyword">in</span> tensors) <span class="comment"># 返回张量在第index层的切片，即所有数据的第index个组合成的张量</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.tensors[<span class="number">0</span>].size(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="二、Sampler"><a href="#二、Sampler" class="headerlink" title="二、Sampler"></a>二、Sampler</h3><p>torch.utils.data.Sampler 是负责生成Dataset的索引的类。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sampler</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, data_source</span>):</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span>(<span class="params">self</span>):</span> <span class="comment"># 返回一个迭代器，每个都是“一系列”数据的索引</span></span><br><span class="line">        <span class="keyword">raise</span> NotImplementedError</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span> <span class="comment"># 表示返回的迭代器的长度</span></span><br><span class="line">        <span class="keyword">raise</span> NotImplementedError</span><br></pre></td></tr></table></figure>
+<p>Sampler有子类SequentialSampler和RandomSampler，定义如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 顺序采样</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SequentialSampler</span>(<span class="params">Sampler</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, data_source</span>):</span></span><br><span class="line">        self.data_source = data_source</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">iter</span>(<span class="built_in">range</span>(<span class="built_in">len</span>(self.data_source)))</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(self.data_source)</span><br><span class="line"><span class="comment"># 随机采样</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RandomSampler</span>(<span class="params">Sampler</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, data_source</span>):</span></span><br><span class="line">        self.data_source = data_source</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">iter</span>(torch.randperm(<span class="built_in">len</span>(self.data_source)).long()) <span class="comment"># 随机生成一个排列</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(self.data_source)</span><br></pre></td></tr></table></figure>
+<p>torch.utils.data.BatchSampler是基于Sampler来构造的，用来生成批量索引。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BatchSampler</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, sampler, batch_size, drop_last</span>):</span> <span class="comment"># 参数sampler, batch_size(每一批次大小), drop_last(如果最后一个批次没满，是否丢掉最后一批次)</span></span><br><span class="line">        self.sampler = sampler  </span><br><span class="line">        self.batch_size = batch_size</span><br><span class="line">        self.drop_last = drop_last</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span>(<span class="params">self</span>):</span></span><br><span class="line">        batch = []</span><br><span class="line">        <span class="keyword">for</span> idx <span class="keyword">in</span> self.sampler:</span><br><span class="line">            batch.append(idx) <span class="comment"># 根据sampler的索引，将数据装入一个batch中</span></span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(batch) == self.batch_size:</span><br><span class="line">                <span class="keyword">yield</span> batch</span><br><span class="line">                batch = []</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(batch) &gt; <span class="number">0</span> <span class="keyword">and</span> <span class="keyword">not</span> self.drop_last:</span><br><span class="line">            <span class="keyword">yield</span> batch</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">if</span> self.drop_last:</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">len</span>(self.sampler) // self.batch_size</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> (<span class="built_in">len</span>(self.sampler) + self.batch_size - <span class="number">1</span>) // self.batch_size</span><br></pre></td></tr></table></figure>
+<p>drop_last的例子:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">list</span>(BatchSampler(<span class="built_in">range</span>(<span class="number">10</span>), batch_size=<span class="number">3</span>, drop_last=<span class="literal">False</span>))</span><br><span class="line">        [[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>], [<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>], [<span class="number">9</span>]]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">list</span>(BatchSampler(<span class="built_in">range</span>(<span class="number">10</span>), batch_size=<span class="number">3</span>, drop_last=<span class="literal">True</span>))</span><br><span class="line">        [[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>], [<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]]</span><br></pre></td></tr></table></figure>
+<p>batchsampler的其他例子</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.utils.data.sampler <span class="keyword">import</span> BatchSampler</span><br><span class="line">[x <span class="keyword">for</span> x <span class="keyword">in</span> BatchSampler(<span class="built_in">range</span>(<span class="number">10</span>), batch_size=<span class="number">3</span>, drop_last=<span class="literal">False</span>)]</span><br><span class="line">Out[<span class="number">9</span>]: [[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>], [<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>], [<span class="number">9</span>]]</span><br><span class="line">[x <span class="keyword">for</span> x <span class="keyword">in</span> BatchSampler(RandomSampler(<span class="built_in">range</span>(<span class="number">10</span>)), batch_size=<span class="number">3</span>, drop_last=<span class="literal">False</span>)]</span><br><span class="line">Out[<span class="number">15</span>]: [[<span class="number">1</span>, <span class="number">3</span>, <span class="number">7</span>], [<span class="number">9</span>, <span class="number">2</span>, <span class="number">0</span>], [<span class="number">5</span>, <span class="number">4</span>, <span class="number">6</span>], [<span class="number">8</span>]]</span><br></pre></td></tr></table></figure>
+<h3 id="三、DataLoader"><a href="#三、DataLoader" class="headerlink" title="三、DataLoader"></a>三、DataLoader</h3><p>torch.utils.data.DataLoader 负责加载数据，支持多进程。</p>
+<p>其接口定义如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">DataLoader(dataset, batch_size=<span class="number">1</span>, shuffle=<span class="literal">False</span>, sampler=<span class="literal">None</span>,</span><br><span class="line">           batch_sampler=<span class="literal">None</span>, num_workers=<span class="number">0</span>, collate_fn=<span class="literal">None</span>,</span><br><span class="line">           pin_memory=<span class="literal">False</span>, drop_last=<span class="literal">False</span>, timeout=<span class="number">0</span>,</span><br><span class="line">           worker_init_fn=<span class="literal">None</span>, *, prefetch_factor=<span class="number">2</span>,</span><br><span class="line">           persistent_workers=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+<p>dataset是加载的数据集。</p>
+<p>batch_size是每个batch加载数据的多少。</p>
+<p>shuffle设置为True的时候，调用RandomSampler进行随机索引。</p>
+<p>sampler是从数据集中提取样本的策略，如果指定了sampler，则shuffle参数必须为False。</p>
+<p>batch_sampler与sampler类似，每次返回一个批次的索引，如果指定了batch_sampler，则batch_size和shuffle必须与之相符合。</p>
+<p>num_workers是数据加载的子进程数。</p>
+<p>collate_fn是一个callable的函数，将Map-style dataset取出的batch_size个数据（tuple类型，每个tuple长度为2，其中第一个是数据，第二个是标签）整合成一个list，这个list的长度为2，一个是batch_size个数据组成的FloatTensor，一个是batch_size个标签组成的longTensor。</p>
+<p>pin_memory如果为True，则 DataLoader 在将张量返回之前将其复制到 CUDA 固定的内存中。</p>
+<p>drop_last，如果最后一个batch没满，是否要丢掉。</p>
+<p>timeout，如果为正，则为从 worker 收集 batch 的超时值，应始终为非负数，超过这个时间还没读取到数据的话就会报错</p>
+<p>worker_init_fn 是callable的函数，如果不为 None，它将会被每个 worker 子进程调用，以 worker id ([0, num_workers - 1] 内的整形) 为输入。</p>
+<p>prefetch_factor是每个 worker 提前加载 的 sample 数量，默认为2。</p>
+<p>persistent_workers 如果为 True，dataloader 将不会终止 worker 进程，直到 dataset 迭代完成。</p>
+<p><strong>collate_fn</strong> </p>
+<p>当collate_fn作用于数据样本列表，将输入样本整理为一个 batch时（不是只处理一个数据时），通常做以下3件事：</p>
+<ol>
+<li>添加新的维度（第一维）</li>
+<li>自动将numpy数组和python数值转换为tensor</li>
+<li>保留数据结构</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DataLoader</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, dataset, batch_size=<span class="number">1</span>, shuffle=<span class="literal">False</span>, sampler=<span class="literal">None</span>, batch_sampler=<span class="literal">None</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">                 num_workers=<span class="number">0</span>, collate_fn=default_collate, pin_memory=<span class="literal">False</span>, drop_last=<span class="literal">False</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">                 timeout=<span class="number">0</span>, worker_init_fn=<span class="literal">None</span></span>):</span></span><br><span class="line">        self.dataset = dataset</span><br><span class="line">        self.batch_size = batch_size</span><br><span class="line">        self.num_workers = num_workers</span><br><span class="line">        self.collate_fn = collate_fn</span><br><span class="line">        self.pin_memory = pin_memory</span><br><span class="line">        self.drop_last = drop_last</span><br><span class="line">        self.timeout = timeout</span><br><span class="line">        self.worker_init_fn = worker_init_fn</span><br><span class="line">        <span class="keyword">if</span> timeout &lt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">&#x27;timeout option should be non-negative&#x27;</span>)</span><br><span class="line">        <span class="comment"># 检测是否存在参数冲突</span></span><br><span class="line">        <span class="keyword">if</span> batch_sampler <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">if</span> batch_size &gt; <span class="number">1</span> <span class="keyword">or</span> shuffle <span class="keyword">or</span> sampler <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">or</span> drop_last:</span><br><span class="line">                <span class="keyword">raise</span> ValueError(<span class="string">&#x27;batch_sampler is mutually exclusive with &#x27;</span></span><br><span class="line">                                 <span class="string">&#x27;batch_size, shuffle, sampler, and drop_last&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> sampler <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> shuffle:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">&#x27;sampler is mutually exclusive with shuffle&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> self.num_workers &lt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">&#x27;num_workers cannot be negative; &#x27;</span></span><br><span class="line">                             <span class="string">&#x27;use num_workers=0 to disable multiprocessing.&#x27;</span>)</span><br><span class="line">        <span class="comment"># 在此处会强行指定一个 BatchSampler</span></span><br><span class="line">        <span class="keyword">if</span> batch_sampler <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="comment"># 在此处会强行指定一个 Sampler</span></span><br><span class="line">            <span class="keyword">if</span> sampler <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">                <span class="keyword">if</span> shuffle:</span><br><span class="line">                    sampler = RandomSampler(dataset)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    sampler = SequentialSampler(dataset)</span><br><span class="line">            batch_sampler = BatchSampler(sampler, batch_size, drop_last)</span><br><span class="line">        <span class="comment"># 使用自定义的采样器和批采样器</span></span><br><span class="line">        self.sampler = sampler</span><br><span class="line">        self.batch_sampler = batch_sampler</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># 调用Pytorch的多线程迭代器加载数据</span></span><br><span class="line">        <span class="keyword">return</span> DataLoaderIter(self)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(self.batch_sampler)</span><br></pre></td></tr></table></figure>
+<h3 id="三、DataLoaderIter"><a href="#三、DataLoaderIter" class="headerlink" title="三、DataLoaderIter"></a>三、DataLoaderIter</h3><p>在调用iter(DataLoader)的时候，返回了DataLoaderIter。</p>
+<p>（只看了单线程，多线程还不会）</p>
+<p>定义如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DataLoaderIter</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="string">&quot;Iterates once over the DataLoader&#x27;s dataset, as specified by the sampler&quot;</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, loader</span>):</span></span><br><span class="line">        self.dataset = loader.dataset</span><br><span class="line">        self.collate_fn = loader.collate_fn</span><br><span class="line">        self.batch_sampler = loader.batch_sampler</span><br><span class="line">        self.num_workers = loader.num_workers</span><br><span class="line">        self.pin_memory = loader.pin_memory <span class="keyword">and</span> torch.cuda.is_available()</span><br><span class="line">        self.timeout = loader.timeout</span><br><span class="line">        self.done_event = threading.Event()</span><br><span class="line"> </span><br><span class="line">        self.sample_iter = <span class="built_in">iter</span>(self.batch_sampler) <span class="comment"># DataLoaderIter比DataLoader多了sample_iter</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span> self.num_workers &gt; <span class="number">0</span>: <span class="comment"># 后面就都是处理多线程的了</span></span><br><span class="line">            self.worker_init_fn = loader.worker_init_fn</span><br><span class="line">            self.index_queue = multiprocessing.SimpleQueue()</span><br><span class="line">            self.worker_result_queue = multiprocessing.SimpleQueue()</span><br><span class="line">            self.batches_outstanding = <span class="number">0</span></span><br><span class="line">            self.worker_pids_set = <span class="literal">False</span></span><br><span class="line">            self.shutdown = <span class="literal">False</span></span><br><span class="line">            self.send_idx = <span class="number">0</span></span><br><span class="line">            self.rcvd_idx = <span class="number">0</span></span><br><span class="line">            self.reorder_dict = &#123;&#125;</span><br><span class="line"> </span><br><span class="line">            base_seed = torch.LongTensor(<span class="number">1</span>).random_()[<span class="number">0</span>]</span><br><span class="line">            self.workers = [</span><br><span class="line">                multiprocessing.Process(</span><br><span class="line">                    target=_worker_loop,</span><br><span class="line">                    args=(self.dataset, self.index_queue, self.worker_result_queue, self.collate_fn,</span><br><span class="line">                          base_seed + i, self.worker_init_fn, i))</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(self.num_workers)]</span><br><span class="line"> </span><br><span class="line">            <span class="keyword">if</span> self.pin_memory <span class="keyword">or</span> self.timeout &gt; <span class="number">0</span>:</span><br><span class="line">                self.data_queue = queue.Queue()</span><br><span class="line">                self.worker_manager_thread = threading.Thread(</span><br><span class="line">                    target=_worker_manager_loop,</span><br><span class="line">                    args=(self.worker_result_queue, self.data_queue, self.done_event, self.pin_memory,</span><br><span class="line">                          torch.cuda.current_device()))</span><br><span class="line">                self.worker_manager_thread.daemon = <span class="literal">True</span></span><br><span class="line">                self.worker_manager_thread.start()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                self.data_queue = self.worker_result_queue</span><br><span class="line"> </span><br><span class="line">            <span class="keyword">for</span> w <span class="keyword">in</span> self.workers:</span><br><span class="line">                w.daemon = <span class="literal">True</span>  <span class="comment"># ensure that the worker exits on process exit</span></span><br><span class="line">                w.start()</span><br><span class="line"> </span><br><span class="line">            _update_worker_pids(<span class="built_in">id</span>(self), <span class="built_in">tuple</span>(w.pid <span class="keyword">for</span> w <span class="keyword">in</span> self.workers))</span><br><span class="line">            _set_SIGCHLD_handler()</span><br><span class="line">            self.worker_pids_set = <span class="literal">True</span></span><br><span class="line"> </span><br><span class="line">            <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span> * self.num_workers):</span><br><span class="line">                self._put_indices()</span><br><span class="line">                </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__next__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">if</span> self.num_workers == <span class="number">0</span>:  <span class="comment"># 如果是单线程</span></span><br><span class="line">            indices = <span class="built_in">next</span>(self.sample_iter) <span class="comment"># 生成一个批次数据的索引</span></span><br><span class="line">            batch = self.collate_fn([self.dataset[i] <span class="keyword">for</span> i <span class="keyword">in</span> indices]) <span class="comment"># 用collate_fn将这些数据打包成一个长度为2的list</span></span><br><span class="line">            <span class="keyword">if</span> self.pin_memory:</span><br><span class="line">                batch = pin_memory_batch(batch)</span><br><span class="line">            <span class="keyword">return</span> batch <span class="comment"># 返回这个批次数据</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment"># 后面都是多线程了</span></span><br><span class="line">        <span class="keyword">if</span> self.rcvd_idx <span class="keyword">in</span> self.reorder_dict:</span><br><span class="line">            batch = self.reorder_dict.pop(self.rcvd_idx)</span><br><span class="line">            <span class="keyword">return</span> self._process_next_batch(batch)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span> self.batches_outstanding == <span class="number">0</span>:</span><br><span class="line">            self._shutdown_workers()</span><br><span class="line">            <span class="keyword">raise</span> StopIteration</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">assert</span> (<span class="keyword">not</span> self.shutdown <span class="keyword">and</span> self.batches_outstanding &gt; <span class="number">0</span>)</span><br><span class="line">            idx, batch = self._get_batch()</span><br><span class="line">            self.batches_outstanding -= <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> idx != self.rcvd_idx:</span><br><span class="line">                self.reorder_dict[idx] = batch</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">return</span> self._process_next_batch(batch)     </span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_get_batch</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">if</span> self.timeout &gt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">return</span> self.data_queue.get(<span class="literal">True</span>, self.timeout)</span><br><span class="line">            <span class="keyword">except</span> queue.Empty:</span><br><span class="line">                <span class="keyword">raise</span> RuntimeError(<span class="string">&#x27;DataLoader timed out after &#123;&#125; seconds&#x27;</span>.<span class="built_in">format</span>(self.timeout))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> self.data_queue.get()        </span><br><span class="line">        </span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">_process_next_batch</span>(<span class="params">self, batch</span>):</span></span><br><span class="line">        self.rcvd_idx += <span class="number">1</span></span><br><span class="line">        self._put_indices()</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(batch, ExceptionWrapper):</span><br><span class="line">            <span class="keyword">raise</span> batch.exc_type(batch.exc_msg)</span><br><span class="line">        <span class="keyword">return</span> batch</span><br><span class="line">    </span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">_put_indices</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">assert</span> self.batches_outstanding &lt; <span class="number">2</span> * self.num_workers</span><br><span class="line">        indices = <span class="built_in">next</span>(self.sample_iter, <span class="literal">None</span>)</span><br><span class="line">        <span class="keyword">if</span> indices <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        self.index_queue.put((self.send_idx, indices))</span><br><span class="line">        self.batches_outstanding += <span class="number">1</span></span><br><span class="line">        self.send_idx += <span class="number">1</span>    </span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+      </tags>
   </entry>
   <entry>
     <title>李宏毅ML2020Spring HW3</title>
@@ -256,7 +203,7 @@ Markdown里Note的使用方法
 <span id="more"></span>
 <p>数据特点是：带标签的数据量小，有大量无标签数据。</p>
 <p>任务:</p>
-<ol type="1">
+<ol>
 <li>对带标签数据进行数据增强</li>
 <li>对无标签数据采取自监督学习</li>
 </ol>
@@ -283,56 +230,73 @@ Markdown里Note的使用方法
       </tags>
   </entry>
   <entry>
-    <title>交叉熵</title>
-    <url>/2022/01/26/%E4%BA%A4%E5%8F%89%E7%86%B5/</url>
-    <content><![CDATA[<p><strong>信息量</strong>定义<span class="math inline">\(f(x)=-log_2x\)</span>，表明信息量的多少，x是概率，通俗来说概率越小信息量越大。</p>
-<p><strong>熵</strong>的定义是信息量的期望，即<span class="math inline">\(H(P)=\sum _{i=1}^{m}p_i*f(p_i)\)</span></p>
-<p><strong>相对熵(KL散度)</strong>是两个系统“差距”， 比如以P为基准，与Q相差多少：<span class="math inline">\(D_{KL}(P||Q)=\sum_{i=1}^{m}p_i*(f_Q(q_i)-f_p(p_i))=\sum_{i=1}^{m}p_i*(-log_2q_i)-\sum_{i=1}^{m}p_i(-log_2p_i)\)</span></p>
-<p>后面一项是P的熵，前面一项是P与Q的交叉熵</p>
-<p><strong>交叉熵</strong> <span class="math inline">\(H(P, Q)=\sum_{i=1}^{m}p_i(-log_2q_i)=-\sum_{i=1}^{n}(y_ilog_2\hat{y_i}+(1-y_i)log_2(1-\hat{y_i}))\)</span></p>
+    <title>博客中Note的使用方法</title>
+    <url>/2021/08/07/%E5%8D%9A%E5%AE%A2%E4%B8%ADNote%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<center>Markdown里Note的使用方法</center>
+
+<span id="more"></span>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>打开主题的_config.yml</p>
+<p>修改配置为</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"># Note tag (bs-callout)</span><br><span class="line">note:</span><br><span class="line">  # Note tag style values:</span><br><span class="line">  #  - simple    bs-callout old alert style. Default.</span><br><span class="line">  #  - modern    bs-callout new (v2-v3) alert style.</span><br><span class="line">  #  - flat      flat callout style with background, like on Mozilla or StackOverflow.</span><br><span class="line">  #  - disabled  disable all CSS styles import of note tag.</span><br><span class="line">  style: flat</span><br><span class="line">  icons: false</span><br><span class="line">  # Offset lighter of background in % for modern and flat styles (modern: -12 | 12; flat: -18 | 6).</span><br><span class="line">  # Offset also applied to label tag variables. This option can work with disabled note tag.</span><br><span class="line">  light_bg_offset: 0</span><br><span class="line">  border_radius: 3</span><br></pre></td></tr></table></figure>
+<p>其中style是note的风格</p>
+<h3 id="在markdown中使用方法"><a href="#在markdown中使用方法" class="headerlink" title="在markdown中使用方法"></a>在markdown中使用方法</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">&#123;% note class<span class="emphasis">_name %&#125;内容&#123;% endnote %&#125;</span></span><br></pre></td></tr></table></figure>
+<p>其中class_name可以是</p>
+<ul>
+<li>default</li>
+<li>primary</li>
+<li>success</li>
+<li>info</li>
+<li>warning</li>
+<li>danger</li>
+</ul>
+<p>效果分别为</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0phbmtpbmdXb24vSmFua2luZ1dvbi5naXRodWIuaW8vbWFzdGVyLzIwMTkvaGV4b25vdGUvMTU0NzY2Mzk2MTcxMy5wbmc?x-oss-process=image/format,png" alt=""></p>
 ]]></content>
       <categories>
-        <category>深度学习</category>
+        <category>Other</category>
       </categories>
-      <tags>
-        <tag>深度学习</tag>
-      </tags>
+  </entry>
+  <entry>
+    <title>World of her</title>
+    <url>/2021/08/16/World-of-her/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="看起来不太对哦" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="33fd8c0302e7efb14455c3d535fe98591c9e82ca3f0b4b461840c3c10d193253">42cd1a953feac0305aec47d330cbfe5e012f1e8aaae4a0ad2ada67ccb9180540c4df27dfb55f0b5ffafdbbc3c8c21caad33c3cf8236356c7c5f1f1436f3b115952d32f0a9d3094124bca70846c720ac97433d00c14a3931559bd5a6c3b1f8d9d4e476be28e5ec78dfa49b8ae1f5de6f70b76e095ce0b2847bb9cbb9eea6f1e1572596bb03d70215c9a49e651f3355e645868f5f827a61a73142eee1715f58d1a11fd5e97715f7250032909c6e684e81a42f494e3881f22a10655e8c755f74e9e6ca9cbd02a20db2f648ec98e9708405ff3d02592b0c8aef102bc92514568ae0bcb58a5b94baa4ed348640b9b5275fbe2b03439aded988b1b7a3ca7be229e63ca2d57e0284af348414b98d2d052c1cc921001fd6641916c07742d7c40d230371c87e61f5aeacb86bd46cdf485b4d57f409836fc157057415d7ec73639fc4e51697802fcd2d7d3ab8fa610ec2c8685474d6f84d46d29bd872acab6ec0a9681f4221580b1d46f469b9389dce85fca8edfb1cf65877eaec84432103a7947129ffcefd13b4abdd3c46d47163ddac388a5e9d4f5095ab05f0e66c314c3e067842a25fad1ae152d529c0f19c0d16fd7dbae0141529dd921b1bcc704ae6c70cd6ebe9d4a3dd75c2224e5a0f5e80c6352136ce9c25324d48444c98e30b2dc5722c588a3bbfa650d159672937d5fdb9112d260072abcf5a8e0fc94e0faafe81870251d9c26ce1afb307c13ae62c1763f127b038e2d9ed39e4fe3ec5ba3aded5f2e1ce2f0823d817baef4583206d4833fd00efb020b0c48e9e3a532269b96d6783cd51e8be52ff79752466dd11e1680583caded2d41de9f618dd90a39575c1e563553041e67c5cd737a3e0bbb50c6940b690fe37e0da42919fccc52aa9e4c2c927040a4208dc0991fcf94a2e5113458f91717e1f7eafb2b81195ace013c8430f6e1bfab4230</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">输入密码哦</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>Life</category>
+        <category>Love</category>
+      </categories>
   </entry>
   <entry>
     <title>李宏毅ML2020Spring-HW4</title>
     <url>/2022/02/15/%E6%9D%8E%E5%AE%8F%E6%AF%85ML2020Spring-HW4/</url>
-    <content><![CDATA[<center>
-李宏毅2020年春季机器学习课程HW4 语音辨识
-</center>
-<center>
-学习代码...
-</center>
+    <content><![CDATA[<center>李宏毅2020年春季机器学习课程HW4 语音辨识</center>
+
+<center>学习代码...</center>
+
 <span id="more"></span>
 <p>任务描述：根据语音辨识说话的人是谁。</p>
 <p>数据包括600个人，所有数据都经过了处理，处理成mel-spectrogram。</p>
 <p>数据构成：</p>
-<figure>
-<img src="https://s2.loli.net/2022/02/15/tXM9uy27KH5NqQJ.png" alt="image-20220215115530876" /><figcaption aria-hidden="true">image-20220215115530876</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2022/02/15/tXM9uy27KH5NqQJ.png" alt=""></p>
 <p>其中mapping.json内包括speaker2id和id2speaker</p>
-<figure>
-<img src="https://s2.loli.net/2022/02/15/HCscz4b5k6LnFlQ.png" alt="image-20220215115541314" /><figcaption aria-hidden="true">image-20220215115541314</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2022/02/15/HCscz4b5k6LnFlQ.png" alt=""></p>
 <p>metadata.json内是训练数据，n_mels是mel-spectrograms的特征长度，为40。里面还包括了speakers。</p>
-<figure>
-<img src="https://s2.loli.net/2022/02/15/vyzcW9iA8QdgajI.png" alt="image-20220215111313566" /><figcaption aria-hidden="true">image-20220215111313566</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2022/02/15/vyzcW9iA8QdgajI.png" alt=""></p>
 <p>speakers里有很多id，对应的是对应人的声音的数据，feature_path是数据地址，mel_len是这个特征包括了多少个mel（每个的特征长度都是40）</p>
-<figure>
-<img src="https://s2.loli.net/2022/02/15/kZVbB4idUTOLoGp.png" alt="image-20220215111431996" /><figcaption aria-hidden="true">image-20220215111431996</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2022/02/15/wF9DE3tPNK725zm.png" alt="image-20220215111540143" /><figcaption aria-hidden="true">image-20220215111540143</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2022/02/15/kZVbB4idUTOLoGp.png" alt=""></p>
+<p><img src="https://s2.loli.net/2022/02/15/wF9DE3tPNK725zm.png" alt=""></p>
 <p>testdata.json类似，只不过没有speakers标签。</p>
-<figure>
-<img src="https://s2.loli.net/2022/02/15/J8cx3WATMuPD25a.png" alt="image-20220215111726882" /><figcaption aria-hidden="true">image-20220215111726882</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2022/02/15/J8cx3WATMuPD25a.png" alt=""></p>
 <p>代码如下：</p>
 <p>构建数据集类：</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> Dataset</span><br><span class="line"><span class="keyword">from</span> torch.nn.utils.rnn <span class="keyword">import</span> pad_sequence</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myDataset</span>(<span class="params">Dataset</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, data_dir, segment_len=<span class="number">128</span></span>):</span> <span class="comment"># segment_len是把一个数据切成长度只有128，方便一个batch处理</span></span><br><span class="line">        self.data_dir = data_dir</span><br><span class="line">        self.segment_len = segment_len</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Load the mapping from speaker neme to their corresponding id. </span></span><br><span class="line">        mapping_path = Path(data_dir) / <span class="string">&quot;mapping.json&quot;</span></span><br><span class="line">        mapping = json.load(mapping_path.<span class="built_in">open</span>())</span><br><span class="line">        self.speaker2id = mapping[<span class="string">&quot;speaker2id&quot;</span>]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Load metadata of training data.</span></span><br><span class="line">        metadata_path = Path(data_dir) / <span class="string">&quot;metadata.json&quot;</span></span><br><span class="line">        metadata = json.load(<span class="built_in">open</span>(metadata_path))[<span class="string">&quot;speakers&quot;</span>]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Get the total number of speaker.</span></span><br><span class="line">        self.speaker_num = <span class="built_in">len</span>(metadata.keys())</span><br><span class="line">        self.data = []</span><br><span class="line">        <span class="keyword">for</span> speaker <span class="keyword">in</span> metadata.keys():</span><br><span class="line">            <span class="keyword">for</span> utterances <span class="keyword">in</span> metadata[speaker]:</span><br><span class="line">                self.data.append([utterances[<span class="string">&quot;feature_path&quot;</span>], self.speaker2id[speaker]])</span><br><span class="line">                <span class="comment"># self.data内存放训练数据的地址和标签。</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(self.data)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span>(<span class="params">self, index</span>):</span></span><br><span class="line">        feat_path, speaker = self.data[index]</span><br><span class="line">        <span class="comment"># Load preprocessed mel-spectrogram.</span></span><br><span class="line">        mel = torch.load(os.path.join(self.data_dir, feat_path))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Segmemt mel-spectrogram into &quot;segment_len&quot; frames.</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(mel) &gt; self.segment_len:</span><br><span class="line">          <span class="comment"># Randomly get the starting point of the segment.</span></span><br><span class="line">            start = random.randint(<span class="number">0</span>, <span class="built_in">len</span>(mel) - self.segment_len)</span><br><span class="line">          <span class="comment"># Get a segment with &quot;segment_len&quot; frames.</span></span><br><span class="line">            mel = torch.FloatTensor(mel[start:start+self.segment_len])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            mel = torch.FloatTensor(mel)</span><br><span class="line">    <span class="comment"># Turn the speaker id into long for computing loss later.</span></span><br><span class="line">        speaker = torch.FloatTensor([speaker]).long()</span><br><span class="line">        <span class="keyword">return</span> mel, speaker</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_speaker_number</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.speaker_num</span><br></pre></td></tr></table></figure>
@@ -362,18 +326,17 @@ Markdown里Note的使用方法
   <entry>
     <title>没有代码的题解们</title>
     <url>/2021/11/03/%E6%B2%A1%E6%9C%89%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A2%98%E8%A7%A3%E4%BB%AC/</url>
-    <content><![CDATA[<center>
-一些题目的思路
+    <content><![CDATA[<center> 一些题目的思路
 </center>
+
 <span id="more"></span>
-<h3 id="cf980d-perfect-groups">CF980D Perfect Groups</h3>
-<p><strong>分类：</strong></p>
+<h3 id="CF980D-Perfect-Groups"><a href="#CF980D-Perfect-Groups" class="headerlink" title="CF980D Perfect Groups"></a>CF980D Perfect Groups</h3><p><strong>分类：</strong></p>
 <p>[数学，思维]</p>
 <p><strong>题意：</strong></p>
-<p><img src="https://i.loli.net/2021/11/03/ipqUDS7CvhPxYVm.png" /></p>
+<p><img src="https://i.loli.net/2021/11/03/ipqUDS7CvhPxYVm.png" alt=""></p>
 <p><strong>思路：</strong></p>
 <p>首先想到，往一个组内添加一个新元素会有什么性质。</p>
-<p>假设组内原有数中有<span class="math inline">\(a\)</span>和<span class="math inline">\(b\)</span>，并且有<span class="math inline">\(a\times b=k_1^2\)</span>，对于新考虑的数<span class="math inline">\(c\)</span>，<span class="math inline">\(c\)</span>跟<span class="math inline">\(b\)</span>的关系是<span class="math inline">\(b\times c=k_2^2\)</span>，那么可以得到<span class="math inline">\(a\times c=\frac{b^2}{k_1^2\times k_2^2}\)</span>，即<span class="math inline">\(a\)</span>和<span class="math inline">\(c\)</span>相乘也是平方数。</p>
+<p>假设组内原有数中有$a$和$b$，并且有$a\times b=k_1^2$，对于新考虑的数$c$，$c$跟$b$的关系是$b\times c=k_2^2$，那么可以得到$a\times c=\frac{b^2}{k_1^2\times k_2^2}$，即$a$和$c$相乘也是平方数。</p>
 <p>于是对于一个连续的序列，我们直接用一个并查集维护连通块即可。</p>
 <p>中间会有一些细节，比如0.</p>
 ]]></content>
@@ -391,424 +354,409 @@ Markdown里Note的使用方法
     <content><![CDATA[<p>离散数学——代数系统</p>
 <span id="more"></span>
 <p>[TOC]</p>
-<h3 id="代数系统">代数系统</h3>
-<h4 id="二元运算及其性质">二元运算及其性质</h4>
-<blockquote>
-<p><strong>定义</strong> <strong>设<span class="math inline">\(S\)</span>是一个非空集合，映射<span class="math inline">\(f:S^n\rightarrow S\)</span>称为<span class="math inline">\(S\)</span>上的一个n元运算。</strong></p>
+<h3 id="代数系统"><a href="#代数系统" class="headerlink" title="代数系统"></a>代数系统</h3><h4 id="二元运算及其性质"><a href="#二元运算及其性质" class="headerlink" title="二元运算及其性质"></a>二元运算及其性质</h4><blockquote>
+<p> <strong>定义</strong>  <strong>设$S$是一个非空集合，映射$f:S^n\rightarrow S$称为$S$上的一个n元运算。</strong></p>
 </blockquote>
 <p>n元运算可以看作n+1元关系。</p>
 <blockquote>
 <p><strong>定义</strong></p>
-<p><strong>设"<span class="math inline">\(\cdot\)</span>"是定义在集合<span class="math inline">\(S\)</span>上的二元运算，如果</strong></p>
+<p><strong>设”$\cdot$”是定义在集合$S$上的二元运算，如果</strong></p>
 <ul>
-<li><span class="math inline">\(\forall x, y \in S\)</span>, <span class="math inline">\(x\cdot y \in S\)</span>,则称"<span class="math inline">\(\cdot\)</span>"在S上是<strong>封闭的</strong></li>
-<li><span class="math inline">\(\forall x, y\in S\)</span>, <span class="math inline">\(x\cdot y=y\cdot x\)</span>,则称"<span class="math inline">\(\cdot\)</span>"在S上是<strong>可交换的</strong></li>
-<li><span class="math inline">\(\forall x, y, z\in S\)</span>, <span class="math inline">\(x\cdot (y\cdot z)=(x\cdot y)\cdot z\)</span>,则称"<span class="math inline">\(\cdot\)</span>"在S上是<strong>可结合的</strong></li>
-<li><span class="math inline">\(\forall x\in S\)</span>, <span class="math inline">\(x\cdot x=x\)</span>,则称"<span class="math inline">\(\cdot\)</span>"是<strong>幂等的</strong>。</li>
+<li>$\forall x, y \in S$, $x\cdot y \in S$,则称”$\cdot$”在S上是<strong>封闭的</strong></li>
+<li>$\forall x, y\in S$, $x\cdot y=y\cdot x$,则称”$\cdot$”在S上是<strong>可交换的</strong></li>
+<li>$\forall x, y, z\in S$, $x\cdot (y\cdot z)=(x\cdot y)\cdot z$,则称”$\cdot$”在S上是<strong>可结合的</strong></li>
+<li>$\forall x\in S$, $x\cdot x=x$,则称”$\cdot$”是<strong>幂等的</strong>。</li>
 </ul>
-</blockquote>
-<blockquote>
 <p><strong>定义</strong></p>
-<p><strong>设<span class="math inline">\(\cdot\)</span>和<span class="math inline">\(*\)</span>是同时定义在<span class="math inline">\(S\)</span>上的两个二元运算。如果</strong></p>
+<p><strong>设$\cdot$和$*$是同时定义在$S$上的两个二元运算。如果</strong></p>
 <ul>
-<li><span class="math inline">\(\forall x, y, z\in S, x*(y\cdot z)=(x*y)\cdot(x*z)且(y\cdot z)*x=(y*x)\cdot(z*x)\)</span>，则称运算*关于<strong>·</strong>是<strong>可分配的</strong>。</li>
-<li>*和<span class="math inline">\(\cdot\)</span> 是可换运算，且<span class="math inline">\(\forall x, y\in S, x*(x\cdot y)=x及x\cdot(x*y)=x\)</span>，则称运算*和<strong>·</strong>满足<strong>吸收律</strong></li>
+<li>$\forall x, y, z\in S, x<em>(y\cdot z)=(x</em>y)\cdot(x<em>z)且(y\cdot z)</em>x=(y<em>x)\cdot(z</em>x)$，则称运算*关于<strong>·</strong>是<strong>可分配的</strong>。</li>
+<li>*和$\cdot$ 是可换运算，且$\forall x, y\in S, x<em>(x\cdot y)=x及x\cdot(x</em>y)=x$，则称运算*和<strong>·</strong>满足<strong>吸收律</strong></li>
 </ul>
 </blockquote>
-<h4 id="代数系统的定义与特异元">代数系统的定义与特异元</h4>
-<blockquote>
-<p><strong>定义</strong> <strong>一个==非空集合==S连同若干个定义在S上的运算<span class="math inline">\(f_1, f_2, ...,f_k\)</span>所组成的系统称为一个==代数系统==，记为<span class="math inline">\(&lt;S,f_1,f_2,...,f_k&gt;\)</span></strong></p>
+<h4 id="代数系统的定义与特异元"><a href="#代数系统的定义与特异元" class="headerlink" title="代数系统的定义与特异元"></a>代数系统的定义与特异元</h4><blockquote>
+<p><strong>定义</strong>     <strong>一个==非空集合==S连同若干个定义在S上的运算$f_1, f_2, …,f_k$所组成的系统称为一个==代数系统==，记为$<S,f_1,f_2,...,f_k>$</strong></p>
 </blockquote>
 <ul>
 <li><p>判断集合S及其上的代数运算是否是代数系统的关键是</p>
-<ol type="1">
-<li><p>集合S<strong>非空</strong></p></li>
-<li><p>这些运算是否满足<strong>封闭性</strong></p></li>
-</ol></li>
+<ol>
+<li><p>集合S<strong>非空</strong></p>
+</li>
+<li><p>这些运算是否满足<strong>封闭性</strong></p>
+</li>
+</ol>
+</li>
 </ul>
 <blockquote>
 <p><strong>定义</strong></p>
-<p><strong>设<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是一个代数系统，则</strong></p>
+<p><strong>设$<S, \cdot>$是一个代数系统，则</strong></p>
 <ul>
-<li><strong>如果<span class="math inline">\(\exist e\in S\)</span>使<span class="math inline">\(\forall x\in S, e\cdot x=x\cdot e=x\)</span>，则称e为代数系统的==幺元（单位元）==</strong></li>
-<li><strong>如果存在<span class="math inline">\(\theta \in S\)</span>，使<span class="math inline">\(\forall x\in S, \theta \cdot x=x\cdot \theta=\theta\)</span>，则称<span class="math inline">\(\theta\)</span>为代数系统的==零元==</strong></li>
-<li><strong><span class="math inline">\(a\in S\)</span>，如果<span class="math inline">\(a\cdot a=a\)</span>，则称<span class="math inline">\(a\)</span>时系统的==幂等元==</strong></li>
+<li><strong>如果$\exist e\in S$使$\forall x\in S, e\cdot x=x\cdot e=x$，则称e为代数系统的==幺元（单位元）==</strong></li>
+<li><strong>如果存在$\theta \in S$，使$\forall x\in S, \theta \cdot x=x\cdot \theta=\theta$，则称$\theta$为代数系统的==零元==</strong></li>
+<li><strong>$a\in S$，如果$a\cdot a=a$，则称$a$时系统的==幂等元==</strong></li>
 </ul>
-</blockquote>
-<blockquote>
-<p><strong>定义</strong> <strong>设在代数系统$&lt;S, $<span class="math inline">\(~~\cdot~\)</span>&gt;中，<span class="math inline">\(e\)</span>是幺元，<span class="math inline">\(a\)</span>是S中的一个元素。如果存在<span class="math inline">\(b\in S\)</span>使得<span class="math inline">\(a\cdot b=b\cdot a=e\)</span>，则称<span class="math inline">\(b\)</span>是<span class="math inline">\(a\)</span>的==逆元==，记为<span class="math inline">\(b=a^{-1}\)</span></strong></p>
+<p><strong>定义</strong>   <strong>设在代数系统$<S, $$~~\cdot~$>中，$e$是幺元，$a$是S中的一个元素。如果存在$b\in S$使得$a\cdot b=b\cdot a=e$，则称$b$是$a$的==逆元==，记为$b=a^{-1}$</strong></p>
 </blockquote>
 <p>在一个代数系统中，不是每个元都存在着逆元。</p>
 <blockquote>
-<p><strong>定理</strong> <strong>设<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是一个代数系统。如果存在幺元，则幺元是==唯一的==；如果存在零元，则零元是==唯一的==；如果元a有逆元，且"<span class="math inline">\(~\cdot~\)</span>"==可结合==，则逆元是==唯一的==。</strong></p>
+<p><strong>定理</strong>   <strong>设$<S, \cdot>$是一个代数系统。如果存在幺元，则幺元是==唯一的==；如果存在零元，则零元是==唯一的==；如果元a有逆元，且”$~\cdot~$”==可结合==，则逆元是==唯一的==。</strong></p>
 </blockquote>
 <p>证明：反证法即可（设不唯一）。</p>
 <p>根据运算满足的条件，可以把含单个二元运算的代数系统进行分层。</p>
 <blockquote>
 <p><strong>定义</strong></p>
-<p><strong>设<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是一个代数系统，则</strong></p>
+<p><strong>设$<S, \cdot>$是一个代数系统，则</strong></p>
 <ul>
-<li><strong>当"<span class="math inline">\(\cdot\)</span>"是封闭的，称<span class="math inline">\(&lt;S, \cdot&gt;\)</span>为==广群==</strong></li>
-<li><strong>如果<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是广群，且"<span class="math inline">\(\cdot\)</span>"是==可结合运算==，则称<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是==半群==</strong></li>
-<li><strong>如果<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是半群，且存在幺元，则称<span class="math inline">\(&lt;S, \cdot&gt;\)</span>为==含幺半群==</strong></li>
-<li><strong>如果<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是含幺半群，且每个元素都有逆元，则称<span class="math inline">\(&lt;S, \cdot&gt;\)</span>为==群==</strong></li>
+<li><strong>当”$\cdot$”是封闭的，称$<S, \cdot>$为==广群==</strong></li>
+<li><strong>如果$<S, \cdot>$是广群，且”$\cdot$”是==可结合运算==，则称$<S, \cdot>$是==半群==</strong></li>
+<li><strong>如果$<S, \cdot>$是半群，且存在幺元，则称$<S, \cdot>$为==含幺半群==</strong></li>
+<li><strong>如果$<S, \cdot>$是含幺半群，且每个元素都有逆元，则称$<S, \cdot>$为==群==</strong></li>
 </ul>
 </blockquote>
 <p>群的条件：闭，结，幺，逆</p>
 <p>（没必要在代数系统是否要求有封闭性上花费太大心思，不同教材不同，在这里要求代数系统要有封闭性）</p>
-<h3 id="半群与群">半群与群</h3>
-<h4 id="半群">半群</h4>
-<p>例：</p>
+<h3 id="半群与群"><a href="#半群与群" class="headerlink" title="半群与群"></a>半群与群</h3><h4 id="半群"><a href="#半群" class="headerlink" title="半群"></a>半群</h4><p>例：</p>
 <ul>
-<li><span class="math inline">\(&lt;S, \cdot&gt;\)</span>满足封闭、可结合、有幺元0，所以是含幺半群。还满足可换性，每个元都有逆元，因此也是<strong>可换群</strong></li>
+<li>$<S, \cdot>$满足封闭、可结合、有幺元0，所以是含幺半群。还满足可换性，每个元都有逆元，因此也是<strong>可换群</strong></li>
 </ul>
-<p>​ <span class="math inline">\(&lt;S, \times&gt;\)</span>满足封闭、可结合、有幺元1，因此是含幺半群。但0无逆元，所以不是群。</p>
+<p>​        $<S, \times>$满足封闭、可结合、有幺元1，因此是含幺半群。但0无逆元，所以不是群。</p>
 <blockquote>
-<p><strong>定义</strong></p>
-<p><strong>设<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是半群，<span class="math inline">\(a\in S\)</span>，n是正整数，约定符号<span class="math inline">\(a^n\)</span>表示n个a在运算"<span class="math inline">\(\cdot\)</span>"下的结果，可递归定义如下：</strong></p>
-<ol type="1">
-<li><strong><span class="math inline">\(a^1=a\)</span></strong></li>
-<li><strong><span class="math inline">\(a^{n+1}=a^n\cdot a\)</span></strong></li>
+<p><strong>定义</strong>   </p>
+<p><strong>设$<S, \cdot>$是半群，$a\in S$，n是正整数，约定符号$a^n$表示n个a在运算”$\cdot$”下的结果，可递归定义如下：</strong></p>
+<ol>
+<li><strong>$a^1=a$</strong></li>
+<li><strong>$a^{n+1}=a^n\cdot a$</strong></li>
 </ol>
-<p><strong>当<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是含幺半群，e是幺元时，可以把归纳基础改为<span class="math inline">\(a^0=e\)</span></strong></p>
-</blockquote>
-<blockquote>
+<p><strong>当$<S, \cdot>$是含幺半群，e是幺元时，可以把归纳基础改为$a^0=e$</strong></p>
 <p><strong>定理</strong></p>
-<p><strong>设<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是半群，<span class="math inline">\(a\in S\)</span>，m和m是正整数，则</strong></p>
-<ol type="1">
-<li><strong><span class="math inline">\(a^m\cdot a^n=a^{n+m}\)</span></strong></li>
-<li><strong><span class="math inline">\((a^m)^n=a^{mn}\)</span></strong></li>
+<p><strong>设$<S, \cdot>$是半群，$a\in S$，m和m是正整数，则</strong></p>
+<ol>
+<li><strong>$a^m\cdot a^n=a^{n+m}$</strong></li>
+<li><strong>$(a^m)^n=a^{mn}$</strong></li>
 </ol>
-<p><strong>当<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是含幺半群时，上述结论对任意非负整数m和n都成立</strong></p>
-</blockquote>
-<blockquote>
+<p><strong>当$<S, \cdot>$是含幺半群时，上述结论对任意非负整数m和n都成立</strong></p>
 <p><strong>定理</strong></p>
-<p><strong>设<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是一个半群，如果S是==有限集==，则必有<span class="math inline">\(a\in S\)</span>使得<span class="math inline">\(a^2=a\)</span>。</strong></p>
+<p><strong>设$<S, \cdot>$是一个半群，如果S是==有限集==，则必有$a\in S$使得$a^2=a$。</strong></p>
 </blockquote>
-<p>证明:</p>
-<p>任取<span class="math inline">\(b\in S\)</span>，因为S是有限集，则元素<span class="math inline">\(b^1, b^2,...\)</span>中必定有两个一样的，设为<span class="math inline">\(b^i, b^j\)</span>，设<span class="math inline">\(i&lt;j\)</span>，所以<span class="math inline">\(b^i=b^{j-i}\cdot b^i\)</span>，所以对于任意的<span class="math inline">\(t \ge i\)</span>，都有<span class="math inline">\(b^t=b^{j-i}\cdot b^t\)</span>，反复迭代可以得到<span class="math inline">\(b^t=b^{k(j-i)}\cdot b^t\)</span>，取<span class="math inline">\(k\)</span>使得<span class="math inline">\(k(j-i)\ge i\)</span>，同时令<span class="math inline">\(t=k(j-i)\)</span>，则<span class="math inline">\(b^t\)</span>是幂等元。</p>
+<p>证明: </p>
+<p>任取$b\in S$，因为S是有限集，则元素$b^1, b^2,…$中必定有两个一样的，设为$b^i, b^j$，设$i&lt;j$，所以$b^i=b^{j-i}\cdot b^i$，所以对于任意的$t \ge i$，都有$b^t=b^{j-i}\cdot b^t$，反复迭代可以得到$b^t=b^{k(j-i)}\cdot b^t$，取$k$使得$k(j-i)\ge i$，同时令$t=k(j-i)$，则$b^t$是幂等元。</p>
 <p>含幺半群至少有一个幂等元，即幺元。</p>
 <blockquote>
 <p><strong>定义</strong></p>
-<p><strong>设<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是一个半群，==非空集合==<span class="math inline">\(A \subseteq S\)</span>，并且<span class="math inline">\(&lt;A, \cdot&gt;\)</span>也是半群，则称<span class="math inline">\(&lt;A, \cdot&gt;\)</span>是<span class="math inline">\(&lt;S, \cdot&gt;\)</span>的==子半群==</strong>。</p>
-<p><strong>设<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是一个含幺半群，==非空集合==<span class="math inline">\(A \subseteq S\)</span>，并且<span class="math inline">\(&lt;A, \cdot&gt;\)</span>也是含幺半群，则称<span class="math inline">\(&lt;A, \cdot&gt;\)</span>是<span class="math inline">\(&lt;S, \cdot&gt;\)</span>的==含幺子半群==</strong>。</p>
+<p><strong>设$<S, \cdot>$是一个半群，==非空集合==$A \subseteq S$，并且$<A, \cdot>$也是半群，则称$<A, \cdot>$是$<S, \cdot>$的==子半群==</strong>。</p>
+<p><strong>设$<S, \cdot>$是一个含幺半群，==非空集合==$A \subseteq S$，并且$<A, \cdot>$也是含幺半群，则称$<A, \cdot>$是$<S, \cdot>$的==含幺子半群==</strong>。</p>
 </blockquote>
-<p>要证明<span class="math inline">\(&lt;A, \cdot&gt;\)</span>是半群<span class="math inline">\(&lt;S, \cdot&gt;\)</span>的子半群时，只需证明<span class="math inline">\(A\)</span>非空，<span class="math inline">\(A\subseteq S\)</span>并且运算"<span class="math inline">\(\cdot\)</span>"在集合A内是封闭的。</p>
-<h4 id="群和子群">群和子群</h4>
-<p>例：</p>
+<p>要证明$<A, \cdot>$是半群$<S, \cdot>$的子半群时，只需证明$A$非空，$A\subseteq S$并且运算”$\cdot$”在集合A内是封闭的。</p>
+<h4 id="群和子群"><a href="#群和子群" class="headerlink" title="群和子群"></a>群和子群</h4><p>例：</p>
 <ul>
-<li><span class="math inline">\(&lt;Z,+&gt;\)</span>整数加群，<span class="math inline">\(&lt;R,+&gt;\)</span>实数加群，<span class="math inline">\(&lt;Q,+&gt;\)</span>有理数加群。</li>
+<li>$<Z,+>$整数加群，$<R,+>$实数加群，$<Q,+>$有理数加群。</li>
 </ul>
-<p>​ <span class="math inline">\(&lt;Z,\times&gt;\)</span>不是群，<span class="math inline">\(&lt;R-\{0\},\times&gt;\)</span>是实数乘群。</p>
+<p>​        $<Z,\times>$不是群，$<R-\{0\},\times>$是实数乘群。</p>
 <ul>
-<li><p>设<span class="math inline">\(Z_k\)</span>表示整数集Z上的模k剩余类集合，即<span class="math inline">\(Z_k=\{[0],[1],[2],..,[k-1]\}\)</span></p>
-<p><span class="math inline">\(&lt;Z_k,\bigoplus&gt;\)</span>是<strong>剩余类加群</strong>，[0]是幺元， 每元[i]的逆元是[k-i]</p>
-<p><span class="math inline">\(&lt;Z_k,\bigotimes&gt;\)</span>不是群，因为[0]无逆元。</p>
-<p>而<span class="math inline">\(&lt;Z_k-\{[0]\},\bigotimes&gt;\)</span>，也<strong>不一定</strong>是群。如<span class="math inline">\(&lt;Z_4-\{[0]\}，\bigotimes&gt;\)</span>不是群（不封闭），但<span class="math inline">\(&lt;Z_5-\{[0]\}，\bigotimes&gt;\)</span>是群。</p>
-<p>当k是<strong>素数</strong>的时候，<span class="math inline">\(&lt;Z_k-\{[0]\},\bigotimes&gt;\)</span>一定是群。</p></li>
-<li><p>设n个元素的集合A上的全体置换构成集合<span class="math inline">\(S_n\)</span>。则<span class="math inline">\(&lt;S_n,\circ&gt;\)</span>构成群，称为<strong>n次对称群</strong></p></li>
+<li><p>设$Z_k$表示整数集Z上的模k剩余类集合，即$Z_k=\{[0],[1],[2],..,[k-1]\}$</p>
+<p>$<Z_k,\bigoplus>$是<strong>剩余类加群</strong>，[0]是幺元， 每元[i]的逆元是[k-i]</p>
+<p>$<Z_k,\bigotimes>$不是群，因为[0]无逆元。</p>
+<p>而$<Z_k-\{[0]\},\bigotimes>$，也<strong>不一定</strong>是群。如$<Z_4-\{[0]\}，\bigotimes>$不是群（不封闭），但$<Z_5-\{[0]\}，\bigotimes>$是群。</p>
+<p>当k是<strong>素数</strong>的时候，$<Z_k-\{[0]\},\bigotimes>$一定是群。</p>
+</li>
+<li><p>设n个元素的集合A上的全体置换构成集合$S_n$。则$<S_n,\circ>$构成群，称为<strong>n次对称群</strong></p>
+</li>
 </ul>
 <p>==群中元素的个数称为群的阶==</p>
 <p>群也可以用别的形式等价定义</p>
 <blockquote>
 <p><strong>定理</strong></p>
-<p><strong>如果<span class="math inline">\(&lt;G, \cdot&gt;\)</span>是==半群==，并且对于任意<span class="math inline">\(a, b\in G\)</span>，都存在<span class="math inline">\(x, y\in G\)</span>，使<span class="math inline">\(x\cdot a=b,a\cdot y=b\)</span>，则<span class="math inline">\(&lt;G,\cdot&gt;\)</span>是群。</strong></p>
+<p><strong>如果$<G, \cdot>$是==半群==，并且对于任意$a, b\in G$，都存在$x, y\in G$，使$x\cdot a=b,a\cdot y=b$，则$<G,\cdot>$是群。</strong></p>
 </blockquote>
 <p>证明：先证明有幺元，再证明每元都有逆。</p>
-<ol type="1">
-<li><p>设<span class="math inline">\(a\in G\)</span>，方程<span class="math inline">\(x\cdot a=a\)</span>的解为<span class="math inline">\(e_1\)</span>，那么对于任何<span class="math inline">\(t\in G\)</span>，都有<span class="math inline">\(e_1\cdot t=t\)</span></p>
-<p>证明：设方程<span class="math inline">\(a\cdot y=t\)</span>的解为<span class="math inline">\(y_0\)</span></p>
-<p>​ 于是有<span class="math inline">\(e_1\cdot t=e_1\cdot (a\cdot y_0)=(e_1\cdot a)\cdot y_0=a\cdot y_0=t\)</span></p>
-<p>所以<span class="math inline">\(e_1\)</span>是<span class="math inline">\(G\)</span>中的左幺元，同理<span class="math inline">\(G\)</span>中的右幺元是<span class="math inline">\(e_2\)</span></p>
-<p>所以<span class="math inline">\(G\)</span>中有幺元<span class="math inline">\(e\)</span>。（一个代数系统中幺元是唯一的）</p></li>
-<li><p>同理，对任意<span class="math inline">\(b\in G\)</span>，方程<span class="math inline">\(x\cdot b=e\)</span>有解<span class="math inline">\(x_0\)</span>， 则<span class="math inline">\(x_0\)</span>是b的左逆元。</p>
-<p><span class="math inline">\(b\cdot y=t\)</span>有解<span class="math inline">\(y_0\)</span>，是b的右逆元。从而b有逆元。（可结合的运算的代数系统每元的逆是唯一的）</p></li>
+<ol>
+<li><p>设$a\in G$，方程$x\cdot a=a$的解为$e_1$，那么对于任何$t\in G$，都有$e_1\cdot t=t$</p>
+<p>证明：设方程$a\cdot y=t$的解为$y_0$</p>
+<p>​        于是有$e_1\cdot t=e_1\cdot (a\cdot y_0)=(e_1\cdot a)\cdot y_0=a\cdot y_0=t$</p>
+<p>所以$e_1$是$G$中的左幺元，同理$G$中的右幺元是$e_2$</p>
+<p>所以$G$中有幺元$e$。（一个代数系统中幺元是唯一的）</p>
+</li>
+<li><p>同理，对任意$b\in G$，方程$x\cdot b=e$有解$x_0$， 则$x_0$是b的左逆元。</p>
+<p>$b\cdot y=t$有解$y_0$，是b的右逆元。从而b有逆元。（可结合的运算的代数系统每元的逆是唯一的）</p>
+</li>
 </ol>
 <p>这个定理说明：在群的定义中，幺元的条件可以用存在左幺元（或右幺元）替代，逆元的条件可以用存在左逆元（右逆元）替代。</p>
 <blockquote>
-<p><strong>定理</strong> <strong>在群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>中==消去律成立==，即如果<span class="math inline">\(a\cdot b=a\cdot c\)</span>，必有<span class="math inline">\(b=c\)</span></strong></p>
+<p><strong>定理</strong>     <strong>在群$<G, \cdot>$中==消去律成立==，即如果$a\cdot b=a\cdot c$，必有$b=c$</strong></p>
 </blockquote>
-<p>证明：<span class="math inline">\(a^{-1}\cdot a\cdot b=a^{-1}\cdot a\cdot c\\b=c\)</span></p>
+<p>证明：$a^{-1}\cdot a\cdot b=a^{-1}\cdot a\cdot c\\b=c$</p>
 <blockquote>
-<p><strong>推论</strong>1 <strong>群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的运算表中每行和每列都没有重复元素</strong></p>
-<p><strong>推论</strong>2 <strong>群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>除幺元外无其他幂等元</strong></p>
-</blockquote>
-<blockquote>
-<p><strong>定理</strong> 设<span class="math inline">\(&lt;G, \cdot&gt;\)</span>是群，<span class="math inline">\(a\in G\)</span>，构造映射<span class="math inline">\(\varphi_a:G\to G\)</span>，使得对任意<span class="math inline">\(x\in G\)</span>，<span class="math inline">\(\varphi _a(x)=a\cdot x\)</span>，令<span class="math inline">\(H = \{\varphi _a|a \in G\}\)</span>，则对于函数的复合运算"<span class="math inline">\(\circ\)</span>"，<span class="math inline">\(&lt;H,\circ&gt;\)</span>是群。</p>
+<p><strong>推论</strong>1   <strong>群$<G, \cdot>$的运算表中每行和每列都没有重复元素</strong></p>
+<p><strong>推论</strong>2   <strong>群$<G, \cdot>$除幺元外无其他幂等元</strong></p>
+<p><strong>定理</strong>    设$<G, \cdot>$是群，$a\in G$，构造映射$\varphi_a:G\to G$，使得对任意$x\in G$，$\varphi _a(x)=a\cdot x$，令$H = \{\varphi _a|a \in G\}$，则对于函数的复合运算”$\circ$”，$<H,\circ>$是群。</p>
 </blockquote>
 <p>按闭结幺逆证明即可。</p>
 <blockquote>
 <p><strong>定义</strong></p>
-<p><strong>设<span class="math inline">\(&lt;G, \cdot&gt;\)</span>是群，<span class="math inline">\(S\)</span>是<span class="math inline">\(G\)</span>的==非空子集==。如果<span class="math inline">\(&lt;G, \cdot&gt;\)</span>也是群，则称<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的子群。</strong></p>
+<p><strong>设$<G, \cdot>$是群，$S$是$G$的==非空子集==。如果$<G, \cdot>$也是群，则称$<S, \cdot>$是$<G, \cdot>$的子群。</strong></p>
 </blockquote>
-<p>任意群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>都有两个天然子群，即它本身和幺元子群<span class="math inline">\(&lt;\{e\},\cdot&gt;\)</span>，被称为平凡子群，其他情况的子群称为真子群。</p>
-<p>此外，由群中一个元素，也可生成一个子群，为此，需要把群中元素的幂扩充到负指数的情形，即定义<span class="math inline">\(a^{-k}=(a^k)^{-1}\)</span></p>
+<p>任意群$<G, \cdot>$都有两个天然子群，即它本身和幺元子群$&lt;\{e\},\cdot&gt;$，被称为平凡子群，其他情况的子群称为真子群。</p>
+<p>此外，由群中一个元素，也可生成一个子群，为此，需要把群中元素的幂扩充到负指数的情形，即定义$a^{-k}=(a^k)^{-1}$</p>
 <blockquote>
 <p><strong>定理</strong></p>
-<p>设<span class="math inline">\(&lt;G, \cdot&gt;\)</span>是群，<span class="math inline">\(\forall x\in G\)</span>，记<span class="math inline">\(S=\{a^n|n\in Z\}\)</span>，则<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的子群。</p>
+<p>设$<G, \cdot>$是群，$\forall x\in G$，记$S=\{a^n|n\in Z\}$，则$<S, \cdot>$是$<G, \cdot>$的子群。</p>
 </blockquote>
-<p>把由群的一个元素<span class="math inline">\(a\)</span>生成的子群记为<span class="math inline">\((a)\)</span></p>
+<p>把由群的一个元素$a$生成的子群记为$(a)$</p>
 <blockquote>
-<p><strong>定理</strong> <strong>子群的幺元与群的幺元相同；对任意<span class="math inline">\(a\in S\)</span>，<span class="math inline">\(a\)</span>在<span class="math inline">\(S\)</span>中的逆元就是<span class="math inline">\(a\)</span>在<span class="math inline">\(G\)</span>中的逆元</strong></p>
+<p><strong>定理</strong>    <strong>子群的幺元与群的幺元相同；对任意$a\in S$，$a$在$S$中的逆元就是$a$在$G$中的逆元</strong></p>
 </blockquote>
 <p>判别子群的方法：</p>
 <blockquote>
-<p><strong>定理 设<span class="math inline">\(&lt;G, \cdot&gt;\)</span>是群，<span class="math inline">\(S\)</span>是<span class="math inline">\(G\)</span>的==非空子集==。<span class="math inline">\(&lt;S,\cdot&gt;\)</span>是<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的子群，当且仅当对于任何<span class="math inline">\(a, b\in S\)</span>，<span class="math inline">\(a\cdot b^{-1}\in S\)</span></strong></p>
+<p><strong>定理    设$<G, \cdot>$是群，$S$是$G$的==非空子集==。$<S,\cdot>$是$<G, \cdot>$的子群，当且仅当对于任何$a, b\in S$，$a\cdot b^{-1}\in S$</strong></p>
 </blockquote>
 <p>证明：</p>
-<ol type="1">
-<li><p>充分性：显然（闭，结，幺，逆）</p></li>
+<ol>
+<li><p>充分性：显然（闭，结，幺，逆）</p>
+</li>
 <li><p>必要性：</p>
-<p>当<span class="math inline">\(a=b\)</span>时，由题意知<span class="math inline">\(a\cdot a^{-1}=e\in S\)</span>，所以S中存在幺元。</p>
-<p>令<span class="math inline">\(a=e\)</span>，那么当<span class="math inline">\(b\in S\)</span>时，必有<span class="math inline">\(e\cdot b^{-1}=b^{-1}\in S\)</span>，所以S中每元都有逆。</p>
-<p>当<span class="math inline">\(a,b\in S\)</span>时，由于<span class="math inline">\(b^{-1}\in S\)</span>，就有<span class="math inline">\(a\cdot b = a\cdot (b^{-1})^{-1} \in S\)</span>，所以满足封闭性。</p></li>
+<p>当$a=b$时，由题意知$a\cdot a^{-1}=e\in S$，所以S中存在幺元。</p>
+<p>令$a=e$，那么当$b\in S$时，必有$e\cdot b^{-1}=b^{-1}\in S$，所以S中每元都有逆。</p>
+<p>当$a,b\in S$时，由于$b^{-1}\in S$，就有$a\cdot b = a\cdot (b^{-1})^{-1} \in S$，所以满足封闭性。</p>
+</li>
 </ol>
-<p>可以证明：当<span class="math inline">\(G\)</span>是有限集的时候，判别<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是否是<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的子群，只判别在<span class="math inline">\(S\)</span>中是否封闭就行了。</p>
-<h4 id="交换群和循环群">交换群和循环群</h4>
-<blockquote>
-<p><strong>定义</strong> <strong>如果群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的运算==满足交换率==，则称群<span class="math inline">\(G\)</span>为==交换群（Abel群）==。</strong></p>
+<p>可以证明：当$G$是有限集的时候，判别$<S, \cdot>$是否是$<G, \cdot>$的子群，只判别在$S$中是否封闭就行了。</p>
+<h4 id="交换群和循环群"><a href="#交换群和循环群" class="headerlink" title="交换群和循环群"></a>交换群和循环群</h4><blockquote>
+<p><strong>定义</strong>    <strong>如果群$<G, \cdot>$的运算==满足交换率==，则称群$G$为==交换群（Abel群）==。</strong></p>
 </blockquote>
 <p>交换群又常被成为<strong>加群</strong></p>
 <blockquote>
-<p><strong>定理</strong> <strong>群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>为交换群的==充要条件==是：对任意<span class="math inline">\(a,b\in G\)</span>，<span class="math inline">\((a\cdot b)^2=a^2\cdot b^2\)</span></strong></p>
+<p><strong>定理</strong>    <strong>群$<G, \cdot>$为交换群的==充要条件==是：对任意$a,b\in G$，$(a\cdot b)^2=a^2\cdot b^2$</strong></p>
 </blockquote>
 <p>在交换群中，循环群有特殊地位</p>
 <p>（循环群都是交换群）</p>
 <blockquote>
-<p><strong>定义</strong> <strong>如果群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>中存在一个元<span class="math inline">\(a\)</span>，是的<span class="math inline">\(G\)</span>能由<span class="math inline">\(a\)</span>生成，即<span class="math inline">\(G=(a)\)</span>，则称<span class="math inline">\(G\)</span>为==循环群==，称<span class="math inline">\(a\)</span>是<span class="math inline">\(G\)</span>的一个==生成元==。</strong></p>
+<p><strong>定义</strong>    <strong>如果群$<G, \cdot>$中存在一个元$a$，是的$G$能由$a$生成，即$G=(a)$，则称$G$为==循环群==，称$a$是$G$的一个==生成元==。</strong></p>
 </blockquote>
-<p><span class="math inline">\(G = \{a^k|k \in G\}\)</span></p>
+<p>$G = \{a^k|k \in G\}$</p>
 <blockquote>
-<p><strong>定义</strong> <strong>设<span class="math inline">\(&lt;G, \cdot&gt;\)</span>是群，<span class="math inline">\(a\in G\)</span>，使得<span class="math inline">\(a^n=e\)</span>的==最小正整数<span class="math inline">\(n\)</span>==为元素<span class="math inline">\(a\)</span>的周期。如果不存在这种最小正整数，则称<span class="math inline">\(a\)</span>的周期为<span class="math inline">\(\infty\)</span></strong></p>
-</blockquote>
-<blockquote>
+<p><strong>定义</strong>    <strong>设$<G, \cdot>$是群，$a\in G$，使得$a^n=e$的==最小正整数$n$==为元素$a$的周期。如果不存在这种最小正整数，则称$a$的周期为$\infty$</strong></p>
 <p><strong>定理</strong></p>
-<p><strong>设群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>中元素<span class="math inline">\(a\)</span>的周期为正整数<span class="math inline">\(n\)</span>，则：</strong></p>
+<p><strong>设群$<G, \cdot>$中元素$a$的周期为正整数$n$，则：</strong></p>
 <ul>
-<li><strong><span class="math inline">\(a^m=e\)</span>，当且仅当<span class="math inline">\(n|m\)</span></strong></li>
-<li><strong><span class="math inline">\(a^i=a^j\)</span>，当且仅当<span class="math inline">\(n|(i-j)\)</span></strong></li>
-<li><strong>由<span class="math inline">\(a\)</span>生成的子群恰好有n个元素。</strong></li>
+<li><strong>$a^m=e$，当且仅当$n|m$</strong></li>
+<li><strong>$a^i=a^j$，当且仅当$n|(i-j)$</strong></li>
+<li><strong>由$a$生成的子群恰好有n个元素。</strong></li>
 </ul>
 </blockquote>
 <p><strong>有限群的每个元素周期都是有限数。</strong></p>
 <p>循环群的任何子群都是循环群。</p>
-<h4 id="陪集与拉格朗日定理">陪集与拉格朗日定理</h4>
-<blockquote>
+<h4 id="陪集与拉格朗日定理"><a href="#陪集与拉格朗日定理" class="headerlink" title="陪集与拉格朗日定理"></a>陪集与拉格朗日定理</h4><blockquote>
 <p><strong>定义</strong></p>
-<p><strong>设<span class="math inline">\(&lt;H, \cdot&gt;\)</span>是群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的一个子群，<span class="math inline">\(a\in G\)</span>，记<span class="math inline">\(aH=\{a\cdot h|h\in H\}\)</span>，称<span class="math inline">\(aH\)</span>是<span class="math inline">\(H\)</span>在<span class="math inline">\(G\)</span>中关于元<span class="math inline">\(a\)</span>的==左陪集==。称<span class="math inline">\(Ha=\{h\cdot a|h\in H\}\)</span>是<span class="math inline">\(H\)</span>在<span class="math inline">\(G\)</span>中关于元<span class="math inline">\(a\)</span>的==右陪集==。由左（右）陪集构成的集合的基数称为==子群的指数==。</strong></p>
+<p><strong>设$<H, \cdot>$是群$<G, \cdot>$的一个子群，$a\in G$，记$aH=\{a\cdot h|h\in H\}$，称$aH$是$H$在$G$中关于元$a$的==左陪集==。称$Ha=\{h\cdot a|h\in H\}$是$H$在$G$中关于元$a$的==右陪集==。由左（右）陪集构成的集合的基数称为==子群的指数==。</strong></p>
 </blockquote>
-<p><span class="math inline">\(eH=He=H\)</span></p>
-<p><span class="math inline">\(\forall x \in G,a\in Ha\)</span></p>
+<p>$eH=He=H$</p>
+<p>$\forall x \in G,a\in Ha$</p>
 <ul>
-<li><p><span class="math inline">\(H\)</span>关于同一元素的左陪集和右陪集可能不相同</p></li>
+<li><p>$H$关于同一元素的左陪集和右陪集可能不相同</p>
+</li>
 <li><p>凡是同属某个左（右）陪集的元素，它们对应的左（右）陪集也相同</p>
 <blockquote>
-<p><strong>定理 设H是G的子群，<span class="math inline">\(a\in Hb \Leftrightarrow a\cdot b^{-1}\in H \Leftrightarrow Ha=Hb\)</span></strong></p>
+<p><strong>定理  设H是G的子群，$a\in Hb \Leftrightarrow a\cdot b^{-1}\in H \Leftrightarrow Ha=Hb$</strong></p>
 </blockquote>
 <p>证明：</p>
-<ol type="1">
-<li><p>先证明<span class="math inline">\(a\in Hb \Leftrightarrow a\cdot b^{-1}\in H\)</span></p>
-<ol type="1">
-<li><p><span class="math inline">\(a\in Hb,~\therefore a=h\cdot b(h\in H)\)</span></p>
-<p><span class="math inline">\(\therefore a\cdot b^{-1}=h\in H\)</span>（h有逆元）</p>
-<p><span class="math inline">\(\therefore a\in Hb \Rightarrow a\cdot b^{-1}\in H\)</span></p></li>
-<li><p><span class="math inline">\(a\cdot b^{-1}\in H\)</span></p>
-<p><span class="math inline">\(\therefore a\cdot b^{-1}=h\in H\)</span></p>
-<p><span class="math inline">\(\therefore a = h\cdot b\in Hb\)</span></p>
-<p><span class="math inline">\(\therefore a\cdot b^{-1}\in H \Rightarrow a\in Hb\)</span></p></li>
+<ol>
+<li><p>先证明$a\in Hb \Leftrightarrow a\cdot b^{-1}\in H$</p>
+<ol>
+<li><p>$a\in Hb,~\therefore a=h\cdot b(h\in H)$</p>
+<p>$\therefore a\cdot b^{-1}=h\in H$（h有逆元）</p>
+<p>$\therefore a\in Hb \Rightarrow a\cdot b^{-1}\in H$</p>
+</li>
+<li><p>$a\cdot b^{-1}\in H$</p>
+<p>$\therefore a\cdot b^{-1}=h\in H$</p>
+<p>$\therefore a = h\cdot b\in Hb$</p>
+<p>$\therefore a\cdot b^{-1}\in H \Rightarrow a\in Hb$</p>
+</li>
 </ol>
-<p>所以<span class="math inline">\(a\in Hb \Leftrightarrow a\cdot b^{-1}\in H\)</span></p></li>
-<li><p>再证明<span class="math inline">\(a\cdot b^{-1}\in H \Leftrightarrow Ha=Hb\)</span></p>
-<ol type="1">
-<li><p>证明<span class="math inline">\(a\cdot b^{-1}\in H \Rightarrow Ha=Hb\)</span></p>
-<ol type="1">
-<li><p><span class="math inline">\(\forall x\in Ha,x=h_1\cdot a(h_1 \in H)\)</span></p>
-<p>又<span class="math inline">\(a\cdot b^{-1}=h_2\in H\)</span></p>
-<p><span class="math inline">\(\therefore x=h_1\cdot h_2 \cdot b=(h_1\cdot h_2)\cdot b \in Hb\)</span></p>
-<p><span class="math inline">\(\therefore Ha \subseteq Hb\)</span></p></li>
-<li><p>类似可证明<span class="math inline">\(Hb\subseteq Ha\)</span></p></li>
+<p>所以$a\in Hb \Leftrightarrow a\cdot b^{-1}\in H$</p>
+</li>
+<li><p>再证明$a\cdot b^{-1}\in H \Leftrightarrow Ha=Hb$</p>
+<ol>
+<li><p>证明$a\cdot b^{-1}\in H \Rightarrow Ha=Hb$</p>
+<ol>
+<li><p>$\forall x\in Ha,x=h_1\cdot a(h_1 \in H)$</p>
+<p>又$a\cdot b^{-1}=h_2\in H$</p>
+<p>$\therefore x=h_1\cdot h_2 \cdot b=(h_1\cdot h_2)\cdot b \in Hb$</p>
+<p>$\therefore Ha \subseteq Hb$</p>
+</li>
+<li><p>类似可证明$Hb\subseteq Ha$</p>
+</li>
 </ol>
-<p><span class="math inline">\(\therefore Hb=Ha\)</span></p></li>
-<li><p>证明：$ Ha=Hbab^{-1}H $</p>
-<p>显然</p></li>
-</ol></li>
-</ol></li>
-<li><p>任何两个左（右）陪集要么相同，要么无公共元素</p></li>
-<li><p>所有左（右）陪集的元素数目相同</p></li>
+<p>$\therefore Hb=Ha$</p>
+</li>
+<li><p>证明：$ Ha=Hb\Rightarrow a\cdot b^{-1}\in H $</p>
+<p>显然</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>任何两个左（右）陪集要么相同，要么无公共元素</p>
+</li>
+<li><p>所有左（右）陪集的元素数目相同</p>
+</li>
 </ul>
 <blockquote>
 <p><strong>定理</strong></p>
-<p><strong>设<span class="math inline">\(H\)</span>是群<span class="math inline">\(G\)</span>的子群，<span class="math inline">\(a, b\in G\)</span>。在<span class="math inline">\(G\)</span>中建立二元关系<span class="math inline">\(aRb\Leftrightarrow b\in aH\)</span>，则<span class="math inline">\(R\)</span>是<span class="math inline">\(G\)</span>上的一个等价关系。</strong></p>
+<p><strong>设$H$是群$G$的子群，$a, b\in G$。在$G$中建立二元关系$aRb\Leftrightarrow b\in aH$，则$R$是$G$上的一个等价关系。</strong></p>
 </blockquote>
 <p>证明：</p>
-<ol type="1">
-<li>自反的：<span class="math inline">\(a\in aH\)</span>，所以<span class="math inline">\(aRb\)</span></li>
-<li>对称的：如果<span class="math inline">\(aRb\)</span>，即<span class="math inline">\(b\in aH\)</span>，则<span class="math inline">\(bH=aH\)</span>，又因为<span class="math inline">\(a\in aH\)</span>所以<span class="math inline">\(a\in bH\)</span>，即<span class="math inline">\(bRa\)</span>，对称性得证</li>
-<li>可传递的：设<span class="math inline">\(aRb,bRc\)</span>，根据定义存在<span class="math inline">\(h_1,h_2\in H\)</span>，使<span class="math inline">\(b=a\cdot h_1,c=b\cdot h_2\)</span>，于是<span class="math inline">\(c=b\cdot h_2=a\cdot h_1\cdot h_2\in aH\)</span>，所以<span class="math inline">\(aRc\)</span>成立</li>
+<ol>
+<li>自反的：$a\in aH$，所以$aRb$</li>
+<li>对称的：如果$aRb$，即$b\in aH$，则$bH=aH$，又因为$a\in aH$所以$a\in bH$，即$bRa$，对称性得证</li>
+<li>可传递的：设$aRb,bRc$，根据定义存在$h_1,h_2\in H$，使$b=a\cdot h_1,c=b\cdot h_2$，于是$c=b\cdot h_2=a\cdot h_1\cdot h_2\in aH$，所以$aRc$成立</li>
 </ol>
 <blockquote>
-<p><strong>定理</strong> R是上述等价关系，则<span class="math inline">\([a]_R=aH\)</span></p>
+<p><strong>定理</strong>    R是上述等价关系，则$[a]_R=aH$</p>
 </blockquote>
-<p>等价关系R可以确定群G的一个分划，每个左陪集就是分划中的一个块。<span class="math inline">\(G=H\cup a_1H\cup a_2H\cup ...\)</span>称为G的左陪集分解式。</p>
-<p>同时可以确定G的右陪集分解式<span class="math inline">\(G=H\cup Ha_1\cup Ha_2\cup ...\)</span></p>
+<p>等价关系R可以确定群G的一个分划，每个左陪集就是分划中的一个块。$G=H\cup a_1H\cup a_2H\cup …$称为G的左陪集分解式。</p>
+<p>同时可以确定G的右陪集分解式$G=H\cup Ha_1\cup Ha_2\cup …$</p>
 <blockquote>
-<p><strong>定理</strong> <strong>群G中子群H的所有左（右）陪集都是等势的。</strong></p>
+<p><strong>定理</strong>    <strong>群G中子群H的所有左（右）陪集都是等势的。</strong></p>
 </blockquote>
-<p>证明：只需证明任何<span class="math inline">\(aH\sim H\)</span>。</p>
-<p>​ 构造映射<span class="math inline">\(f:H\to aH\)</span>，对任何<span class="math inline">\(h\in H,f(h)=a\cdot h\)</span>。这是双射函数。</p>
+<p>证明：只需证明任何$aH\sim H$。</p>
+<p>​    构造映射$f:H\to aH$，对任何$h\in H,f(h)=a\cdot h$。这是双射函数。</p>
 <blockquote>
-<p><strong>定理 拉格朗日定理</strong></p>
-<p><strong><span class="math inline">\(n\)</span>阶群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的任何子群<span class="math inline">\(&lt;H, \cdot&gt;\)</span>的阶必定是<span class="math inline">\(n\)</span>的因子。</strong></p>
+<p><strong>定理    拉格朗日定理</strong></p>
+<p><strong>$n$阶群$<G, \cdot>$的任何子群$<H, \cdot>$的阶必定是$n$的因子。</strong></p>
 </blockquote>
 <p>由上述陪集分解式，显然。</p>
 <blockquote>
-<p><strong>推论</strong> <strong><span class="math inline">\(n\)</span>元群<span class="math inline">\(G\)</span>中任何元素的周期必是<span class="math inline">\(n\)</span>的因子。</strong></p>
+<p><strong>推论</strong>    <strong>$n$元群$G$中任何元素的周期必是$n$的因子。</strong></p>
 </blockquote>
 <p>证明：</p>
-<p>​ 设<span class="math inline">\(a\in G\)</span>，则<span class="math inline">\((a)=\{e, a, a^2, ..., a^{m-1}\}\)</span>是G的一个子群，故<span class="math inline">\(m|n\)</span>,而<span class="math inline">\(m\)</span>是元素<span class="math inline">\(a\)</span>的周期，所以每个元素的周期必是<span class="math inline">\(n\)</span>的因子。</p>
-<h4 id="正规子群与商群">正规子群与商群</h4>
-<blockquote>
-<p><strong>定义</strong> <strong>设<span class="math inline">\(&lt;H, \cdot&gt;\)</span>是群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的一个子群。如果对于任何<span class="math inline">\(a\in G,aH=Ha\)</span>，则称<span class="math inline">\(H\)</span>是<span class="math inline">\(G\)</span>的==正规子群（不变子群）==。</strong></p>
+<p>​    设$a\in G$，则$(a)=\{e, a, a^2, …, a^{m-1}\}$是G的一个子群，故$m|n$,而$m$是元素$a$的周期，所以每个元素的周期必是$n$的因子。</p>
+<h4 id="正规子群与商群"><a href="#正规子群与商群" class="headerlink" title="正规子群与商群"></a>正规子群与商群</h4><blockquote>
+<p><strong>定义</strong>    <strong>设$<H, \cdot>$是群$<G, \cdot>$的一个子群。如果对于任何$a\in G,aH=Ha$，则称$H$是$G$的==正规子群（不变子群）==。</strong></p>
 </blockquote>
 <ul>
-<li>任意群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的平凡子群都是G的不变子群</li>
-<li>交换群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的任意子群<span class="math inline">\(&lt;H, \cdot&gt;\)</span>都是G的不变子群</li>
-<li>循环群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的任意子群<span class="math inline">\(&lt;H, \cdot&gt;\)</span>都是G的不变子群</li>
-<li>素数阶群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>没有不平凡的不变子群</li>
+<li>任意群$<G, \cdot>$的平凡子群都是G的不变子群</li>
+<li>交换群$<G, \cdot>$的任意子群$<H, \cdot>$都是G的不变子群</li>
+<li>循环群$<G, \cdot>$的任意子群$<H, \cdot>$都是G的不变子群</li>
+<li>素数阶群$<G, \cdot>$没有不平凡的不变子群</li>
 </ul>
 <blockquote>
-<p><strong>定理</strong> <strong>群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的子群<span class="math inline">\(&lt;H, \cdot&gt;\)</span>是不变子群，==当且仅当==对任何<span class="math inline">\(a\in G,aHa^{-1}\subseteq H\)</span></strong></p>
+<p><strong>定理</strong>    <strong>群$<G, \cdot>$的子群$<H, \cdot>$是不变子群，==当且仅当==对任何$a\in G,aHa^{-1}\subseteq H$</strong></p>
 </blockquote>
 <p>证明：</p>
-<ol type="1">
-<li><span class="math inline">\(H\)</span>是<span class="math inline">\(G\)</span>的正规子群，所以<span class="math inline">\(aH=Ha\)</span>，即对任何<span class="math inline">\(h_1\in H\)</span>，必有<span class="math inline">\(h_2\in H\)</span>，使<span class="math inline">\(a\cdot h_1=h_2\cdot a\)</span>，即<span class="math inline">\(a\cdot h_1\cdot a^{-1}=h_2\in H\)</span>，充分性得证</li>
-<li>如果对于任何<span class="math inline">\(a\in G,aHa^{-1}\subseteq H\)</span>，即对于任何<span class="math inline">\(h_1\in H\)</span>，都有<span class="math inline">\(h_2\in H\)</span>，是<span class="math inline">\(a\cdot h_1\cdot a^{-1}=h_2\)</span>，由此可得<span class="math inline">\(a\cdot h_1=h_2\cdot a\)</span>，由<span class="math inline">\(h_1,h_2\)</span>的任意性，可得<span class="math inline">\(aH=Ha\)</span>，必要性得证。</li>
+<ol>
+<li>$H$是$G$的正规子群，所以$aH=Ha$，即对任何$h_1\in H$，必有$h_2\in H$，使$a\cdot h_1=h_2\cdot a$，即$a\cdot h_1\cdot a^{-1}=h_2\in H$，充分性得证</li>
+<li>如果对于任何$a\in G,aHa^{-1}\subseteq H$，即对于任何$h_1\in H$，都有$h_2\in H$，是$a\cdot h_1\cdot a^{-1}=h_2$，由此可得$a\cdot h_1=h_2\cdot a$，由$h_1,h_2$的任意性，可得$aH=Ha$，必要性得证。</li>
 </ol>
 <blockquote>
-<p><strong>定义</strong> 设<span class="math inline">\(&lt;H, *&gt;\)</span>是<span class="math inline">\(&lt;G, *&gt;\)</span>的一个==正规子群==，<span class="math inline">\(G/H\)</span>表示<span class="math inline">\(G\)</span>的所有陪集的集合，则<span class="math inline">\(&lt;G/H, \cdot&gt;\)</span>是一个群，称为==商群==。其中"<span class="math inline">\(\cdot\)</span>"定义为<span class="math inline">\(\forall aH,bH\in G/H,aH\cdot bH=(a*b)H\)</span></p>
+<p><strong>定义</strong>    设$<H, *>$是$<G, *>$的一个==正规子群==，$G/H$表示$G$的所有陪集的集合，则$<G/H, \cdot>$是一个群，称为==商群==。其中”$\cdot$”定义为$\forall aH,bH\in G/H,aH\cdot bH=(a*b)H$</p>
 </blockquote>
-<h4 id="群的同态与同构">群的同态与同构</h4>
-<blockquote>
-<p><strong>定义</strong></p>
-<p><strong>设<span class="math inline">\(&lt;S, \cdot&gt;\)</span>和<span class="math inline">\(&lt;T, \circ&gt;\)</span>是两个==代数系统==，其中“<span class="math inline">\(\cdot\)</span>”和“<span class="math inline">\(\circ\)</span>”分别是<span class="math inline">\(S\)</span>和<span class="math inline">\(T\)</span>的二元运算。如果存在映射<span class="math inline">\(f:S\to T\)</span>使得对任意<span class="math inline">\(a_1,a_2\in S,f(a_1\cdot a_2)=f(a_1)\circ f(a_2)\)</span>，则称<span class="math inline">\(f\)</span>是<span class="math inline">\(S\)</span>到<span class="math inline">\(T\)</span>的==同态映射==，或者<span class="math inline">\(S\)</span>和<span class="math inline">\(T\)</span>==同态==，记为<span class="math inline">\(S\sim T\)</span>；称<span class="math inline">\(f(S)\subseteq T\)</span>为<span class="math inline">\(S\)</span>的==同态像==。</strong></p>
-<p><strong>当<span class="math inline">\(f\)</span>是满射时，称<span class="math inline">\(f\)</span>为==满同态==；当<span class="math inline">\(f\)</span>是双射时，称<span class="math inline">\(f\)</span>为==同构映射==。代数系统<span class="math inline">\(S\)</span>和<span class="math inline">\(T\)</span>同构记为<span class="math inline">\(S\cong T\)</span>.</strong></p>
+<h4 id="群的同态与同构"><a href="#群的同态与同构" class="headerlink" title="群的同态与同构"></a>群的同态与同构</h4><blockquote>
+<p><strong>定义</strong>    </p>
+<p><strong>设$<S, \cdot>$和$<T, \circ>$是两个==代数系统==，其中“$\cdot$”和“$\circ$”分别是$S$和$T$的二元运算。如果存在映射$f:S\to T$使得对任意$a_1,a_2\in S,f(a_1\cdot a_2)=f(a_1)\circ f(a_2)$，则称$f$是$S$到$T$的==同态映射==，或者$S$和$T$==同态==，记为$S\sim T$；称$f(S)\subseteq T$为$S$的==同态像==。</strong></p>
+<p><strong>当$f$是满射时，称$f$为==满同态==；当$f$是双射时，称$f$为==同构映射==。代数系统$S$和$T$同构记为$S\cong T$.</strong></p>
 </blockquote>
 <p>同态映射不仅确定了不同集合元素间的对应关系，而且还保持了代数系统的运算性质。</p>
 <blockquote>
 <p><strong>定理</strong></p>
-<p><strong>设<span class="math inline">\(f\)</span>是从代数系统<span class="math inline">\(&lt;S, \cdot&gt;\)</span>到代数系统<span class="math inline">\(&lt;T, \circ&gt;\)</span>的==同态映射==，则</strong></p>
+<p><strong>设$f$是从代数系统$<S, \cdot>$到代数系统$<T, \circ>$的==同态映射==，则</strong></p>
 <ul>
-<li><strong>如果运算”<span class="math inline">\(\cdot\)</span>"在<span class="math inline">\(S\)</span>中是封闭的，那么运算“<span class="math inline">\(\circ\)</span>”在<span class="math inline">\(f(S)\)</span>中也是封闭的。</strong></li>
-<li><strong><span class="math inline">\(&lt;S, \cdot&gt;\)</span>满足结合律，则<span class="math inline">\(&lt;f(S), \cdot&gt;\)</span>满足结合律</strong></li>
-<li><strong><span class="math inline">\(&lt;S, \cdot&gt;\)</span>满足交换律，则<span class="math inline">\(&lt;f(S), \cdot&gt;\)</span>满足交换律</strong></li>
-<li><strong><span class="math inline">\(&lt;S, \cdot&gt;\)</span>存在幺元，则<span class="math inline">\(&lt;f(S), \cdot&gt;\)</span>存在幺元</strong></li>
-<li><strong><span class="math inline">\(S\)</span>中每元关于运算“<span class="math inline">\(\cdot\)</span>”有逆元，那么<span class="math inline">\(f(S)\)</span>中每元关于运算“<span class="math inline">\(\circ\)</span>”也有逆元。<span class="math inline">\(\forall x\in S, f(x^{-1})=f^{-1}(x)\)</span></strong></li>
+<li><strong>如果运算”$\cdot$”在$S$中是封闭的，那么运算“$\circ$”在$f(S)$中也是封闭的。</strong></li>
+<li><strong>$<S, \cdot>$满足结合律，则$<f(S), \cdot>$满足结合律</strong></li>
+<li><strong>$<S, \cdot>$满足交换律，则$<f(S), \cdot>$满足交换律</strong></li>
+<li><strong>$<S, \cdot>$存在幺元，则$<f(S), \cdot>$存在幺元</strong></li>
+<li><strong>$S$中每元关于运算“$\cdot$”有逆元，那么$f(S)$中每元关于运算“$\circ$”也有逆元。$\forall x\in S, f(x^{-1})=f^{-1}(x)$</strong></li>
 </ul>
-</blockquote>
-<blockquote>
-<p><strong>定理</strong> <strong>如果<span class="math inline">\(f\)</span>是代数系统<span class="math inline">\(&lt;S, \cdot&gt;\)</span>到<span class="math inline">\(&lt;T, \cdot&gt;\)</span>的满同态，那么</strong></p>
+<p><strong>定理</strong>    <strong>如果$f$是代数系统$<S, \cdot>$到$<T, \cdot>$的满同态，那么</strong></p>
 <ul>
-<li><strong>如果<span class="math inline">\(S\)</span>是半群，则<span class="math inline">\(T\)</span>也是半群</strong></li>
-<li><strong>如果<span class="math inline">\(S\)</span>是群，则<span class="math inline">\(T\)</span>也是群</strong></li>
+<li><strong>如果$S$是半群，则$T$也是半群</strong></li>
+<li><strong>如果$S$是群，则$T$也是群</strong></li>
 </ul>
 </blockquote>
 <p>在同态映射下，像源的代数性质都为像集所具有，但像集所具有的代数性质像源未必能有。</p>
-<p>如$&lt;Z_2,&gt; <span class="math inline">\(是群，而\)</span>&lt;N, +&gt;$不是群。</p>
-<p><span class="math inline">\(f\)</span>实际上是按一定模式把像源的元素进行归类。</p>
+<p>如$<Z_2,\bigoplus> $是群，而$<N, +>$不是群。</p>
+<p>$f$实际上是按一定模式把像源的元素进行归类。</p>
 <blockquote>
-<p><strong>定义</strong> <strong>设<span class="math inline">\(f\)</span>是使<span class="math inline">\(&lt;G, \cdot&gt;\)</span>到<span class="math inline">\(&lt;H, \circ&gt;\)</span>的同态映射，<span class="math inline">\(e&#39;\)</span>是<span class="math inline">\(H\)</span>的幺元，记<span class="math inline">\(Ker(f)=\{x|x\in G \and f(x)=e&#39;\}\)</span>，则称<span class="math inline">\(Ker(f)\)</span>为<span class="math inline">\(f\)</span>的==同态核==</strong></p>
-</blockquote>
-<blockquote>
-<p><strong>定理</strong> <strong>设<span class="math inline">\(f\)</span>是使<span class="math inline">\(&lt;G, \cdot&gt;\)</span>到<span class="math inline">\(&lt;H, \circ&gt;\)</span>的同态映射，则<span class="math inline">\(f\)</span>的==同态核==<span class="math inline">\(Ker(f)\)</span>是<span class="math inline">\(G\)</span>的==正规子群==</strong></p>
+<p><strong>定义</strong>    <strong>设$f$是使$<G, \cdot>$到$<H, \circ>$的同态映射，$e’$是$H$的幺元，记$Ker(f)=\{x|x\in G \and f(x)=e’\}$，则称$Ker(f)$为$f$的==同态核==</strong></p>
+<p><strong>定理</strong>    <strong>设$f$是使$<G, \cdot>$到$<H, \circ>$的同态映射，则$f$的==同态核==$Ker(f)$是$G$的==正规子群==</strong></p>
 </blockquote>
 <p>证明：</p>
-<ol type="1">
-<li><p>先证<span class="math inline">\(Ker(f)\)</span>是<span class="math inline">\(&lt;G,\cdot&gt;\)</span>的子群</p>
-<p>设<span class="math inline">\(e&#39;\)</span>是H的幺元</p>
-<p><span class="math inline">\(\forall x, y\in Ker(f),\therefore f(x)=f(y)=e&#39;\)</span></p>
-<p><span class="math inline">\(f(x\cdot y^{-1})=f(x)\circ f(y^{-1})=f(x)\circ f^{-1}(y)=e&#39;\circ e&#39;=e&#39;\in Ker(f)\)</span></p>
-<p>所以<span class="math inline">\(Ker(f)\)</span>是<span class="math inline">\(&lt;G,\cdot&gt;\)</span>的子群</p></li>
+<ol>
+<li><p>先证$Ker(f)$是$<G,\cdot>$的子群</p>
+<p>设$e’$是H的幺元</p>
+<p>$\forall x, y\in Ker(f),\therefore f(x)=f(y)=e’$</p>
+<p>$f(x\cdot y^{-1})=f(x)\circ f(y^{-1})=f(x)\circ f^{-1}(y)=e’\circ e’=e’\in Ker(f)$</p>
+<p>所以$Ker(f)$是$<G,\cdot>$的子群</p>
+</li>
 <li><p>再证是正规子群</p>
-<p><span class="math inline">\(\forall x\in G,k\in Ker(f)\)</span></p>
-<p><span class="math inline">\(f(x\cdot k\cdot x^{-1})=f(x)\circ f(k)\circ f(x^{-1})=f(x)\circ f^{-1}(x)=e&#39;\in Ker(f)\)</span></p>
-<p>所以<span class="math inline">\(Ker(f)\)</span>是<span class="math inline">\(&lt;G,\cdot&gt;\)</span>的正规子群</p></li>
+<p>$\forall x\in G,k\in Ker(f)$</p>
+<p>$f(x\cdot k\cdot x^{-1})=f(x)\circ f(k)\circ f(x^{-1})=f(x)\circ f^{-1}(x)=e’\in Ker(f)$</p>
+<p>所以$Ker(f)$是$<G,\cdot>$的正规子群</p>
+</li>
 </ol>
-<h3 id="环与域">环与域</h3>
-<h4 id="环的定义及性质">环的定义及性质</h4>
-<blockquote>
+<h3 id="环与域"><a href="#环与域" class="headerlink" title="环与域"></a>环与域</h3><h4 id="环的定义及性质"><a href="#环的定义及性质" class="headerlink" title="环的定义及性质"></a>环的定义及性质</h4><blockquote>
 <p><strong>定义</strong></p>
-<p><strong>设<span class="math inline">\(&lt;R,+,*&gt;\)</span>是含有两个二元运算的代数系统。如果满足</strong></p>
-<ol type="1">
-<li><strong><span class="math inline">\(&lt;R,+&gt;\)</span>是==交换群==</strong></li>
-<li><strong><span class="math inline">\(&lt;R,*&gt;\)</span>是==半群==</strong></li>
-<li><strong><span class="math inline">\(\forall a, b, c\in R,a*(b+c)=(a*b)+(a*c),(b+c)*a=(b*a)+(c*a)\)</span></strong></li>
+<p><strong>设$<R,+,*>$是含有两个二元运算的代数系统。如果满足</strong></p>
+<ol>
+<li><strong>$<R,+>$是==交换群==</strong></li>
+<li><strong>$<R,*>$是==半群==</strong></li>
+<li><strong>$\forall a, b, c\in R,a<em>(b+c)=(a</em>b)+(a<em>c),(b+c)</em>a=(b<em>a)+(c</em>a)$</strong></li>
 </ol>
-<p><strong>则称<span class="math inline">\(&lt;R,+,*&gt;\)</span>是==环==</strong></p>
+<p><strong>则称$<R,+,*>$是==环==</strong></p>
 </blockquote>
-<p>约定加法幺元记为<span class="math inline">\(\theta\)</span>。</p>
-<p>元<span class="math inline">\(b\)</span>的加法记为<span class="math inline">\(-b\)</span>，并且<span class="math inline">\(a+(-b)=a-b\)</span>。</p>
+<p>约定加法幺元记为$\theta$。</p>
+<p>元$b$的加法记为$-b$，并且$a+(-b)=a-b$。</p>
 <blockquote>
-<p><strong>定理 移项法则</strong></p>
-<p><strong>设<span class="math inline">\(&lt;R,+,*&gt;\)</span>是环，<span class="math inline">\(a,b,c\in R\)</span>，则下面两条等价：</strong></p>
-<ol type="1">
-<li><strong><span class="math inline">\(a+b=c\)</span></strong></li>
-<li><strong><span class="math inline">\(a+b-c=\theta\)</span></strong></li>
+<p><strong>定理    移项法则</strong></p>
+<p><strong>设$<R,+,*>$是环，$a,b,c\in R$，则下面两条等价：</strong></p>
+<ol>
+<li><strong>$a+b=c$</strong></li>
+<li><strong>$a+b-c=\theta$</strong></li>
 </ol>
-</blockquote>
-<blockquote>
-<p><strong>定理</strong></p>
-<p><strong>设<span class="math inline">\(&lt;R,+,*&gt;\)</span>是环<span class="math inline">\(a,b,c\in R\)</span>，则：</strong></p>
+<p><strong>定理</strong> </p>
+<p><strong>设$<R,+,*>$是环$a,b,c\in R$，则：</strong></p>
 <ul>
-<li><strong><span class="math inline">\(a*\theta =\theta *a=\theta\)</span>（加法幺元是乘法零元）</strong></li>
-<li><strong><span class="math inline">\(a*(-b)=-(a*b)=(-a)*b\)</span></strong></li>
-<li><strong><span class="math inline">\((-a)*(-b)=a*b\)</span></strong></li>
-<li><strong><span class="math inline">\(a*(b-c)=(a*b)-(a*c)\)</span></strong></li>
-<li><strong><span class="math inline">\((b-c)*a=(b*a)-(c*a)\)</span></strong></li>
+<li><strong>$a<em>\theta =\theta </em>a=\theta$（加法幺元是乘法零元）</strong></li>
+<li><strong>$a<em>(-b)=-(a</em>b)=(-a)*b$</strong></li>
+<li><strong>$(-a)<em>(-b)=a</em>b$</strong></li>
+<li><strong>$a<em>(b-c)=(a</em>b)-(a*c)$</strong></li>
+<li><strong>$(b-c)<em>a=(b</em>a)-(c*a)$</strong></li>
 </ul>
 </blockquote>
 <p>证明：</p>
-<ol type="1">
-<li><p><span class="math inline">\(a*\theta=a*(\theta +\theta)=(a*\theta)+(a*\theta)\)</span></p>
-<p>由移项法则，得到<span class="math inline">\(a*\theta = \theta\)</span></p></li>
-<li><p><span class="math inline">\((a*(-b))+(a*b)=a*(-b+b)=a*\theta =\theta\)</span></p>
-<p><span class="math inline">\(\therefore a*(-b)=-(a*b)\)</span></p>
-<p>同理<span class="math inline">\((-a)*b=-(a*b)\)</span></p></li>
-<li><p><span class="math inline">\((-a)*(-b)-(a*b)=(-a)*(-b)+a*(-b)=(-a+a)*(-b)=\theta *(-b)=\theta\)</span></p></li>
+<ol>
+<li><p>$a<em>\theta=a</em>(\theta +\theta)=(a<em>\theta)+(a</em>\theta)$</p>
+<p>由移项法则，得到$a*\theta = \theta$</p>
+</li>
+<li><p>$(a<em>(-b))+(a</em>b)=a<em>(-b+b)=a</em>\theta =\theta$</p>
+<p>$\therefore a<em>(-b)=-(a</em>b)$</p>
+<p>同理$(-a)<em>b=-(a</em>b)$</p>
+</li>
+<li><p>$(-a)<em>(-b)-(a</em>b)=(-a)<em>(-b)+a</em>(-b)=(-a+a)<em>(-b)=\theta </em>(-b)=\theta$</p>
+</li>
 </ol>
-<p>​ <span class="math inline">\(\therefore (-a)*(-b)=a*b\)</span></p>
-<ol start="4" type="1">
-<li><span class="math inline">\(a*(b-c)=a*(b+(-c))=(a*b)+(a*(-c))=(a*b)-(a*c)\)</span></li>
+<p>​        $\therefore (-a)<em>(-b)=a</em>b$</p>
+<ol>
+<li>$a<em>(b-c)=a</em>(b+(-c))=(a<em>b)+(a</em>(-c))=(a<em>b)-(a</em>c)$</li>
 <li>同4.</li>
 </ol>
 <blockquote>
-<p><strong>定义</strong> <strong>设<span class="math inline">\(&lt;R,+,*&gt;\)</span>是环，<span class="math inline">\(a,b\in R\)</span>。如果<span class="math inline">\(a\ne \theta,b\ne \theta\)</span>，而<span class="math inline">\(a*b=\theta\)</span>，则称<span class="math inline">\(a\)</span>和<span class="math inline">\(b\)</span>是<span class="math inline">\(R\)</span>中的==零因子==。</strong></p>
+<p><strong>定义</strong>    <strong>设$<R,+,*>$是环，$a,b\in R$。如果$a\ne \theta,b\ne \theta$，而$a*b=\theta$，则称$a$和$b$是$R$中的==零因子==。</strong></p>
 </blockquote>
-<p>例如，当<span class="math inline">\(m\)</span>不是素数时，<span class="math inline">\(&lt;Z_m,\bigoplus,\bigotimes&gt;\)</span>有零因子，m是素数时有零因子。</p>
+<p>例如，当$m$不是素数时，$<Z_m,\bigoplus,\bigotimes>$有零因子，m是素数时有零因子。</p>
 <p>n阶矩阵中存在零因子。</p>
-<h4 id="整环与域">整环与域</h4>
-<blockquote>
+<h4 id="整环与域"><a href="#整环与域" class="headerlink" title="整环与域"></a>整环与域</h4><blockquote>
 <p><strong>定义</strong></p>
-<p><strong>设<span class="math inline">\(&lt;R,+,*&gt;\)</span>是==环==</strong></p>
-<ol type="1">
-<li><strong>如果<span class="math inline">\(&lt;R,*&gt;\)</span>可交换，则称<span class="math inline">\(&lt;R,+,*&gt;\)</span>为==交换环==。</strong></li>
-<li><strong>如果<span class="math inline">\(&lt;R,*&gt;\)</span>有幺元，则称<span class="math inline">\(&lt;R,+,*&gt;\)</span>为==含幺环==。</strong></li>
-<li><strong>如果1.2.成立，且无零因子，则称<span class="math inline">\(&lt;R,+,*&gt;\)</span>为==整环==。</strong></li>
+<p><strong>设$<R,+,*>$是==环==</strong></p>
+<ol>
+<li><strong>如果$<R,*>$可交换，则称$<R,+,*>$为==交换环==。</strong></li>
+<li><strong>如果$<R,*>$有幺元，则称$<R,+,*>$为==含幺环==。</strong></li>
+<li><strong>如果1.2.成立，且无零因子，则称$<R,+,*>$为==整环==。</strong></li>
 </ol>
-</blockquote>
-<blockquote>
-<p><strong>定理</strong> <strong>设<span class="math inline">\(&lt;R,+,*&gt;\)</span>是环，则<span class="math inline">\(R\)</span>中无零因子，当且仅当对任何<span class="math inline">\(a,x,y\in R\)</span>，当<span class="math inline">\(a\ne \theta\)</span>时，由<span class="math inline">\(a*x=a*y\)</span>，必然得到<span class="math inline">\(x=y\)</span>。</strong></p>
-</blockquote>
-<blockquote>
-<p><strong>定义</strong> <strong>设<span class="math inline">\(&lt;R,+,*&gt;\)</span>是环，<span class="math inline">\(S\)</span>是<span class="math inline">\(R\)</span>的==非空子集==，如果<span class="math inline">\(&lt;S,+,*&gt;\)</span>也是环，则称<span class="math inline">\(S\)</span>是<span class="math inline">\(R\)</span>的==子环==。</strong></p>
-</blockquote>
-<blockquote>
-<p><strong>定义</strong> <strong>设<span class="math inline">\(&lt;S,+,*&gt;\)</span>和<span class="math inline">\(&lt;T,\bigoplus,\bigotimes&gt;\)</span>是两个环，<span class="math inline">\(f:S\to T\)</span>是映射。如果对于任意<span class="math inline">\(a.b\in S\)</span>，都有<span class="math display">\[f(a+b)=f(a)\bigoplus f(b),f(a*b)=f(a)\bigotimes f(b)\]</span>，则称<span class="math inline">\(f\)</span>是环<span class="math inline">\(&lt;S,+,*&gt;\)</span>到<span class="math inline">\(&lt;T,\bigoplus,\bigotimes&gt;\)</span>的==同态映射==。<span class="math inline">\(f(S)\)</span>称谓<span class="math inline">\(S\)</span>的==同态像==。当<span class="math inline">\(f\)</span>是满射的时候，称<span class="math inline">\(f\)</span>为==满同态==。是双射时，称<span class="math inline">\(f\)</span>为==环同构映射==。</strong></p>
-</blockquote>
-<blockquote>
-<p><strong>定义</strong> <strong>设<span class="math inline">\(&lt;R,+,*&gt;\)</span>是环，如果<span class="math inline">\(&lt;R,+&gt;\)</span>和<span class="math inline">\(&lt;R-\{\theta\},*&gt;\)</span>都是==交换群==，则称<span class="math inline">\(&lt;R,+,*&gt;\)</span>是==域==。</strong></p>
-</blockquote>
-<blockquote>
-<p><strong>定理</strong> <strong>有限整环<span class="math inline">\(&lt;R,+,*&gt;\)</span>必是域</strong></p>
+<p><strong>定理</strong>    <strong>设$<R,+,*>$是环，则$R$中无零因子，当且仅当对任何$a,x,y\in R$，当$a\ne \theta$时，由$a<em>x=a</em>y$，必然得到$x=y$。</strong></p>
+<p><strong>定义</strong>    <strong>设$<R,+,*>$是环，$S$是$R$的==非空子集==，如果$<S,+,*>$也是环，则称$S$是$R$的==子环==。</strong></p>
+<p><strong>定义</strong>    <strong>设$<S,+,*>$和$<T,\bigoplus,\bigotimes>$是两个环，$f:S\to T$是映射。如果对于任意$a.b\in S$，都有<script type="math/tex">f(a+b)=f(a)\bigoplus f(b),f(a*b)=f(a)\bigotimes f(b)</script>，则称$f$是环$<S,+,*>$到$<T,\bigoplus,\bigotimes>$的==同态映射==。$f(S)$称谓$S$的==同态像==。当$f$是满射的时候，称$f$为==满同态==。是双射时，称$f$为==环同构映射==。</strong></p>
+<p><strong>定义</strong>    <strong>设$<R,+,*>$是环，如果$<R,+>$和$<R-\{\theta\},*>$都是==交换群==，则称$<R,+,*>$是==域==。</strong></p>
+<p><strong>定理</strong>    <strong>有限整环$<R,+,*>$必是域</strong></p>
 </blockquote>
 ]]></content>
       <categories>
