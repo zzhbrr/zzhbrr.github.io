@@ -271,14 +271,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>8.5k</span>
+              <span>12k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>8 分钟</span>
+              <span>11 分钟</span>
             </span>
 
         </div>
@@ -293,409 +293,424 @@
         <p>离散数学——代数系统</p>
 <span id="more"></span>
 <p>[TOC]</p>
-<h3 id="代数系统"><a href="#代数系统" class="headerlink" title="代数系统"></a>代数系统</h3><h4 id="二元运算及其性质"><a href="#二元运算及其性质" class="headerlink" title="二元运算及其性质"></a>二元运算及其性质</h4><blockquote>
-<p> <strong>定义</strong>  <strong>设$S$是一个非空集合，映射$f:S^n\rightarrow S$称为$S$上的一个n元运算。</strong></p>
+<h3 id="代数系统">代数系统</h3>
+<h4 id="二元运算及其性质">二元运算及其性质</h4>
+<blockquote>
+<p><strong>定义</strong> <strong>设<span class="math inline">\(S\)</span>是一个非空集合，映射<span class="math inline">\(f:S^n\rightarrow S\)</span>称为<span class="math inline">\(S\)</span>上的一个n元运算。</strong></p>
 </blockquote>
 <p>n元运算可以看作n+1元关系。</p>
 <blockquote>
 <p><strong>定义</strong></p>
-<p><strong>设”$\cdot$”是定义在集合$S$上的二元运算，如果</strong></p>
+<p><strong>设"<span class="math inline">\(\cdot\)</span>"是定义在集合<span class="math inline">\(S\)</span>上的二元运算，如果</strong></p>
 <ul>
-<li>$\forall x, y \in S$, $x\cdot y \in S$,则称”$\cdot$”在S上是<strong>封闭的</strong></li>
-<li>$\forall x, y\in S$, $x\cdot y=y\cdot x$,则称”$\cdot$”在S上是<strong>可交换的</strong></li>
-<li>$\forall x, y, z\in S$, $x\cdot (y\cdot z)=(x\cdot y)\cdot z$,则称”$\cdot$”在S上是<strong>可结合的</strong></li>
-<li>$\forall x\in S$, $x\cdot x=x$,则称”$\cdot$”是<strong>幂等的</strong>。</li>
-</ul>
-<p><strong>定义</strong></p>
-<p><strong>设$\cdot$和$*$是同时定义在$S$上的两个二元运算。如果</strong></p>
-<ul>
-<li>$\forall x, y, z\in S, x<em>(y\cdot z)=(x</em>y)\cdot(x<em>z)且(y\cdot z)</em>x=(y<em>x)\cdot(z</em>x)$，则称运算*关于<strong>·</strong>是<strong>可分配的</strong>。</li>
-<li>*和$\cdot$ 是可换运算，且$\forall x, y\in S, x<em>(x\cdot y)=x及x\cdot(x</em>y)=x$，则称运算*和<strong>·</strong>满足<strong>吸收律</strong></li>
+<li><span class="math inline">\(\forall x, y \in S\)</span>, <span class="math inline">\(x\cdot y \in S\)</span>,则称"<span class="math inline">\(\cdot\)</span>"在S上是<strong>封闭的</strong></li>
+<li><span class="math inline">\(\forall x, y\in S\)</span>, <span class="math inline">\(x\cdot y=y\cdot x\)</span>,则称"<span class="math inline">\(\cdot\)</span>"在S上是<strong>可交换的</strong></li>
+<li><span class="math inline">\(\forall x, y, z\in S\)</span>, <span class="math inline">\(x\cdot (y\cdot z)=(x\cdot y)\cdot z\)</span>,则称"<span class="math inline">\(\cdot\)</span>"在S上是<strong>可结合的</strong></li>
+<li><span class="math inline">\(\forall x\in S\)</span>, <span class="math inline">\(x\cdot x=x\)</span>,则称"<span class="math inline">\(\cdot\)</span>"是<strong>幂等的</strong>。</li>
 </ul>
 </blockquote>
-<h4 id="代数系统的定义与特异元"><a href="#代数系统的定义与特异元" class="headerlink" title="代数系统的定义与特异元"></a>代数系统的定义与特异元</h4><blockquote>
-<p><strong>定义</strong>     <strong>一个==非空集合==S连同若干个定义在S上的运算$f_1, f_2, …,f_k$所组成的系统称为一个==代数系统==，记为$<S,f_1,f_2,...,f_k>$</strong></p>
+<blockquote>
+<p><strong>定义</strong></p>
+<p><strong>设<span class="math inline">\(\cdot\)</span>和<span class="math inline">\(*\)</span>是同时定义在<span class="math inline">\(S\)</span>上的两个二元运算。如果</strong></p>
+<ul>
+<li><span class="math inline">\(\forall x, y, z\in S, x*(y\cdot z)=(x*y)\cdot(x*z)且(y\cdot z)*x=(y*x)\cdot(z*x)\)</span>，则称运算*关于<strong>·</strong>是<strong>可分配的</strong>。</li>
+<li>*和<span class="math inline">\(\cdot\)</span> 是可换运算，且<span class="math inline">\(\forall x, y\in S, x*(x\cdot y)=x及x\cdot(x*y)=x\)</span>，则称运算*和<strong>·</strong>满足<strong>吸收律</strong></li>
+</ul>
+</blockquote>
+<h4 id="代数系统的定义与特异元">代数系统的定义与特异元</h4>
+<blockquote>
+<p><strong>定义</strong> <strong>一个==非空集合==S连同若干个定义在S上的运算<span class="math inline">\(f_1, f_2, ...,f_k\)</span>所组成的系统称为一个==代数系统==，记为<span class="math inline">\(&lt;S,f_1,f_2,...,f_k&gt;\)</span></strong></p>
 </blockquote>
 <ul>
 <li><p>判断集合S及其上的代数运算是否是代数系统的关键是</p>
-<ol>
-<li><p>集合S<strong>非空</strong></p>
-</li>
-<li><p>这些运算是否满足<strong>封闭性</strong></p>
-</li>
-</ol>
-</li>
+<ol type="1">
+<li><p>集合S<strong>非空</strong></p></li>
+<li><p>这些运算是否满足<strong>封闭性</strong></p></li>
+</ol></li>
 </ul>
 <blockquote>
 <p><strong>定义</strong></p>
-<p><strong>设$<S, \cdot>$是一个代数系统，则</strong></p>
+<p><strong>设<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是一个代数系统，则</strong></p>
 <ul>
-<li><strong>如果$\exist e\in S$使$\forall x\in S, e\cdot x=x\cdot e=x$，则称e为代数系统的==幺元（单位元）==</strong></li>
-<li><strong>如果存在$\theta \in S$，使$\forall x\in S, \theta \cdot x=x\cdot \theta=\theta$，则称$\theta$为代数系统的==零元==</strong></li>
-<li><strong>$a\in S$，如果$a\cdot a=a$，则称$a$时系统的==幂等元==</strong></li>
+<li><strong>如果<span class="math inline">\(\exist e\in S\)</span>使<span class="math inline">\(\forall x\in S, e\cdot x=x\cdot e=x\)</span>，则称e为代数系统的==幺元（单位元）==</strong></li>
+<li><strong>如果存在<span class="math inline">\(\theta \in S\)</span>，使<span class="math inline">\(\forall x\in S, \theta \cdot x=x\cdot \theta=\theta\)</span>，则称<span class="math inline">\(\theta\)</span>为代数系统的==零元==</strong></li>
+<li><strong><span class="math inline">\(a\in S\)</span>，如果<span class="math inline">\(a\cdot a=a\)</span>，则称<span class="math inline">\(a\)</span>时系统的==幂等元==</strong></li>
 </ul>
-<p><strong>定义</strong>   <strong>设在代数系统$<S, $$~~\cdot~$>中，$e$是幺元，$a$是S中的一个元素。如果存在$b\in S$使得$a\cdot b=b\cdot a=e$，则称$b$是$a$的==逆元==，记为$b=a^{-1}$</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>定义</strong> <strong>设在代数系统$&lt;S, $<span class="math inline">\(~~\cdot~\)</span>&gt;中，<span class="math inline">\(e\)</span>是幺元，<span class="math inline">\(a\)</span>是S中的一个元素。如果存在<span class="math inline">\(b\in S\)</span>使得<span class="math inline">\(a\cdot b=b\cdot a=e\)</span>，则称<span class="math inline">\(b\)</span>是<span class="math inline">\(a\)</span>的==逆元==，记为<span class="math inline">\(b=a^{-1}\)</span></strong></p>
 </blockquote>
 <p>在一个代数系统中，不是每个元都存在着逆元。</p>
 <blockquote>
-<p><strong>定理</strong>   <strong>设$<S, \cdot>$是一个代数系统。如果存在幺元，则幺元是==唯一的==；如果存在零元，则零元是==唯一的==；如果元a有逆元，且”$~\cdot~$”==可结合==，则逆元是==唯一的==。</strong></p>
+<p><strong>定理</strong> <strong>设<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是一个代数系统。如果存在幺元，则幺元是==唯一的==；如果存在零元，则零元是==唯一的==；如果元a有逆元，且"<span class="math inline">\(~\cdot~\)</span>"==可结合==，则逆元是==唯一的==。</strong></p>
 </blockquote>
 <p>证明：反证法即可（设不唯一）。</p>
 <p>根据运算满足的条件，可以把含单个二元运算的代数系统进行分层。</p>
 <blockquote>
 <p><strong>定义</strong></p>
-<p><strong>设$<S, \cdot>$是一个代数系统，则</strong></p>
+<p><strong>设<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是一个代数系统，则</strong></p>
 <ul>
-<li><strong>当”$\cdot$”是封闭的，称$<S, \cdot>$为==广群==</strong></li>
-<li><strong>如果$<S, \cdot>$是广群，且”$\cdot$”是==可结合运算==，则称$<S, \cdot>$是==半群==</strong></li>
-<li><strong>如果$<S, \cdot>$是半群，且存在幺元，则称$<S, \cdot>$为==含幺半群==</strong></li>
-<li><strong>如果$<S, \cdot>$是含幺半群，且每个元素都有逆元，则称$<S, \cdot>$为==群==</strong></li>
+<li><strong>当"<span class="math inline">\(\cdot\)</span>"是封闭的，称<span class="math inline">\(&lt;S, \cdot&gt;\)</span>为==广群==</strong></li>
+<li><strong>如果<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是广群，且"<span class="math inline">\(\cdot\)</span>"是==可结合运算==，则称<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是==半群==</strong></li>
+<li><strong>如果<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是半群，且存在幺元，则称<span class="math inline">\(&lt;S, \cdot&gt;\)</span>为==含幺半群==</strong></li>
+<li><strong>如果<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是含幺半群，且每个元素都有逆元，则称<span class="math inline">\(&lt;S, \cdot&gt;\)</span>为==群==</strong></li>
 </ul>
 </blockquote>
 <p>群的条件：闭，结，幺，逆</p>
 <p>（没必要在代数系统是否要求有封闭性上花费太大心思，不同教材不同，在这里要求代数系统要有封闭性）</p>
-<h3 id="半群与群"><a href="#半群与群" class="headerlink" title="半群与群"></a>半群与群</h3><h4 id="半群"><a href="#半群" class="headerlink" title="半群"></a>半群</h4><p>例：</p>
+<h3 id="半群与群">半群与群</h3>
+<h4 id="半群">半群</h4>
+<p>例：</p>
 <ul>
-<li>$<S, \cdot>$满足封闭、可结合、有幺元0，所以是含幺半群。还满足可换性，每个元都有逆元，因此也是<strong>可换群</strong></li>
+<li><span class="math inline">\(&lt;S, \cdot&gt;\)</span>满足封闭、可结合、有幺元0，所以是含幺半群。还满足可换性，每个元都有逆元，因此也是<strong>可换群</strong></li>
 </ul>
-<p>​        $<S, \times>$满足封闭、可结合、有幺元1，因此是含幺半群。但0无逆元，所以不是群。</p>
+<p>​ <span class="math inline">\(&lt;S, \times&gt;\)</span>满足封闭、可结合、有幺元1，因此是含幺半群。但0无逆元，所以不是群。</p>
 <blockquote>
-<p><strong>定义</strong>   </p>
-<p><strong>设$<S, \cdot>$是半群，$a\in S$，n是正整数，约定符号$a^n$表示n个a在运算”$\cdot$”下的结果，可递归定义如下：</strong></p>
-<ol>
-<li><strong>$a^1=a$</strong></li>
-<li><strong>$a^{n+1}=a^n\cdot a$</strong></li>
+<p><strong>定义</strong></p>
+<p><strong>设<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是半群，<span class="math inline">\(a\in S\)</span>，n是正整数，约定符号<span class="math inline">\(a^n\)</span>表示n个a在运算"<span class="math inline">\(\cdot\)</span>"下的结果，可递归定义如下：</strong></p>
+<ol type="1">
+<li><strong><span class="math inline">\(a^1=a\)</span></strong></li>
+<li><strong><span class="math inline">\(a^{n+1}=a^n\cdot a\)</span></strong></li>
 </ol>
-<p><strong>当$<S, \cdot>$是含幺半群，e是幺元时，可以把归纳基础改为$a^0=e$</strong></p>
-<p><strong>定理</strong></p>
-<p><strong>设$<S, \cdot>$是半群，$a\in S$，m和m是正整数，则</strong></p>
-<ol>
-<li><strong>$a^m\cdot a^n=a^{n+m}$</strong></li>
-<li><strong>$(a^m)^n=a^{mn}$</strong></li>
-</ol>
-<p><strong>当$<S, \cdot>$是含幺半群时，上述结论对任意非负整数m和n都成立</strong></p>
-<p><strong>定理</strong></p>
-<p><strong>设$<S, \cdot>$是一个半群，如果S是==有限集==，则必有$a\in S$使得$a^2=a$。</strong></p>
+<p><strong>当<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是含幺半群，e是幺元时，可以把归纳基础改为<span class="math inline">\(a^0=e\)</span></strong></p>
 </blockquote>
-<p>证明: </p>
-<p>任取$b\in S$，因为S是有限集，则元素$b^1, b^2,…$中必定有两个一样的，设为$b^i, b^j$，设$i&lt;j$，所以$b^i=b^{j-i}\cdot b^i$，所以对于任意的$t \ge i$，都有$b^t=b^{j-i}\cdot b^t$，反复迭代可以得到$b^t=b^{k(j-i)}\cdot b^t$，取$k$使得$k(j-i)\ge i$，同时令$t=k(j-i)$，则$b^t$是幂等元。</p>
+<blockquote>
+<p><strong>定理</strong></p>
+<p><strong>设<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是半群，<span class="math inline">\(a\in S\)</span>，m和m是正整数，则</strong></p>
+<ol type="1">
+<li><strong><span class="math inline">\(a^m\cdot a^n=a^{n+m}\)</span></strong></li>
+<li><strong><span class="math inline">\((a^m)^n=a^{mn}\)</span></strong></li>
+</ol>
+<p><strong>当<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是含幺半群时，上述结论对任意非负整数m和n都成立</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>定理</strong></p>
+<p><strong>设<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是一个半群，如果S是==有限集==，则必有<span class="math inline">\(a\in S\)</span>使得<span class="math inline">\(a^2=a\)</span>。</strong></p>
+</blockquote>
+<p>证明:</p>
+<p>任取<span class="math inline">\(b\in S\)</span>，因为S是有限集，则元素<span class="math inline">\(b^1, b^2,...\)</span>中必定有两个一样的，设为<span class="math inline">\(b^i, b^j\)</span>，设<span class="math inline">\(i&lt;j\)</span>，所以<span class="math inline">\(b^i=b^{j-i}\cdot b^i\)</span>，所以对于任意的<span class="math inline">\(t \ge i\)</span>，都有<span class="math inline">\(b^t=b^{j-i}\cdot b^t\)</span>，反复迭代可以得到<span class="math inline">\(b^t=b^{k(j-i)}\cdot b^t\)</span>，取<span class="math inline">\(k\)</span>使得<span class="math inline">\(k(j-i)\ge i\)</span>，同时令<span class="math inline">\(t=k(j-i)\)</span>，则<span class="math inline">\(b^t\)</span>是幂等元。</p>
 <p>含幺半群至少有一个幂等元，即幺元。</p>
 <blockquote>
 <p><strong>定义</strong></p>
-<p><strong>设$<S, \cdot>$是一个半群，==非空集合==$A \subseteq S$，并且$<A, \cdot>$也是半群，则称$<A, \cdot>$是$<S, \cdot>$的==子半群==</strong>。</p>
-<p><strong>设$<S, \cdot>$是一个含幺半群，==非空集合==$A \subseteq S$，并且$<A, \cdot>$也是含幺半群，则称$<A, \cdot>$是$<S, \cdot>$的==含幺子半群==</strong>。</p>
+<p><strong>设<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是一个半群，==非空集合==<span class="math inline">\(A \subseteq S\)</span>，并且<span class="math inline">\(&lt;A, \cdot&gt;\)</span>也是半群，则称<span class="math inline">\(&lt;A, \cdot&gt;\)</span>是<span class="math inline">\(&lt;S, \cdot&gt;\)</span>的==子半群==</strong>。</p>
+<p><strong>设<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是一个含幺半群，==非空集合==<span class="math inline">\(A \subseteq S\)</span>，并且<span class="math inline">\(&lt;A, \cdot&gt;\)</span>也是含幺半群，则称<span class="math inline">\(&lt;A, \cdot&gt;\)</span>是<span class="math inline">\(&lt;S, \cdot&gt;\)</span>的==含幺子半群==</strong>。</p>
 </blockquote>
-<p>要证明$<A, \cdot>$是半群$<S, \cdot>$的子半群时，只需证明$A$非空，$A\subseteq S$并且运算”$\cdot$”在集合A内是封闭的。</p>
-<h4 id="群和子群"><a href="#群和子群" class="headerlink" title="群和子群"></a>群和子群</h4><p>例：</p>
+<p>要证明<span class="math inline">\(&lt;A, \cdot&gt;\)</span>是半群<span class="math inline">\(&lt;S, \cdot&gt;\)</span>的子半群时，只需证明<span class="math inline">\(A\)</span>非空，<span class="math inline">\(A\subseteq S\)</span>并且运算"<span class="math inline">\(\cdot\)</span>"在集合A内是封闭的。</p>
+<h4 id="群和子群">群和子群</h4>
+<p>例：</p>
 <ul>
-<li>$<Z,+>$整数加群，$<R,+>$实数加群，$<Q,+>$有理数加群。</li>
+<li><span class="math inline">\(&lt;Z,+&gt;\)</span>整数加群，<span class="math inline">\(&lt;R,+&gt;\)</span>实数加群，<span class="math inline">\(&lt;Q,+&gt;\)</span>有理数加群。</li>
 </ul>
-<p>​        $<Z,\times>$不是群，$<R-\{0\},\times>$是实数乘群。</p>
+<p>​ <span class="math inline">\(&lt;Z,\times&gt;\)</span>不是群，<span class="math inline">\(&lt;R-\{0\},\times&gt;\)</span>是实数乘群。</p>
 <ul>
-<li><p>设$Z_k$表示整数集Z上的模k剩余类集合，即$Z_k=\{[0],[1],[2],..,[k-1]\}$</p>
-<p>$<Z_k,\bigoplus>$是<strong>剩余类加群</strong>，[0]是幺元， 每元[i]的逆元是[k-i]</p>
-<p>$<Z_k,\bigotimes>$不是群，因为[0]无逆元。</p>
-<p>而$<Z_k-\{[0]\},\bigotimes>$，也<strong>不一定</strong>是群。如$<Z_4-\{[0]\}，\bigotimes>$不是群（不封闭），但$<Z_5-\{[0]\}，\bigotimes>$是群。</p>
-<p>当k是<strong>素数</strong>的时候，$<Z_k-\{[0]\},\bigotimes>$一定是群。</p>
-</li>
-<li><p>设n个元素的集合A上的全体置换构成集合$S_n$。则$<S_n,\circ>$构成群，称为<strong>n次对称群</strong></p>
-</li>
+<li><p>设<span class="math inline">\(Z_k\)</span>表示整数集Z上的模k剩余类集合，即<span class="math inline">\(Z_k=\{[0],[1],[2],..,[k-1]\}\)</span></p>
+<p><span class="math inline">\(&lt;Z_k,\bigoplus&gt;\)</span>是<strong>剩余类加群</strong>，[0]是幺元， 每元[i]的逆元是[k-i]</p>
+<p><span class="math inline">\(&lt;Z_k,\bigotimes&gt;\)</span>不是群，因为[0]无逆元。</p>
+<p>而<span class="math inline">\(&lt;Z_k-\{[0]\},\bigotimes&gt;\)</span>，也<strong>不一定</strong>是群。如<span class="math inline">\(&lt;Z_4-\{[0]\}，\bigotimes&gt;\)</span>不是群（不封闭），但<span class="math inline">\(&lt;Z_5-\{[0]\}，\bigotimes&gt;\)</span>是群。</p>
+<p>当k是<strong>素数</strong>的时候，<span class="math inline">\(&lt;Z_k-\{[0]\},\bigotimes&gt;\)</span>一定是群。</p></li>
+<li><p>设n个元素的集合A上的全体置换构成集合<span class="math inline">\(S_n\)</span>。则<span class="math inline">\(&lt;S_n,\circ&gt;\)</span>构成群，称为<strong>n次对称群</strong></p></li>
 </ul>
 <p>==群中元素的个数称为群的阶==</p>
 <p>群也可以用别的形式等价定义</p>
 <blockquote>
 <p><strong>定理</strong></p>
-<p><strong>如果$<G, \cdot>$是==半群==，并且对于任意$a, b\in G$，都存在$x, y\in G$，使$x\cdot a=b,a\cdot y=b$，则$<G,\cdot>$是群。</strong></p>
+<p><strong>如果<span class="math inline">\(&lt;G, \cdot&gt;\)</span>是==半群==，并且对于任意<span class="math inline">\(a, b\in G\)</span>，都存在<span class="math inline">\(x, y\in G\)</span>，使<span class="math inline">\(x\cdot a=b,a\cdot y=b\)</span>，则<span class="math inline">\(&lt;G,\cdot&gt;\)</span>是群。</strong></p>
 </blockquote>
 <p>证明：先证明有幺元，再证明每元都有逆。</p>
-<ol>
-<li><p>设$a\in G$，方程$x\cdot a=a$的解为$e_1$，那么对于任何$t\in G$，都有$e_1\cdot t=t$</p>
-<p>证明：设方程$a\cdot y=t$的解为$y_0$</p>
-<p>​        于是有$e_1\cdot t=e_1\cdot (a\cdot y_0)=(e_1\cdot a)\cdot y_0=a\cdot y_0=t$</p>
-<p>所以$e_1$是$G$中的左幺元，同理$G$中的右幺元是$e_2$</p>
-<p>所以$G$中有幺元$e$。（一个代数系统中幺元是唯一的）</p>
-</li>
-<li><p>同理，对任意$b\in G$，方程$x\cdot b=e$有解$x_0$， 则$x_0$是b的左逆元。</p>
-<p>$b\cdot y=t$有解$y_0$，是b的右逆元。从而b有逆元。（可结合的运算的代数系统每元的逆是唯一的）</p>
-</li>
+<ol type="1">
+<li><p>设<span class="math inline">\(a\in G\)</span>，方程<span class="math inline">\(x\cdot a=a\)</span>的解为<span class="math inline">\(e_1\)</span>，那么对于任何<span class="math inline">\(t\in G\)</span>，都有<span class="math inline">\(e_1\cdot t=t\)</span></p>
+<p>证明：设方程<span class="math inline">\(a\cdot y=t\)</span>的解为<span class="math inline">\(y_0\)</span></p>
+<p>​ 于是有<span class="math inline">\(e_1\cdot t=e_1\cdot (a\cdot y_0)=(e_1\cdot a)\cdot y_0=a\cdot y_0=t\)</span></p>
+<p>所以<span class="math inline">\(e_1\)</span>是<span class="math inline">\(G\)</span>中的左幺元，同理<span class="math inline">\(G\)</span>中的右幺元是<span class="math inline">\(e_2\)</span></p>
+<p>所以<span class="math inline">\(G\)</span>中有幺元<span class="math inline">\(e\)</span>。（一个代数系统中幺元是唯一的）</p></li>
+<li><p>同理，对任意<span class="math inline">\(b\in G\)</span>，方程<span class="math inline">\(x\cdot b=e\)</span>有解<span class="math inline">\(x_0\)</span>， 则<span class="math inline">\(x_0\)</span>是b的左逆元。</p>
+<p><span class="math inline">\(b\cdot y=t\)</span>有解<span class="math inline">\(y_0\)</span>，是b的右逆元。从而b有逆元。（可结合的运算的代数系统每元的逆是唯一的）</p></li>
 </ol>
 <p>这个定理说明：在群的定义中，幺元的条件可以用存在左幺元（或右幺元）替代，逆元的条件可以用存在左逆元（右逆元）替代。</p>
 <blockquote>
-<p><strong>定理</strong>     <strong>在群$<G, \cdot>$中==消去律成立==，即如果$a\cdot b=a\cdot c$，必有$b=c$</strong></p>
+<p><strong>定理</strong> <strong>在群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>中==消去律成立==，即如果<span class="math inline">\(a\cdot b=a\cdot c\)</span>，必有<span class="math inline">\(b=c\)</span></strong></p>
 </blockquote>
-<p>证明：$a^{-1}\cdot a\cdot b=a^{-1}\cdot a\cdot c\\b=c$</p>
+<p>证明：<span class="math inline">\(a^{-1}\cdot a\cdot b=a^{-1}\cdot a\cdot c\\b=c\)</span></p>
 <blockquote>
-<p><strong>推论</strong>1   <strong>群$<G, \cdot>$的运算表中每行和每列都没有重复元素</strong></p>
-<p><strong>推论</strong>2   <strong>群$<G, \cdot>$除幺元外无其他幂等元</strong></p>
-<p><strong>定理</strong>    设$<G, \cdot>$是群，$a\in G$，构造映射$\varphi_a:G\to G$，使得对任意$x\in G$，$\varphi _a(x)=a\cdot x$，令$H = \{\varphi _a|a \in G\}$，则对于函数的复合运算”$\circ$”，$<H,\circ>$是群。</p>
+<p><strong>推论</strong>1 <strong>群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的运算表中每行和每列都没有重复元素</strong></p>
+<p><strong>推论</strong>2 <strong>群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>除幺元外无其他幂等元</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>定理</strong> 设<span class="math inline">\(&lt;G, \cdot&gt;\)</span>是群，<span class="math inline">\(a\in G\)</span>，构造映射<span class="math inline">\(\varphi_a:G\to G\)</span>，使得对任意<span class="math inline">\(x\in G\)</span>，<span class="math inline">\(\varphi _a(x)=a\cdot x\)</span>，令<span class="math inline">\(H = \{\varphi _a|a \in G\}\)</span>，则对于函数的复合运算"<span class="math inline">\(\circ\)</span>"，<span class="math inline">\(&lt;H,\circ&gt;\)</span>是群。</p>
 </blockquote>
 <p>按闭结幺逆证明即可。</p>
 <blockquote>
 <p><strong>定义</strong></p>
-<p><strong>设$<G, \cdot>$是群，$S$是$G$的==非空子集==。如果$<G, \cdot>$也是群，则称$<S, \cdot>$是$<G, \cdot>$的子群。</strong></p>
+<p><strong>设<span class="math inline">\(&lt;G, \cdot&gt;\)</span>是群，<span class="math inline">\(S\)</span>是<span class="math inline">\(G\)</span>的==非空子集==。如果<span class="math inline">\(&lt;G, \cdot&gt;\)</span>也是群，则称<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的子群。</strong></p>
 </blockquote>
-<p>任意群$<G, \cdot>$都有两个天然子群，即它本身和幺元子群$&lt;\{e\},\cdot&gt;$，被称为平凡子群，其他情况的子群称为真子群。</p>
-<p>此外，由群中一个元素，也可生成一个子群，为此，需要把群中元素的幂扩充到负指数的情形，即定义$a^{-k}=(a^k)^{-1}$</p>
+<p>任意群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>都有两个天然子群，即它本身和幺元子群<span class="math inline">\(&lt;\{e\},\cdot&gt;\)</span>，被称为平凡子群，其他情况的子群称为真子群。</p>
+<p>此外，由群中一个元素，也可生成一个子群，为此，需要把群中元素的幂扩充到负指数的情形，即定义<span class="math inline">\(a^{-k}=(a^k)^{-1}\)</span></p>
 <blockquote>
 <p><strong>定理</strong></p>
-<p>设$<G, \cdot>$是群，$\forall x\in G$，记$S=\{a^n|n\in Z\}$，则$<S, \cdot>$是$<G, \cdot>$的子群。</p>
+<p>设<span class="math inline">\(&lt;G, \cdot&gt;\)</span>是群，<span class="math inline">\(\forall x\in G\)</span>，记<span class="math inline">\(S=\{a^n|n\in Z\}\)</span>，则<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的子群。</p>
 </blockquote>
-<p>把由群的一个元素$a$生成的子群记为$(a)$</p>
+<p>把由群的一个元素<span class="math inline">\(a\)</span>生成的子群记为<span class="math inline">\((a)\)</span></p>
 <blockquote>
-<p><strong>定理</strong>    <strong>子群的幺元与群的幺元相同；对任意$a\in S$，$a$在$S$中的逆元就是$a$在$G$中的逆元</strong></p>
+<p><strong>定理</strong> <strong>子群的幺元与群的幺元相同；对任意<span class="math inline">\(a\in S\)</span>，<span class="math inline">\(a\)</span>在<span class="math inline">\(S\)</span>中的逆元就是<span class="math inline">\(a\)</span>在<span class="math inline">\(G\)</span>中的逆元</strong></p>
 </blockquote>
 <p>判别子群的方法：</p>
 <blockquote>
-<p><strong>定理    设$<G, \cdot>$是群，$S$是$G$的==非空子集==。$<S,\cdot>$是$<G, \cdot>$的子群，当且仅当对于任何$a, b\in S$，$a\cdot b^{-1}\in S$</strong></p>
+<p><strong>定理 设<span class="math inline">\(&lt;G, \cdot&gt;\)</span>是群，<span class="math inline">\(S\)</span>是<span class="math inline">\(G\)</span>的==非空子集==。<span class="math inline">\(&lt;S,\cdot&gt;\)</span>是<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的子群，当且仅当对于任何<span class="math inline">\(a, b\in S\)</span>，<span class="math inline">\(a\cdot b^{-1}\in S\)</span></strong></p>
 </blockquote>
 <p>证明：</p>
-<ol>
-<li><p>充分性：显然（闭，结，幺，逆）</p>
-</li>
+<ol type="1">
+<li><p>充分性：显然（闭，结，幺，逆）</p></li>
 <li><p>必要性：</p>
-<p>当$a=b$时，由题意知$a\cdot a^{-1}=e\in S$，所以S中存在幺元。</p>
-<p>令$a=e$，那么当$b\in S$时，必有$e\cdot b^{-1}=b^{-1}\in S$，所以S中每元都有逆。</p>
-<p>当$a,b\in S$时，由于$b^{-1}\in S$，就有$a\cdot b = a\cdot (b^{-1})^{-1} \in S$，所以满足封闭性。</p>
-</li>
+<p>当<span class="math inline">\(a=b\)</span>时，由题意知<span class="math inline">\(a\cdot a^{-1}=e\in S\)</span>，所以S中存在幺元。</p>
+<p>令<span class="math inline">\(a=e\)</span>，那么当<span class="math inline">\(b\in S\)</span>时，必有<span class="math inline">\(e\cdot b^{-1}=b^{-1}\in S\)</span>，所以S中每元都有逆。</p>
+<p>当<span class="math inline">\(a,b\in S\)</span>时，由于<span class="math inline">\(b^{-1}\in S\)</span>，就有<span class="math inline">\(a\cdot b = a\cdot (b^{-1})^{-1} \in S\)</span>，所以满足封闭性。</p></li>
 </ol>
-<p>可以证明：当$G$是有限集的时候，判别$<S, \cdot>$是否是$<G, \cdot>$的子群，只判别在$S$中是否封闭就行了。</p>
-<h4 id="交换群和循环群"><a href="#交换群和循环群" class="headerlink" title="交换群和循环群"></a>交换群和循环群</h4><blockquote>
-<p><strong>定义</strong>    <strong>如果群$<G, \cdot>$的运算==满足交换率==，则称群$G$为==交换群（Abel群）==。</strong></p>
+<p>可以证明：当<span class="math inline">\(G\)</span>是有限集的时候，判别<span class="math inline">\(&lt;S, \cdot&gt;\)</span>是否是<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的子群，只判别在<span class="math inline">\(S\)</span>中是否封闭就行了。</p>
+<h4 id="交换群和循环群">交换群和循环群</h4>
+<blockquote>
+<p><strong>定义</strong> <strong>如果群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的运算==满足交换率==，则称群<span class="math inline">\(G\)</span>为==交换群（Abel群）==。</strong></p>
 </blockquote>
 <p>交换群又常被成为<strong>加群</strong></p>
 <blockquote>
-<p><strong>定理</strong>    <strong>群$<G, \cdot>$为交换群的==充要条件==是：对任意$a,b\in G$，$(a\cdot b)^2=a^2\cdot b^2$</strong></p>
+<p><strong>定理</strong> <strong>群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>为交换群的==充要条件==是：对任意<span class="math inline">\(a,b\in G\)</span>，<span class="math inline">\((a\cdot b)^2=a^2\cdot b^2\)</span></strong></p>
 </blockquote>
 <p>在交换群中，循环群有特殊地位</p>
 <p>（循环群都是交换群）</p>
 <blockquote>
-<p><strong>定义</strong>    <strong>如果群$<G, \cdot>$中存在一个元$a$，是的$G$能由$a$生成，即$G=(a)$，则称$G$为==循环群==，称$a$是$G$的一个==生成元==。</strong></p>
+<p><strong>定义</strong> <strong>如果群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>中存在一个元<span class="math inline">\(a\)</span>，是的<span class="math inline">\(G\)</span>能由<span class="math inline">\(a\)</span>生成，即<span class="math inline">\(G=(a)\)</span>，则称<span class="math inline">\(G\)</span>为==循环群==，称<span class="math inline">\(a\)</span>是<span class="math inline">\(G\)</span>的一个==生成元==。</strong></p>
 </blockquote>
-<p>$G = \{a^k|k \in G\}$</p>
+<p><span class="math inline">\(G = \{a^k|k \in G\}\)</span></p>
 <blockquote>
-<p><strong>定义</strong>    <strong>设$<G, \cdot>$是群，$a\in G$，使得$a^n=e$的==最小正整数$n$==为元素$a$的周期。如果不存在这种最小正整数，则称$a$的周期为$\infty$</strong></p>
+<p><strong>定义</strong> <strong>设<span class="math inline">\(&lt;G, \cdot&gt;\)</span>是群，<span class="math inline">\(a\in G\)</span>，使得<span class="math inline">\(a^n=e\)</span>的==最小正整数<span class="math inline">\(n\)</span>==为元素<span class="math inline">\(a\)</span>的周期。如果不存在这种最小正整数，则称<span class="math inline">\(a\)</span>的周期为<span class="math inline">\(\infty\)</span></strong></p>
+</blockquote>
+<blockquote>
 <p><strong>定理</strong></p>
-<p><strong>设群$<G, \cdot>$中元素$a$的周期为正整数$n$，则：</strong></p>
+<p><strong>设群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>中元素<span class="math inline">\(a\)</span>的周期为正整数<span class="math inline">\(n\)</span>，则：</strong></p>
 <ul>
-<li><strong>$a^m=e$，当且仅当$n|m$</strong></li>
-<li><strong>$a^i=a^j$，当且仅当$n|(i-j)$</strong></li>
-<li><strong>由$a$生成的子群恰好有n个元素。</strong></li>
+<li><strong><span class="math inline">\(a^m=e\)</span>，当且仅当<span class="math inline">\(n|m\)</span></strong></li>
+<li><strong><span class="math inline">\(a^i=a^j\)</span>，当且仅当<span class="math inline">\(n|(i-j)\)</span></strong></li>
+<li><strong>由<span class="math inline">\(a\)</span>生成的子群恰好有n个元素。</strong></li>
 </ul>
 </blockquote>
 <p><strong>有限群的每个元素周期都是有限数。</strong></p>
 <p>循环群的任何子群都是循环群。</p>
-<h4 id="陪集与拉格朗日定理"><a href="#陪集与拉格朗日定理" class="headerlink" title="陪集与拉格朗日定理"></a>陪集与拉格朗日定理</h4><blockquote>
+<h4 id="陪集与拉格朗日定理">陪集与拉格朗日定理</h4>
+<blockquote>
 <p><strong>定义</strong></p>
-<p><strong>设$<H, \cdot>$是群$<G, \cdot>$的一个子群，$a\in G$，记$aH=\{a\cdot h|h\in H\}$，称$aH$是$H$在$G$中关于元$a$的==左陪集==。称$Ha=\{h\cdot a|h\in H\}$是$H$在$G$中关于元$a$的==右陪集==。由左（右）陪集构成的集合的基数称为==子群的指数==。</strong></p>
+<p><strong>设<span class="math inline">\(&lt;H, \cdot&gt;\)</span>是群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的一个子群，<span class="math inline">\(a\in G\)</span>，记<span class="math inline">\(aH=\{a\cdot h|h\in H\}\)</span>，称<span class="math inline">\(aH\)</span>是<span class="math inline">\(H\)</span>在<span class="math inline">\(G\)</span>中关于元<span class="math inline">\(a\)</span>的==左陪集==。称<span class="math inline">\(Ha=\{h\cdot a|h\in H\}\)</span>是<span class="math inline">\(H\)</span>在<span class="math inline">\(G\)</span>中关于元<span class="math inline">\(a\)</span>的==右陪集==。由左（右）陪集构成的集合的基数称为==子群的指数==。</strong></p>
 </blockquote>
-<p>$eH=He=H$</p>
-<p>$\forall x \in G,a\in Ha$</p>
+<p><span class="math inline">\(eH=He=H\)</span></p>
+<p><span class="math inline">\(\forall x \in G,a\in Ha\)</span></p>
 <ul>
-<li><p>$H$关于同一元素的左陪集和右陪集可能不相同</p>
-</li>
+<li><p><span class="math inline">\(H\)</span>关于同一元素的左陪集和右陪集可能不相同</p></li>
 <li><p>凡是同属某个左（右）陪集的元素，它们对应的左（右）陪集也相同</p>
 <blockquote>
-<p><strong>定理  设H是G的子群，$a\in Hb \Leftrightarrow a\cdot b^{-1}\in H \Leftrightarrow Ha=Hb$</strong></p>
+<p><strong>定理 设H是G的子群，<span class="math inline">\(a\in Hb \Leftrightarrow a\cdot b^{-1}\in H \Leftrightarrow Ha=Hb\)</span></strong></p>
 </blockquote>
 <p>证明：</p>
-<ol>
-<li><p>先证明$a\in Hb \Leftrightarrow a\cdot b^{-1}\in H$</p>
-<ol>
-<li><p>$a\in Hb,~\therefore a=h\cdot b(h\in H)$</p>
-<p>$\therefore a\cdot b^{-1}=h\in H$（h有逆元）</p>
-<p>$\therefore a\in Hb \Rightarrow a\cdot b^{-1}\in H$</p>
-</li>
-<li><p>$a\cdot b^{-1}\in H$</p>
-<p>$\therefore a\cdot b^{-1}=h\in H$</p>
-<p>$\therefore a = h\cdot b\in Hb$</p>
-<p>$\therefore a\cdot b^{-1}\in H \Rightarrow a\in Hb$</p>
-</li>
+<ol type="1">
+<li><p>先证明<span class="math inline">\(a\in Hb \Leftrightarrow a\cdot b^{-1}\in H\)</span></p>
+<ol type="1">
+<li><p><span class="math inline">\(a\in Hb,~\therefore a=h\cdot b(h\in H)\)</span></p>
+<p><span class="math inline">\(\therefore a\cdot b^{-1}=h\in H\)</span>（h有逆元）</p>
+<p><span class="math inline">\(\therefore a\in Hb \Rightarrow a\cdot b^{-1}\in H\)</span></p></li>
+<li><p><span class="math inline">\(a\cdot b^{-1}\in H\)</span></p>
+<p><span class="math inline">\(\therefore a\cdot b^{-1}=h\in H\)</span></p>
+<p><span class="math inline">\(\therefore a = h\cdot b\in Hb\)</span></p>
+<p><span class="math inline">\(\therefore a\cdot b^{-1}\in H \Rightarrow a\in Hb\)</span></p></li>
 </ol>
-<p>所以$a\in Hb \Leftrightarrow a\cdot b^{-1}\in H$</p>
-</li>
-<li><p>再证明$a\cdot b^{-1}\in H \Leftrightarrow Ha=Hb$</p>
-<ol>
-<li><p>证明$a\cdot b^{-1}\in H \Rightarrow Ha=Hb$</p>
-<ol>
-<li><p>$\forall x\in Ha,x=h_1\cdot a(h_1 \in H)$</p>
-<p>又$a\cdot b^{-1}=h_2\in H$</p>
-<p>$\therefore x=h_1\cdot h_2 \cdot b=(h_1\cdot h_2)\cdot b \in Hb$</p>
-<p>$\therefore Ha \subseteq Hb$</p>
-</li>
-<li><p>类似可证明$Hb\subseteq Ha$</p>
-</li>
+<p>所以<span class="math inline">\(a\in Hb \Leftrightarrow a\cdot b^{-1}\in H\)</span></p></li>
+<li><p>再证明<span class="math inline">\(a\cdot b^{-1}\in H \Leftrightarrow Ha=Hb\)</span></p>
+<ol type="1">
+<li><p>证明<span class="math inline">\(a\cdot b^{-1}\in H \Rightarrow Ha=Hb\)</span></p>
+<ol type="1">
+<li><p><span class="math inline">\(\forall x\in Ha,x=h_1\cdot a(h_1 \in H)\)</span></p>
+<p>又<span class="math inline">\(a\cdot b^{-1}=h_2\in H\)</span></p>
+<p><span class="math inline">\(\therefore x=h_1\cdot h_2 \cdot b=(h_1\cdot h_2)\cdot b \in Hb\)</span></p>
+<p><span class="math inline">\(\therefore Ha \subseteq Hb\)</span></p></li>
+<li><p>类似可证明<span class="math inline">\(Hb\subseteq Ha\)</span></p></li>
 </ol>
-<p>$\therefore Hb=Ha$</p>
-</li>
-<li><p>证明：$ Ha=Hb\Rightarrow a\cdot b^{-1}\in H $</p>
-<p>显然</p>
-</li>
-</ol>
-</li>
-</ol>
-</li>
-<li><p>任何两个左（右）陪集要么相同，要么无公共元素</p>
-</li>
-<li><p>所有左（右）陪集的元素数目相同</p>
-</li>
+<p><span class="math inline">\(\therefore Hb=Ha\)</span></p></li>
+<li><p>证明：$ Ha=Hbab^{-1}H $</p>
+<p>显然</p></li>
+</ol></li>
+</ol></li>
+<li><p>任何两个左（右）陪集要么相同，要么无公共元素</p></li>
+<li><p>所有左（右）陪集的元素数目相同</p></li>
 </ul>
 <blockquote>
 <p><strong>定理</strong></p>
-<p><strong>设$H$是群$G$的子群，$a, b\in G$。在$G$中建立二元关系$aRb\Leftrightarrow b\in aH$，则$R$是$G$上的一个等价关系。</strong></p>
+<p><strong>设<span class="math inline">\(H\)</span>是群<span class="math inline">\(G\)</span>的子群，<span class="math inline">\(a, b\in G\)</span>。在<span class="math inline">\(G\)</span>中建立二元关系<span class="math inline">\(aRb\Leftrightarrow b\in aH\)</span>，则<span class="math inline">\(R\)</span>是<span class="math inline">\(G\)</span>上的一个等价关系。</strong></p>
 </blockquote>
 <p>证明：</p>
-<ol>
-<li>自反的：$a\in aH$，所以$aRb$</li>
-<li>对称的：如果$aRb$，即$b\in aH$，则$bH=aH$，又因为$a\in aH$所以$a\in bH$，即$bRa$，对称性得证</li>
-<li>可传递的：设$aRb,bRc$，根据定义存在$h_1,h_2\in H$，使$b=a\cdot h_1,c=b\cdot h_2$，于是$c=b\cdot h_2=a\cdot h_1\cdot h_2\in aH$，所以$aRc$成立</li>
+<ol type="1">
+<li>自反的：<span class="math inline">\(a\in aH\)</span>，所以<span class="math inline">\(aRb\)</span></li>
+<li>对称的：如果<span class="math inline">\(aRb\)</span>，即<span class="math inline">\(b\in aH\)</span>，则<span class="math inline">\(bH=aH\)</span>，又因为<span class="math inline">\(a\in aH\)</span>所以<span class="math inline">\(a\in bH\)</span>，即<span class="math inline">\(bRa\)</span>，对称性得证</li>
+<li>可传递的：设<span class="math inline">\(aRb,bRc\)</span>，根据定义存在<span class="math inline">\(h_1,h_2\in H\)</span>，使<span class="math inline">\(b=a\cdot h_1,c=b\cdot h_2\)</span>，于是<span class="math inline">\(c=b\cdot h_2=a\cdot h_1\cdot h_2\in aH\)</span>，所以<span class="math inline">\(aRc\)</span>成立</li>
 </ol>
 <blockquote>
-<p><strong>定理</strong>    R是上述等价关系，则$[a]_R=aH$</p>
+<p><strong>定理</strong> R是上述等价关系，则<span class="math inline">\([a]_R=aH\)</span></p>
 </blockquote>
-<p>等价关系R可以确定群G的一个分划，每个左陪集就是分划中的一个块。$G=H\cup a_1H\cup a_2H\cup …$称为G的左陪集分解式。</p>
-<p>同时可以确定G的右陪集分解式$G=H\cup Ha_1\cup Ha_2\cup …$</p>
+<p>等价关系R可以确定群G的一个分划，每个左陪集就是分划中的一个块。<span class="math inline">\(G=H\cup a_1H\cup a_2H\cup ...\)</span>称为G的左陪集分解式。</p>
+<p>同时可以确定G的右陪集分解式<span class="math inline">\(G=H\cup Ha_1\cup Ha_2\cup ...\)</span></p>
 <blockquote>
-<p><strong>定理</strong>    <strong>群G中子群H的所有左（右）陪集都是等势的。</strong></p>
+<p><strong>定理</strong> <strong>群G中子群H的所有左（右）陪集都是等势的。</strong></p>
 </blockquote>
-<p>证明：只需证明任何$aH\sim H$。</p>
-<p>​    构造映射$f:H\to aH$，对任何$h\in H,f(h)=a\cdot h$。这是双射函数。</p>
+<p>证明：只需证明任何<span class="math inline">\(aH\sim H\)</span>。</p>
+<p>​ 构造映射<span class="math inline">\(f:H\to aH\)</span>，对任何<span class="math inline">\(h\in H,f(h)=a\cdot h\)</span>。这是双射函数。</p>
 <blockquote>
-<p><strong>定理    拉格朗日定理</strong></p>
-<p><strong>$n$阶群$<G, \cdot>$的任何子群$<H, \cdot>$的阶必定是$n$的因子。</strong></p>
+<p><strong>定理 拉格朗日定理</strong></p>
+<p><strong><span class="math inline">\(n\)</span>阶群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的任何子群<span class="math inline">\(&lt;H, \cdot&gt;\)</span>的阶必定是<span class="math inline">\(n\)</span>的因子。</strong></p>
 </blockquote>
 <p>由上述陪集分解式，显然。</p>
 <blockquote>
-<p><strong>推论</strong>    <strong>$n$元群$G$中任何元素的周期必是$n$的因子。</strong></p>
+<p><strong>推论</strong> <strong><span class="math inline">\(n\)</span>元群<span class="math inline">\(G\)</span>中任何元素的周期必是<span class="math inline">\(n\)</span>的因子。</strong></p>
 </blockquote>
 <p>证明：</p>
-<p>​    设$a\in G$，则$(a)=\{e, a, a^2, …, a^{m-1}\}$是G的一个子群，故$m|n$,而$m$是元素$a$的周期，所以每个元素的周期必是$n$的因子。</p>
-<h4 id="正规子群与商群"><a href="#正规子群与商群" class="headerlink" title="正规子群与商群"></a>正规子群与商群</h4><blockquote>
-<p><strong>定义</strong>    <strong>设$<H, \cdot>$是群$<G, \cdot>$的一个子群。如果对于任何$a\in G,aH=Ha$，则称$H$是$G$的==正规子群（不变子群）==。</strong></p>
+<p>​ 设<span class="math inline">\(a\in G\)</span>，则<span class="math inline">\((a)=\{e, a, a^2, ..., a^{m-1}\}\)</span>是G的一个子群，故<span class="math inline">\(m|n\)</span>,而<span class="math inline">\(m\)</span>是元素<span class="math inline">\(a\)</span>的周期，所以每个元素的周期必是<span class="math inline">\(n\)</span>的因子。</p>
+<h4 id="正规子群与商群">正规子群与商群</h4>
+<blockquote>
+<p><strong>定义</strong> <strong>设<span class="math inline">\(&lt;H, \cdot&gt;\)</span>是群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的一个子群。如果对于任何<span class="math inline">\(a\in G,aH=Ha\)</span>，则称<span class="math inline">\(H\)</span>是<span class="math inline">\(G\)</span>的==正规子群（不变子群）==。</strong></p>
 </blockquote>
 <ul>
-<li>任意群$<G, \cdot>$的平凡子群都是G的不变子群</li>
-<li>交换群$<G, \cdot>$的任意子群$<H, \cdot>$都是G的不变子群</li>
-<li>循环群$<G, \cdot>$的任意子群$<H, \cdot>$都是G的不变子群</li>
-<li>素数阶群$<G, \cdot>$没有不平凡的不变子群</li>
+<li>任意群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的平凡子群都是G的不变子群</li>
+<li>交换群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的任意子群<span class="math inline">\(&lt;H, \cdot&gt;\)</span>都是G的不变子群</li>
+<li>循环群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的任意子群<span class="math inline">\(&lt;H, \cdot&gt;\)</span>都是G的不变子群</li>
+<li>素数阶群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>没有不平凡的不变子群</li>
 </ul>
 <blockquote>
-<p><strong>定理</strong>    <strong>群$<G, \cdot>$的子群$<H, \cdot>$是不变子群，==当且仅当==对任何$a\in G,aHa^{-1}\subseteq H$</strong></p>
+<p><strong>定理</strong> <strong>群<span class="math inline">\(&lt;G, \cdot&gt;\)</span>的子群<span class="math inline">\(&lt;H, \cdot&gt;\)</span>是不变子群，==当且仅当==对任何<span class="math inline">\(a\in G,aHa^{-1}\subseteq H\)</span></strong></p>
 </blockquote>
 <p>证明：</p>
-<ol>
-<li>$H$是$G$的正规子群，所以$aH=Ha$，即对任何$h_1\in H$，必有$h_2\in H$，使$a\cdot h_1=h_2\cdot a$，即$a\cdot h_1\cdot a^{-1}=h_2\in H$，充分性得证</li>
-<li>如果对于任何$a\in G,aHa^{-1}\subseteq H$，即对于任何$h_1\in H$，都有$h_2\in H$，是$a\cdot h_1\cdot a^{-1}=h_2$，由此可得$a\cdot h_1=h_2\cdot a$，由$h_1,h_2$的任意性，可得$aH=Ha$，必要性得证。</li>
+<ol type="1">
+<li><span class="math inline">\(H\)</span>是<span class="math inline">\(G\)</span>的正规子群，所以<span class="math inline">\(aH=Ha\)</span>，即对任何<span class="math inline">\(h_1\in H\)</span>，必有<span class="math inline">\(h_2\in H\)</span>，使<span class="math inline">\(a\cdot h_1=h_2\cdot a\)</span>，即<span class="math inline">\(a\cdot h_1\cdot a^{-1}=h_2\in H\)</span>，充分性得证</li>
+<li>如果对于任何<span class="math inline">\(a\in G,aHa^{-1}\subseteq H\)</span>，即对于任何<span class="math inline">\(h_1\in H\)</span>，都有<span class="math inline">\(h_2\in H\)</span>，是<span class="math inline">\(a\cdot h_1\cdot a^{-1}=h_2\)</span>，由此可得<span class="math inline">\(a\cdot h_1=h_2\cdot a\)</span>，由<span class="math inline">\(h_1,h_2\)</span>的任意性，可得<span class="math inline">\(aH=Ha\)</span>，必要性得证。</li>
 </ol>
 <blockquote>
-<p><strong>定义</strong>    设$<H, *>$是$<G, *>$的一个==正规子群==，$G/H$表示$G$的所有陪集的集合，则$<G/H, \cdot>$是一个群，称为==商群==。其中”$\cdot$”定义为$\forall aH,bH\in G/H,aH\cdot bH=(a*b)H$</p>
+<p><strong>定义</strong> 设<span class="math inline">\(&lt;H, *&gt;\)</span>是<span class="math inline">\(&lt;G, *&gt;\)</span>的一个==正规子群==，<span class="math inline">\(G/H\)</span>表示<span class="math inline">\(G\)</span>的所有陪集的集合，则<span class="math inline">\(&lt;G/H, \cdot&gt;\)</span>是一个群，称为==商群==。其中"<span class="math inline">\(\cdot\)</span>"定义为<span class="math inline">\(\forall aH,bH\in G/H,aH\cdot bH=(a*b)H\)</span></p>
 </blockquote>
-<h4 id="群的同态与同构"><a href="#群的同态与同构" class="headerlink" title="群的同态与同构"></a>群的同态与同构</h4><blockquote>
-<p><strong>定义</strong>    </p>
-<p><strong>设$<S, \cdot>$和$<T, \circ>$是两个==代数系统==，其中“$\cdot$”和“$\circ$”分别是$S$和$T$的二元运算。如果存在映射$f:S\to T$使得对任意$a_1,a_2\in S,f(a_1\cdot a_2)=f(a_1)\circ f(a_2)$，则称$f$是$S$到$T$的==同态映射==，或者$S$和$T$==同态==，记为$S\sim T$；称$f(S)\subseteq T$为$S$的==同态像==。</strong></p>
-<p><strong>当$f$是满射时，称$f$为==满同态==；当$f$是双射时，称$f$为==同构映射==。代数系统$S$和$T$同构记为$S\cong T$.</strong></p>
+<h4 id="群的同态与同构">群的同态与同构</h4>
+<blockquote>
+<p><strong>定义</strong></p>
+<p><strong>设<span class="math inline">\(&lt;S, \cdot&gt;\)</span>和<span class="math inline">\(&lt;T, \circ&gt;\)</span>是两个==代数系统==，其中“<span class="math inline">\(\cdot\)</span>”和“<span class="math inline">\(\circ\)</span>”分别是<span class="math inline">\(S\)</span>和<span class="math inline">\(T\)</span>的二元运算。如果存在映射<span class="math inline">\(f:S\to T\)</span>使得对任意<span class="math inline">\(a_1,a_2\in S,f(a_1\cdot a_2)=f(a_1)\circ f(a_2)\)</span>，则称<span class="math inline">\(f\)</span>是<span class="math inline">\(S\)</span>到<span class="math inline">\(T\)</span>的==同态映射==，或者<span class="math inline">\(S\)</span>和<span class="math inline">\(T\)</span>==同态==，记为<span class="math inline">\(S\sim T\)</span>；称<span class="math inline">\(f(S)\subseteq T\)</span>为<span class="math inline">\(S\)</span>的==同态像==。</strong></p>
+<p><strong>当<span class="math inline">\(f\)</span>是满射时，称<span class="math inline">\(f\)</span>为==满同态==；当<span class="math inline">\(f\)</span>是双射时，称<span class="math inline">\(f\)</span>为==同构映射==。代数系统<span class="math inline">\(S\)</span>和<span class="math inline">\(T\)</span>同构记为<span class="math inline">\(S\cong T\)</span>.</strong></p>
 </blockquote>
 <p>同态映射不仅确定了不同集合元素间的对应关系，而且还保持了代数系统的运算性质。</p>
 <blockquote>
 <p><strong>定理</strong></p>
-<p><strong>设$f$是从代数系统$<S, \cdot>$到代数系统$<T, \circ>$的==同态映射==，则</strong></p>
+<p><strong>设<span class="math inline">\(f\)</span>是从代数系统<span class="math inline">\(&lt;S, \cdot&gt;\)</span>到代数系统<span class="math inline">\(&lt;T, \circ&gt;\)</span>的==同态映射==，则</strong></p>
 <ul>
-<li><strong>如果运算”$\cdot$”在$S$中是封闭的，那么运算“$\circ$”在$f(S)$中也是封闭的。</strong></li>
-<li><strong>$<S, \cdot>$满足结合律，则$<f(S), \cdot>$满足结合律</strong></li>
-<li><strong>$<S, \cdot>$满足交换律，则$<f(S), \cdot>$满足交换律</strong></li>
-<li><strong>$<S, \cdot>$存在幺元，则$<f(S), \cdot>$存在幺元</strong></li>
-<li><strong>$S$中每元关于运算“$\cdot$”有逆元，那么$f(S)$中每元关于运算“$\circ$”也有逆元。$\forall x\in S, f(x^{-1})=f^{-1}(x)$</strong></li>
+<li><strong>如果运算”<span class="math inline">\(\cdot\)</span>"在<span class="math inline">\(S\)</span>中是封闭的，那么运算“<span class="math inline">\(\circ\)</span>”在<span class="math inline">\(f(S)\)</span>中也是封闭的。</strong></li>
+<li><strong><span class="math inline">\(&lt;S, \cdot&gt;\)</span>满足结合律，则<span class="math inline">\(&lt;f(S), \cdot&gt;\)</span>满足结合律</strong></li>
+<li><strong><span class="math inline">\(&lt;S, \cdot&gt;\)</span>满足交换律，则<span class="math inline">\(&lt;f(S), \cdot&gt;\)</span>满足交换律</strong></li>
+<li><strong><span class="math inline">\(&lt;S, \cdot&gt;\)</span>存在幺元，则<span class="math inline">\(&lt;f(S), \cdot&gt;\)</span>存在幺元</strong></li>
+<li><strong><span class="math inline">\(S\)</span>中每元关于运算“<span class="math inline">\(\cdot\)</span>”有逆元，那么<span class="math inline">\(f(S)\)</span>中每元关于运算“<span class="math inline">\(\circ\)</span>”也有逆元。<span class="math inline">\(\forall x\in S, f(x^{-1})=f^{-1}(x)\)</span></strong></li>
 </ul>
-<p><strong>定理</strong>    <strong>如果$f$是代数系统$<S, \cdot>$到$<T, \cdot>$的满同态，那么</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>定理</strong> <strong>如果<span class="math inline">\(f\)</span>是代数系统<span class="math inline">\(&lt;S, \cdot&gt;\)</span>到<span class="math inline">\(&lt;T, \cdot&gt;\)</span>的满同态，那么</strong></p>
 <ul>
-<li><strong>如果$S$是半群，则$T$也是半群</strong></li>
-<li><strong>如果$S$是群，则$T$也是群</strong></li>
+<li><strong>如果<span class="math inline">\(S\)</span>是半群，则<span class="math inline">\(T\)</span>也是半群</strong></li>
+<li><strong>如果<span class="math inline">\(S\)</span>是群，则<span class="math inline">\(T\)</span>也是群</strong></li>
 </ul>
 </blockquote>
 <p>在同态映射下，像源的代数性质都为像集所具有，但像集所具有的代数性质像源未必能有。</p>
-<p>如$<Z_2,\bigoplus> $是群，而$<N, +>$不是群。</p>
-<p>$f$实际上是按一定模式把像源的元素进行归类。</p>
+<p>如$&lt;Z_2,&gt; <span class="math inline">\(是群，而\)</span>&lt;N, +&gt;$不是群。</p>
+<p><span class="math inline">\(f\)</span>实际上是按一定模式把像源的元素进行归类。</p>
 <blockquote>
-<p><strong>定义</strong>    <strong>设$f$是使$<G, \cdot>$到$<H, \circ>$的同态映射，$e’$是$H$的幺元，记$Ker(f)=\{x|x\in G \and f(x)=e’\}$，则称$Ker(f)$为$f$的==同态核==</strong></p>
-<p><strong>定理</strong>    <strong>设$f$是使$<G, \cdot>$到$<H, \circ>$的同态映射，则$f$的==同态核==$Ker(f)$是$G$的==正规子群==</strong></p>
+<p><strong>定义</strong> <strong>设<span class="math inline">\(f\)</span>是使<span class="math inline">\(&lt;G, \cdot&gt;\)</span>到<span class="math inline">\(&lt;H, \circ&gt;\)</span>的同态映射，<span class="math inline">\(e&#39;\)</span>是<span class="math inline">\(H\)</span>的幺元，记<span class="math inline">\(Ker(f)=\{x|x\in G \and f(x)=e&#39;\}\)</span>，则称<span class="math inline">\(Ker(f)\)</span>为<span class="math inline">\(f\)</span>的==同态核==</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>定理</strong> <strong>设<span class="math inline">\(f\)</span>是使<span class="math inline">\(&lt;G, \cdot&gt;\)</span>到<span class="math inline">\(&lt;H, \circ&gt;\)</span>的同态映射，则<span class="math inline">\(f\)</span>的==同态核==<span class="math inline">\(Ker(f)\)</span>是<span class="math inline">\(G\)</span>的==正规子群==</strong></p>
 </blockquote>
 <p>证明：</p>
-<ol>
-<li><p>先证$Ker(f)$是$<G,\cdot>$的子群</p>
-<p>设$e’$是H的幺元</p>
-<p>$\forall x, y\in Ker(f),\therefore f(x)=f(y)=e’$</p>
-<p>$f(x\cdot y^{-1})=f(x)\circ f(y^{-1})=f(x)\circ f^{-1}(y)=e’\circ e’=e’\in Ker(f)$</p>
-<p>所以$Ker(f)$是$<G,\cdot>$的子群</p>
-</li>
+<ol type="1">
+<li><p>先证<span class="math inline">\(Ker(f)\)</span>是<span class="math inline">\(&lt;G,\cdot&gt;\)</span>的子群</p>
+<p>设<span class="math inline">\(e&#39;\)</span>是H的幺元</p>
+<p><span class="math inline">\(\forall x, y\in Ker(f),\therefore f(x)=f(y)=e&#39;\)</span></p>
+<p><span class="math inline">\(f(x\cdot y^{-1})=f(x)\circ f(y^{-1})=f(x)\circ f^{-1}(y)=e&#39;\circ e&#39;=e&#39;\in Ker(f)\)</span></p>
+<p>所以<span class="math inline">\(Ker(f)\)</span>是<span class="math inline">\(&lt;G,\cdot&gt;\)</span>的子群</p></li>
 <li><p>再证是正规子群</p>
-<p>$\forall x\in G,k\in Ker(f)$</p>
-<p>$f(x\cdot k\cdot x^{-1})=f(x)\circ f(k)\circ f(x^{-1})=f(x)\circ f^{-1}(x)=e’\in Ker(f)$</p>
-<p>所以$Ker(f)$是$<G,\cdot>$的正规子群</p>
-</li>
+<p><span class="math inline">\(\forall x\in G,k\in Ker(f)\)</span></p>
+<p><span class="math inline">\(f(x\cdot k\cdot x^{-1})=f(x)\circ f(k)\circ f(x^{-1})=f(x)\circ f^{-1}(x)=e&#39;\in Ker(f)\)</span></p>
+<p>所以<span class="math inline">\(Ker(f)\)</span>是<span class="math inline">\(&lt;G,\cdot&gt;\)</span>的正规子群</p></li>
 </ol>
-<h3 id="环与域"><a href="#环与域" class="headerlink" title="环与域"></a>环与域</h3><h4 id="环的定义及性质"><a href="#环的定义及性质" class="headerlink" title="环的定义及性质"></a>环的定义及性质</h4><blockquote>
-<p><strong>定义</strong></p>
-<p><strong>设$<R,+,*>$是含有两个二元运算的代数系统。如果满足</strong></p>
-<ol>
-<li><strong>$<R,+>$是==交换群==</strong></li>
-<li><strong>$<R,*>$是==半群==</strong></li>
-<li><strong>$\forall a, b, c\in R,a<em>(b+c)=(a</em>b)+(a<em>c),(b+c)</em>a=(b<em>a)+(c</em>a)$</strong></li>
-</ol>
-<p><strong>则称$<R,+,*>$是==环==</strong></p>
-</blockquote>
-<p>约定加法幺元记为$\theta$。</p>
-<p>元$b$的加法记为$-b$，并且$a+(-b)=a-b$。</p>
+<h3 id="环与域">环与域</h3>
+<h4 id="环的定义及性质">环的定义及性质</h4>
 <blockquote>
-<p><strong>定理    移项法则</strong></p>
-<p><strong>设$<R,+,*>$是环，$a,b,c\in R$，则下面两条等价：</strong></p>
-<ol>
-<li><strong>$a+b=c$</strong></li>
-<li><strong>$a+b-c=\theta$</strong></li>
+<p><strong>定义</strong></p>
+<p><strong>设<span class="math inline">\(&lt;R,+,*&gt;\)</span>是含有两个二元运算的代数系统。如果满足</strong></p>
+<ol type="1">
+<li><strong><span class="math inline">\(&lt;R,+&gt;\)</span>是==交换群==</strong></li>
+<li><strong><span class="math inline">\(&lt;R,*&gt;\)</span>是==半群==</strong></li>
+<li><strong><span class="math inline">\(\forall a, b, c\in R,a*(b+c)=(a*b)+(a*c),(b+c)*a=(b*a)+(c*a)\)</span></strong></li>
 </ol>
-<p><strong>定理</strong> </p>
-<p><strong>设$<R,+,*>$是环$a,b,c\in R$，则：</strong></p>
+<p><strong>则称<span class="math inline">\(&lt;R,+,*&gt;\)</span>是==环==</strong></p>
+</blockquote>
+<p>约定加法幺元记为<span class="math inline">\(\theta\)</span>。</p>
+<p>元<span class="math inline">\(b\)</span>的加法记为<span class="math inline">\(-b\)</span>，并且<span class="math inline">\(a+(-b)=a-b\)</span>。</p>
+<blockquote>
+<p><strong>定理 移项法则</strong></p>
+<p><strong>设<span class="math inline">\(&lt;R,+,*&gt;\)</span>是环，<span class="math inline">\(a,b,c\in R\)</span>，则下面两条等价：</strong></p>
+<ol type="1">
+<li><strong><span class="math inline">\(a+b=c\)</span></strong></li>
+<li><strong><span class="math inline">\(a+b-c=\theta\)</span></strong></li>
+</ol>
+</blockquote>
+<blockquote>
+<p><strong>定理</strong></p>
+<p><strong>设<span class="math inline">\(&lt;R,+,*&gt;\)</span>是环<span class="math inline">\(a,b,c\in R\)</span>，则：</strong></p>
 <ul>
-<li><strong>$a<em>\theta =\theta </em>a=\theta$（加法幺元是乘法零元）</strong></li>
-<li><strong>$a<em>(-b)=-(a</em>b)=(-a)*b$</strong></li>
-<li><strong>$(-a)<em>(-b)=a</em>b$</strong></li>
-<li><strong>$a<em>(b-c)=(a</em>b)-(a*c)$</strong></li>
-<li><strong>$(b-c)<em>a=(b</em>a)-(c*a)$</strong></li>
+<li><strong><span class="math inline">\(a*\theta =\theta *a=\theta\)</span>（加法幺元是乘法零元）</strong></li>
+<li><strong><span class="math inline">\(a*(-b)=-(a*b)=(-a)*b\)</span></strong></li>
+<li><strong><span class="math inline">\((-a)*(-b)=a*b\)</span></strong></li>
+<li><strong><span class="math inline">\(a*(b-c)=(a*b)-(a*c)\)</span></strong></li>
+<li><strong><span class="math inline">\((b-c)*a=(b*a)-(c*a)\)</span></strong></li>
 </ul>
 </blockquote>
 <p>证明：</p>
-<ol>
-<li><p>$a<em>\theta=a</em>(\theta +\theta)=(a<em>\theta)+(a</em>\theta)$</p>
-<p>由移项法则，得到$a*\theta = \theta$</p>
-</li>
-<li><p>$(a<em>(-b))+(a</em>b)=a<em>(-b+b)=a</em>\theta =\theta$</p>
-<p>$\therefore a<em>(-b)=-(a</em>b)$</p>
-<p>同理$(-a)<em>b=-(a</em>b)$</p>
-</li>
-<li><p>$(-a)<em>(-b)-(a</em>b)=(-a)<em>(-b)+a</em>(-b)=(-a+a)<em>(-b)=\theta </em>(-b)=\theta$</p>
-</li>
+<ol type="1">
+<li><p><span class="math inline">\(a*\theta=a*(\theta +\theta)=(a*\theta)+(a*\theta)\)</span></p>
+<p>由移项法则，得到<span class="math inline">\(a*\theta = \theta\)</span></p></li>
+<li><p><span class="math inline">\((a*(-b))+(a*b)=a*(-b+b)=a*\theta =\theta\)</span></p>
+<p><span class="math inline">\(\therefore a*(-b)=-(a*b)\)</span></p>
+<p>同理<span class="math inline">\((-a)*b=-(a*b)\)</span></p></li>
+<li><p><span class="math inline">\((-a)*(-b)-(a*b)=(-a)*(-b)+a*(-b)=(-a+a)*(-b)=\theta *(-b)=\theta\)</span></p></li>
 </ol>
-<p>​        $\therefore (-a)<em>(-b)=a</em>b$</p>
-<ol>
-<li>$a<em>(b-c)=a</em>(b+(-c))=(a<em>b)+(a</em>(-c))=(a<em>b)-(a</em>c)$</li>
+<p>​ <span class="math inline">\(\therefore (-a)*(-b)=a*b\)</span></p>
+<ol start="4" type="1">
+<li><span class="math inline">\(a*(b-c)=a*(b+(-c))=(a*b)+(a*(-c))=(a*b)-(a*c)\)</span></li>
 <li>同4.</li>
 </ol>
 <blockquote>
-<p><strong>定义</strong>    <strong>设$<R,+,*>$是环，$a,b\in R$。如果$a\ne \theta,b\ne \theta$，而$a*b=\theta$，则称$a$和$b$是$R$中的==零因子==。</strong></p>
+<p><strong>定义</strong> <strong>设<span class="math inline">\(&lt;R,+,*&gt;\)</span>是环，<span class="math inline">\(a,b\in R\)</span>。如果<span class="math inline">\(a\ne \theta,b\ne \theta\)</span>，而<span class="math inline">\(a*b=\theta\)</span>，则称<span class="math inline">\(a\)</span>和<span class="math inline">\(b\)</span>是<span class="math inline">\(R\)</span>中的==零因子==。</strong></p>
 </blockquote>
-<p>例如，当$m$不是素数时，$<Z_m,\bigoplus,\bigotimes>$有零因子，m是素数时有零因子。</p>
+<p>例如，当<span class="math inline">\(m\)</span>不是素数时，<span class="math inline">\(&lt;Z_m,\bigoplus,\bigotimes&gt;\)</span>有零因子，m是素数时有零因子。</p>
 <p>n阶矩阵中存在零因子。</p>
-<h4 id="整环与域"><a href="#整环与域" class="headerlink" title="整环与域"></a>整环与域</h4><blockquote>
+<h4 id="整环与域">整环与域</h4>
+<blockquote>
 <p><strong>定义</strong></p>
-<p><strong>设$<R,+,*>$是==环==</strong></p>
-<ol>
-<li><strong>如果$<R,*>$可交换，则称$<R,+,*>$为==交换环==。</strong></li>
-<li><strong>如果$<R,*>$有幺元，则称$<R,+,*>$为==含幺环==。</strong></li>
-<li><strong>如果1.2.成立，且无零因子，则称$<R,+,*>$为==整环==。</strong></li>
+<p><strong>设<span class="math inline">\(&lt;R,+,*&gt;\)</span>是==环==</strong></p>
+<ol type="1">
+<li><strong>如果<span class="math inline">\(&lt;R,*&gt;\)</span>可交换，则称<span class="math inline">\(&lt;R,+,*&gt;\)</span>为==交换环==。</strong></li>
+<li><strong>如果<span class="math inline">\(&lt;R,*&gt;\)</span>有幺元，则称<span class="math inline">\(&lt;R,+,*&gt;\)</span>为==含幺环==。</strong></li>
+<li><strong>如果1.2.成立，且无零因子，则称<span class="math inline">\(&lt;R,+,*&gt;\)</span>为==整环==。</strong></li>
 </ol>
-<p><strong>定理</strong>    <strong>设$<R,+,*>$是环，则$R$中无零因子，当且仅当对任何$a,x,y\in R$，当$a\ne \theta$时，由$a<em>x=a</em>y$，必然得到$x=y$。</strong></p>
-<p><strong>定义</strong>    <strong>设$<R,+,*>$是环，$S$是$R$的==非空子集==，如果$<S,+,*>$也是环，则称$S$是$R$的==子环==。</strong></p>
-<p><strong>定义</strong>    <strong>设$<S,+,*>$和$<T,\bigoplus,\bigotimes>$是两个环，$f:S\to T$是映射。如果对于任意$a.b\in S$，都有<script type="math/tex">f(a+b)=f(a)\bigoplus f(b),f(a*b)=f(a)\bigotimes f(b)</script>，则称$f$是环$<S,+,*>$到$<T,\bigoplus,\bigotimes>$的==同态映射==。$f(S)$称谓$S$的==同态像==。当$f$是满射的时候，称$f$为==满同态==。是双射时，称$f$为==环同构映射==。</strong></p>
-<p><strong>定义</strong>    <strong>设$<R,+,*>$是环，如果$<R,+>$和$<R-\{\theta\},*>$都是==交换群==，则称$<R,+,*>$是==域==。</strong></p>
-<p><strong>定理</strong>    <strong>有限整环$<R,+,*>$必是域</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>定理</strong> <strong>设<span class="math inline">\(&lt;R,+,*&gt;\)</span>是环，则<span class="math inline">\(R\)</span>中无零因子，当且仅当对任何<span class="math inline">\(a,x,y\in R\)</span>，当<span class="math inline">\(a\ne \theta\)</span>时，由<span class="math inline">\(a*x=a*y\)</span>，必然得到<span class="math inline">\(x=y\)</span>。</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>定义</strong> <strong>设<span class="math inline">\(&lt;R,+,*&gt;\)</span>是环，<span class="math inline">\(S\)</span>是<span class="math inline">\(R\)</span>的==非空子集==，如果<span class="math inline">\(&lt;S,+,*&gt;\)</span>也是环，则称<span class="math inline">\(S\)</span>是<span class="math inline">\(R\)</span>的==子环==。</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>定义</strong> <strong>设<span class="math inline">\(&lt;S,+,*&gt;\)</span>和<span class="math inline">\(&lt;T,\bigoplus,\bigotimes&gt;\)</span>是两个环，<span class="math inline">\(f:S\to T\)</span>是映射。如果对于任意<span class="math inline">\(a.b\in S\)</span>，都有<span class="math display">\[f(a+b)=f(a)\bigoplus f(b),f(a*b)=f(a)\bigotimes f(b)\]</span>，则称<span class="math inline">\(f\)</span>是环<span class="math inline">\(&lt;S,+,*&gt;\)</span>到<span class="math inline">\(&lt;T,\bigoplus,\bigotimes&gt;\)</span>的==同态映射==。<span class="math inline">\(f(S)\)</span>称谓<span class="math inline">\(S\)</span>的==同态像==。当<span class="math inline">\(f\)</span>是满射的时候，称<span class="math inline">\(f\)</span>为==满同态==。是双射时，称<span class="math inline">\(f\)</span>为==环同构映射==。</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>定义</strong> <strong>设<span class="math inline">\(&lt;R,+,*&gt;\)</span>是环，如果<span class="math inline">\(&lt;R,+&gt;\)</span>和<span class="math inline">\(&lt;R-\{\theta\},*&gt;\)</span>都是==交换群==，则称<span class="math inline">\(&lt;R,+,*&gt;\)</span>是==域==。</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>定理</strong> <strong>有限整环<span class="math inline">\(&lt;R,+,*&gt;\)</span>必是域</strong></p>
 </blockquote>
 
     </div>
@@ -864,12 +879,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">40k</span>
+    <span title="站点总字数">43k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">36 分钟</span>
+    <span title="站点阅读时长">39 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
