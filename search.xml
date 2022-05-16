@@ -28,15 +28,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Life</title>
-    <url>/2021/08/07/Life/</url>
-    <content><![CDATA[
-]]></content>
-      <categories>
-        <category>Life</category>
-      </categories>
-  </entry>
-  <entry>
     <title>HDU7047 Link With Balls</title>
     <url>/2021/08/10/HDU7047-Link-With-Balls/</url>
     <content><![CDATA[<center>
@@ -100,21 +91,6 @@ class="math inline">\(C_{m+n}^{n}-C_{m-1}^{n}\)</span>​。</p>
       <tags>
         <tag>题解</tag>
         <tag>组合数学</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Study Diary</title>
-    <url>/2021/10/09/Study-Diary/</url>
-    <content><![CDATA[<center>
-<p>学习笔记&lt;/&gt;</p>
-<span id="more"></span>
-]]></content>
-      <categories>
-        <category>Life</category>
-        <category>Diary</category>
-      </categories>
-      <tags>
-        <tag>学习笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -185,24 +161,27 @@ batch时（不是只处理一个数据时），通常做以下3件事：</p>
       </tags>
   </entry>
   <entry>
-    <title>交叉熵</title>
-    <url>/2022/01/26/%E4%BA%A4%E5%8F%89%E7%86%B5/</url>
-    <content><![CDATA[<p><strong>信息量</strong>定义<span
-class="math inline">\(f(x)=-log_2x\)</span>，表明信息量的多少，x是概率，通俗来说概率越小信息量越大。</p>
-<p><strong>熵</strong>的定义是信息量的期望，即<span
-class="math inline">\(H(P)=\sum _{i=1}^{m}p_i*f(p_i)\)</span></p>
-<p><strong>相对熵(KL散度)</strong>是两个系统“差距”，
-比如以P为基准，与Q相差多少：<span
-class="math inline">\(D_{KL}(P||Q)=\sum_{i=1}^{m}p_i*(f_Q(q_i)-f_p(p_i))=\sum_{i=1}^{m}p_i*(-log_2q_i)-\sum_{i=1}^{m}p_i(-log_2p_i)\)</span></p>
-<p>后面一项是P的熵，前面一项是P与Q的交叉熵</p>
-<p><strong>交叉熵</strong> <span class="math inline">\(H(P,
-Q)=\sum_{i=1}^{m}p_i(-log_2q_i)=-\sum_{i=1}^{n}(y_ilog_2\hat{y_i}+(1-y_i)log_2(1-\hat{y_i}))\)</span></p>
+    <title>Life</title>
+    <url>/2021/08/07/Life/</url>
+    <content><![CDATA[
 ]]></content>
       <categories>
-        <category>深度学习</category>
+        <category>Life</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Study Diary</title>
+    <url>/2021/10/09/Study-Diary/</url>
+    <content><![CDATA[<center>
+<p>学习笔记&lt;/&gt;</p>
+<span id="more"></span>
+]]></content>
+      <categories>
+        <category>Life</category>
+        <category>Diary</category>
       </categories>
       <tags>
-        <tag>深度学习</tag>
+        <tag>学习笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -215,6 +194,35 @@ Q)=\sum_{i=1}^{m}p_i(-log_2q_i)=-\sum_{i=1}^{n}(y_ilog_2\hat{y_i}+(1-y_i)log_2(1
       <categories>
         <category>Other</category>
       </categories>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/08/03/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
+first post. Check <a href="https://hexo.io/docs/">documentation</a> for
+more info. If you get any problems when using Hexo, you can find the
+answer in <a
+href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
+you can ask me on <a
+href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<span id="more"></span>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>test</title>
@@ -234,6 +242,27 @@ Q)=\sum_{i=1}^{m}p_i(-log_2q_i)=-\sum_{i=1}^{n}(y_ilog_2\hat{y_i}+(1-y_i)log_2(1
       <categories>
         <category>Other</category>
       </categories>
+  </entry>
+  <entry>
+    <title>交叉熵</title>
+    <url>/2022/01/26/%E4%BA%A4%E5%8F%89%E7%86%B5/</url>
+    <content><![CDATA[<p><strong>信息量</strong>定义<span
+class="math inline">\(f(x)=-log_2x\)</span>，表明信息量的多少，x是概率，通俗来说概率越小信息量越大。</p>
+<p><strong>熵</strong>的定义是信息量的期望，即<span
+class="math inline">\(H(P)=\sum _{i=1}^{m}p_i*f(p_i)\)</span></p>
+<p><strong>相对熵(KL散度)</strong>是两个系统“差距”，
+比如以P为基准，与Q相差多少：<span
+class="math inline">\(D_{KL}(P||Q)=\sum_{i=1}^{m}p_i*(f_Q(q_i)-f_p(p_i))=\sum_{i=1}^{m}p_i*(-log_2q_i)-\sum_{i=1}^{m}p_i(-log_2p_i)\)</span></p>
+<p>后面一项是P的熵，前面一项是P与Q的交叉熵</p>
+<p><strong>交叉熵</strong> <span class="math inline">\(H(P,
+Q)=\sum_{i=1}^{m}p_i(-log_2q_i)=-\sum_{i=1}^{n}(y_ilog_2\hat{y_i}+(1-y_i)log_2(1-\hat{y_i}))\)</span></p>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+      </tags>
   </entry>
   <entry>
     <title>代数系统笔记</title>
@@ -1145,35 +1174,6 @@ src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL
       </categories>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2021/08/03/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
-first post. Check <a href="https://hexo.io/docs/">documentation</a> for
-more info. If you get any problems when using Hexo, you can find the
-answer in <a
-href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
-you can ask me on <a
-href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<span id="more"></span>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>李宏毅ML2020Spring HW3</title>
     <url>/2022/02/13/%E6%9D%8E%E5%AE%8F%E6%AF%85ML2020Spring-HW3/</url>
     <content><![CDATA[<center>
@@ -1207,41 +1207,6 @@ baseline还有很远距离，但实在没有心情train它了。</p>
       </categories>
       <tags>
         <tag>深度学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>没有代码的题解们</title>
-    <url>/2021/11/03/%E6%B2%A1%E6%9C%89%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A2%98%E8%A7%A3%E4%BB%AC/</url>
-    <content><![CDATA[<center>
-一些题目的思路
-</center>
-<span id="more"></span>
-<h3 id="cf980d-perfect-groups">CF980D Perfect Groups</h3>
-<p><strong>分类：</strong></p>
-<p>[数学，思维]</p>
-<p><strong>题意：</strong></p>
-<p><img src="https://i.loli.net/2021/11/03/ipqUDS7CvhPxYVm.png" /></p>
-<p><strong>思路：</strong></p>
-<p>首先想到，往一个组内添加一个新元素会有什么性质。</p>
-<p>假设组内原有数中有<span class="math inline">\(a\)</span>和<span
-class="math inline">\(b\)</span>，并且有<span
-class="math inline">\(a\times b=k_1^2\)</span>，对于新考虑的数<span
-class="math inline">\(c\)</span>，<span
-class="math inline">\(c\)</span>跟<span
-class="math inline">\(b\)</span>的关系是<span
-class="math inline">\(b\times c=k_2^2\)</span>，那么可以得到<span
-class="math inline">\(a\times c=\frac{b^2}{k_1^2\times
-k_2^2}\)</span>，即<span class="math inline">\(a\)</span>和<span
-class="math inline">\(c\)</span>相乘也是平方数。</p>
-<p>于是对于一个连续的序列，我们直接用一个并查集维护连通块即可。</p>
-<p>中间会有一些细节，比如0.</p>
-]]></content>
-      <categories>
-        <category>Algorithm</category>
-        <category>Solutions</category>
-      </categories>
-      <tags>
-        <tag>题解</tag>
       </tags>
   </entry>
   <entry>
@@ -1291,6 +1256,41 @@ class="math inline">\(c\)</span>相乘也是平方数。</p>
       </categories>
       <tags>
         <tag>深度学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>没有代码的题解们</title>
+    <url>/2021/11/03/%E6%B2%A1%E6%9C%89%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A2%98%E8%A7%A3%E4%BB%AC/</url>
+    <content><![CDATA[<center>
+一些题目的思路
+</center>
+<span id="more"></span>
+<h3 id="cf980d-perfect-groups">CF980D Perfect Groups</h3>
+<p><strong>分类：</strong></p>
+<p>[数学，思维]</p>
+<p><strong>题意：</strong></p>
+<p><img src="https://i.loli.net/2021/11/03/ipqUDS7CvhPxYVm.png" /></p>
+<p><strong>思路：</strong></p>
+<p>首先想到，往一个组内添加一个新元素会有什么性质。</p>
+<p>假设组内原有数中有<span class="math inline">\(a\)</span>和<span
+class="math inline">\(b\)</span>，并且有<span
+class="math inline">\(a\times b=k_1^2\)</span>，对于新考虑的数<span
+class="math inline">\(c\)</span>，<span
+class="math inline">\(c\)</span>跟<span
+class="math inline">\(b\)</span>的关系是<span
+class="math inline">\(b\times c=k_2^2\)</span>，那么可以得到<span
+class="math inline">\(a\times c=\frac{b^2}{k_1^2\times
+k_2^2}\)</span>，即<span class="math inline">\(a\)</span>和<span
+class="math inline">\(c\)</span>相乘也是平方数。</p>
+<p>于是对于一个连续的序列，我们直接用一个并查集维护连通块即可。</p>
+<p>中间会有一些细节，比如0.</p>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+        <category>Solutions</category>
+      </categories>
+      <tags>
+        <tag>题解</tag>
       </tags>
   </entry>
 </search>
