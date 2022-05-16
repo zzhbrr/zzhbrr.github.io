@@ -322,15 +322,21 @@ Dataset, Sampler, DataLoader, DataLoaderIter简单分析
 <p>sampler是从数据集中提取样本的策略，如果指定了sampler，则shuffle参数必须为False。</p>
 <p>batch_sampler与sampler类似，每次返回一个批次的索引，如果指定了batch_sampler，则batch_size和shuffle必须与之相符合。</p>
 <p>num_workers是数据加载的子进程数。</p>
-<p>collate_fn是一个callable的函数，将Map-style dataset取出的batch_size个数据（tuple类型，每个tuple长度为2，其中第一个是数据，第二个是标签）整合成一个list，这个list的长度为2，一个是batch_size个数据组成的FloatTensor，一个是batch_size个标签组成的longTensor。</p>
-<p>pin_memory如果为True，则 DataLoader 在将张量返回之前将其复制到 CUDA 固定的内存中。</p>
+<p>collate_fn是一个callable的函数，将Map-style
+dataset取出的batch_size个数据（tuple类型，每个tuple长度为2，其中第一个是数据，第二个是标签）整合成一个list，这个list的长度为2，一个是batch_size个数据组成的FloatTensor，一个是batch_size个标签组成的longTensor。</p>
+<p>pin_memory如果为True，则 DataLoader 在将张量返回之前将其复制到 CUDA
+固定的内存中。</p>
 <p>drop_last，如果最后一个batch没满，是否要丢掉。</p>
-<p>timeout，如果为正，则为从 worker 收集 batch 的超时值，应始终为非负数，超过这个时间还没读取到数据的话就会报错</p>
-<p>worker_init_fn 是callable的函数，如果不为 None，它将会被每个 worker 子进程调用，以 worker id ([0, num_workers - 1] 内的整形) 为输入。</p>
+<p>timeout，如果为正，则为从 worker 收集 batch
+的超时值，应始终为非负数，超过这个时间还没读取到数据的话就会报错</p>
+<p>worker_init_fn 是callable的函数，如果不为 None，它将会被每个 worker
+子进程调用，以 worker id ([0, num_workers - 1] 内的整形) 为输入。</p>
 <p>prefetch_factor是每个 worker 提前加载 的 sample 数量，默认为2。</p>
-<p>persistent_workers 如果为 True，dataloader 将不会终止 worker 进程，直到 dataset 迭代完成。</p>
+<p>persistent_workers 如果为 True，dataloader 将不会终止 worker
+进程，直到 dataset 迭代完成。</p>
 <p><strong>collate_fn</strong></p>
-<p>当collate_fn作用于数据样本列表，将输入样本整理为一个 batch时（不是只处理一个数据时），通常做以下3件事：</p>
+<p>当collate_fn作用于数据样本列表，将输入样本整理为一个
+batch时（不是只处理一个数据时），通常做以下3件事：</p>
 <ol type="1">
 <li>添加新的维度（第一维）</li>
 <li>自动将numpy数组和python数值转换为tensor</li>
@@ -583,7 +589,7 @@ Dataset, Sampler, DataLoader, DataLoaderIter简单分析
 NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
   NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
     var GUEST = ['nick', 'mail', 'link'];
-    var guest = 'nick,mail,link';
+    var guest = 'nick,mail';
     guest = guest.split(',').filter(item => {
       return GUEST.includes(item);
     });
@@ -591,9 +597,9 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       el         : '#valine-comments',
       verify     : false,
       notify     : false,
-      appId      : 'cRtd9punVLqi5GYkAPSBclk0-MdYXbMMI',
-      appKey     : 'fVU893r9eA7PxOX6jbUHiJP9',
-      placeholder: "输入你的评论\n昵称为必填项目，输入QQ号可以直接获取用户名和头像\n填写了email可以收到回复通知",
+      appId      : 'LwPA3YYjR79z4KVjpTUbE7sO-gzGzoHsz',
+      appKey     : 'znhl6YoHSnBwGqSD5ofRNUmK',
+      placeholder: "请在此输入你的留言",
       avatar     : 'mm',
       meta       : guest,
       pageSize   : '10' || 10,

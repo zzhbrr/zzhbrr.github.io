@@ -303,7 +303,16 @@
 <p><img src="https://i.loli.net/2021/11/03/ipqUDS7CvhPxYVm.png" /></p>
 <p><strong>思路：</strong></p>
 <p>首先想到，往一个组内添加一个新元素会有什么性质。</p>
-<p>假设组内原有数中有<span class="math inline">\(a\)</span>和<span class="math inline">\(b\)</span>，并且有<span class="math inline">\(a\times b=k_1^2\)</span>，对于新考虑的数<span class="math inline">\(c\)</span>，<span class="math inline">\(c\)</span>跟<span class="math inline">\(b\)</span>的关系是<span class="math inline">\(b\times c=k_2^2\)</span>，那么可以得到<span class="math inline">\(a\times c=\frac{b^2}{k_1^2\times k_2^2}\)</span>，即<span class="math inline">\(a\)</span>和<span class="math inline">\(c\)</span>相乘也是平方数。</p>
+<p>假设组内原有数中有<span class="math inline">\(a\)</span>和<span
+class="math inline">\(b\)</span>，并且有<span
+class="math inline">\(a\times b=k_1^2\)</span>，对于新考虑的数<span
+class="math inline">\(c\)</span>，<span
+class="math inline">\(c\)</span>跟<span
+class="math inline">\(b\)</span>的关系是<span
+class="math inline">\(b\times c=k_2^2\)</span>，那么可以得到<span
+class="math inline">\(a\times c=\frac{b^2}{k_1^2\times
+k_2^2}\)</span>，即<span class="math inline">\(a\)</span>和<span
+class="math inline">\(c\)</span>相乘也是平方数。</p>
 <p>于是对于一个连续的序列，我们直接用一个并查集维护连通块即可。</p>
 <p>中间会有一些细节，比如0.</p>
 
@@ -600,7 +609,7 @@
 NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
   NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
     var GUEST = ['nick', 'mail', 'link'];
-    var guest = 'nick,mail,link';
+    var guest = 'nick,mail';
     guest = guest.split(',').filter(item => {
       return GUEST.includes(item);
     });
@@ -608,9 +617,9 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       el         : '#valine-comments',
       verify     : false,
       notify     : false,
-      appId      : 'cRtd9punVLqi5GYkAPSBclk0-MdYXbMMI',
-      appKey     : 'fVU893r9eA7PxOX6jbUHiJP9',
-      placeholder: "输入你的评论\n昵称为必填项目，输入QQ号可以直接获取用户名和头像\n填写了email可以收到回复通知",
+      appId      : 'LwPA3YYjR79z4KVjpTUbE7sO-gzGzoHsz',
+      appKey     : 'znhl6YoHSnBwGqSD5ofRNUmK',
+      placeholder: "请在此输入你的留言",
       avatar     : 'mm',
       meta       : guest,
       pageSize   : '10' || 10,

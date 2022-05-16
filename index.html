@@ -644,11 +644,16 @@ Dataset, Sampler, DataLoader, DataLoaderIter简单分析
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><strong>信息量</strong>定义<span class="math inline">\(f(x)=-log_2x\)</span>，表明信息量的多少，x是概率，通俗来说概率越小信息量越大。</p>
-<p><strong>熵</strong>的定义是信息量的期望，即<span class="math inline">\(H(P)=\sum _{i=1}^{m}p_i*f(p_i)\)</span></p>
-<p><strong>相对熵(KL散度)</strong>是两个系统“差距”， 比如以P为基准，与Q相差多少：<span class="math inline">\(D_{KL}(P||Q)=\sum_{i=1}^{m}p_i*(f_Q(q_i)-f_p(p_i))=\sum_{i=1}^{m}p_i*(-log_2q_i)-\sum_{i=1}^{m}p_i(-log_2p_i)\)</span></p>
+          <p><strong>信息量</strong>定义<span
+class="math inline">\(f(x)=-log_2x\)</span>，表明信息量的多少，x是概率，通俗来说概率越小信息量越大。</p>
+<p><strong>熵</strong>的定义是信息量的期望，即<span
+class="math inline">\(H(P)=\sum _{i=1}^{m}p_i*f(p_i)\)</span></p>
+<p><strong>相对熵(KL散度)</strong>是两个系统“差距”，
+比如以P为基准，与Q相差多少：<span
+class="math inline">\(D_{KL}(P||Q)=\sum_{i=1}^{m}p_i*(f_Q(q_i)-f_p(p_i))=\sum_{i=1}^{m}p_i*(-log_2q_i)-\sum_{i=1}^{m}p_i(-log_2p_i)\)</span></p>
 <p>后面一项是P的熵，前面一项是P与Q的交叉熵</p>
-<p><strong>交叉熵</strong> <span class="math inline">\(H(P, Q)=\sum_{i=1}^{m}p_i(-log_2q_i)=-\sum_{i=1}^{n}(y_ilog_2\hat{y_i}+(1-y_i)log_2(1-\hat{y_i}))\)</span></p>
+<p><strong>交叉熵</strong> <span class="math inline">\(H(P,
+Q)=\sum_{i=1}^{m}p_i(-log_2q_i)=-\sum_{i=1}^{n}(y_ilog_2\hat{y_i}+(1-y_i)log_2(1-\hat{y_i}))\)</span></p>
 
       
     </div>
@@ -1521,7 +1526,7 @@ Markdown里Note的使用方法
 NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
   NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
     var GUEST = ['nick', 'mail', 'link'];
-    var guest = 'nick,mail,link';
+    var guest = 'nick,mail';
     guest = guest.split(',').filter(item => {
       return GUEST.includes(item);
     });
@@ -1529,9 +1534,9 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       el         : '#valine-comments',
       verify     : false,
       notify     : false,
-      appId      : 'cRtd9punVLqi5GYkAPSBclk0-MdYXbMMI',
-      appKey     : 'fVU893r9eA7PxOX6jbUHiJP9',
-      placeholder: "输入你的评论\n昵称为必填项目，输入QQ号可以直接获取用户名和头像\n填写了email可以收到回复通知",
+      appId      : 'LwPA3YYjR79z4KVjpTUbE7sO-gzGzoHsz',
+      appKey     : 'znhl6YoHSnBwGqSD5ofRNUmK',
+      placeholder: "请在此输入你的留言",
       avatar     : 'mm',
       meta       : guest,
       pageSize   : '10' || 10,
