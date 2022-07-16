@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-loading-bar.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zzhbrr.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="CVPR2022 可迁移的稀疏对抗攻击">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[论文阅读] Transferable Sparse Adversarial Attack">
+<meta property="og:url" content="https://zzhbrr.github.io/2022/07/16/91-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-93-Transferable-Sparse-Adversarial-Attack/index.html">
+<meta property="og:site_name" content="zZh的小窝">
+<meta property="og:description" content="CVPR2022 可迁移的稀疏对抗攻击">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/07/16/QZKBAzEDCjrf5s2.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/16/YuWkryZzCdJ3UsA.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/16/sw3Kqa2IdBvmi7y.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/16/OqhxTN7yS2Ufk4H.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/17/ZHVzntyFrb1vPIf.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/17/cInl2au5YNAbTeG.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/17/3eSnOVKMZ6AUtTY.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/17/WPTr6gS25Fopn38.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/17/qUTpRi6z9xoZV1P.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/17/KJtF6GQMDCnwN3g.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/17/zKREC3Ng4hPJes8.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/17/FNbl83EtUmn2RhQ.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/17/npc5NCajtmWSHPF.png">
+<meta property="article:published_time" content="2022-07-16T14:42:37.000Z">
+<meta property="article:modified_time" content="2022-07-16T16:15:21.958Z">
+<meta property="article:author" content="zZhBr">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="论文阅读">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2022/07/16/QZKBAzEDCjrf5s2.png">
+
+<link rel="canonical" href="https://zzhbrr.github.io/2022/07/16/91-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-93-Transferable-Sparse-Adversarial-Attack/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>[论文阅读] Transferable Sparse Adversarial Attack | zZh的小窝</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">zZh的小窝</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">研究中做一个傻子</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>留言板</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zzhbrr.github.io/2022/07/16/91-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-93-Transferable-Sparse-Adversarial-Attack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zZhBr">
+      <meta itemprop="description" content="向梦想中自己的样子疯狂努力！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zZh的小窝">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [论文阅读] Transferable Sparse Adversarial Attack
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-16 22:42:37" itemprop="dateCreated datePublished" datetime="2022-07-16T22:42:37+08:00">2022-07-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-17 00:15:21" itemprop="dateModified" datetime="2022-07-17T00:15:21+08:00">2022-07-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">论文阅读</span></a>
+                </span>
+                  >
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E5%AF%B9%E6%8A%97%E6%94%BB%E5%87%BB/" itemprop="url" rel="index"><span itemprop="name">对抗攻击</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/07/16/91-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-93-Transferable-Sparse-Adversarial-Attack/" class="post-meta-item leancloud_visitors" data-flag-title="[论文阅读] Transferable Sparse Adversarial Attack" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/07/16/91-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-93-Transferable-Sparse-Adversarial-Attack/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/07/16/91-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-93-Transferable-Sparse-Adversarial-Attack/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center>
+CVPR2022 可迁移的稀疏对抗攻击
+</center>
+<span id="more"></span>
+<p>题目：Transferable Sparse Adversarial Attack</p>
+<p>作者：Ziwen He</p>
+<p>会议：CVPR2022</p>
+<p>连接：https://openaccess.thecvf.com/content/CVPR2022/papers/He_Transferable_Sparse_Adversarial_Attack_CVPR_2022_paper.pdf</p>
+<hr />
+<h3 id="摘要翻译">摘要翻译</h3>
+<p>​
+深度神经网络已经表现出对对抗攻击的脆弱性。在本文中，我们聚焦于<strong>基于l0范数的稀疏对抗攻击</strong>，只用次改几个像素即可攻击成功。先前的稀疏攻击方法尽管有高攻击成功率，但在黑盒设置下，由于对代理模型的过拟合，对抗样本具有较低的迁移性。因此，我们提出了一个生成器架构去减轻过拟合问题，并且有效地生成可迁移的稀疏对抗样本。<strong>特别的，我们提出的生成器将稀疏扰动解耦为振幅和位置分量。我们精心设计了一个随机量化算子，以用端到端的方法联合优化这两个分量。</strong>实验表明我们的方法在相似的系数性设置下，相比于SOTA已经大大提升了迁移性。除此之外，我们的方法也实现了优越的<strong>推理速度</strong>，比其他基于优化的方法快了700倍。代码已公开。</p>
+<h3 id="基本问题">基本问题</h3>
+<ul>
+<li><strong>论文解决的问题：</strong> 基于L0范数的稀疏对抗攻击</li>
+<li><strong>动机：</strong>
+<ol type="1">
+<li>现有的稀疏对抗方法如PGD0, SparseFool,
+GreedyFool依赖于目标模型的梯度或其估计，具有较低的迁移性。并且有研究表明<span
+class="math inline">\(l_2\)</span>和<span
+class="math inline">\(l_\infin\)</span>范数限制的攻击在不同架构模型下更具有迁移性，<span
+class="math inline">\(l_0\)</span>范数限制的稀疏对抗样本的迁移性还未知。</li>
+<li>之前的生成式方法都只生成稠密扰动，本文工作与之前生成式方法最大的不同就是有稀疏性的限制。</li>
+</ol></li>
+<li><strong>贡献：</strong>
+<ul>
+<li>探索稀疏对抗样本迁移性问题，并提出一个生成可迁移的稀疏对抗样本的方法。</li>
+</ul></li>
+</ul>
+<h3 id="method">Method</h3>
+<h4 id="analysis">Analysis</h4>
+<p>对于无目标攻击，要优化的问题是：</p>
+<p><img src="https://s2.loli.net/2022/07/16/QZKBAzEDCjrf5s2.png" /></p>
+<p>其中 <span class="math inline">\(\epsilon\)</span> 是<span
+class="math inline">\(l_\infin\)</span>的扰动限制，如果是有目标攻击，则第二行要换为<span
+class="math inline">\(arg\,max_c\,\,F(x_{adv})_c=y_t\)</span>， <span
+class="math inline">\(f(x)_c\)</span> 是类别c的logit值，目标类别是<span
+class="math inline">\(y_t\)</span> 。</p>
+<p>之前的稀疏攻击方法很大的依赖于单个图像的梯度，而基于生成的方法，生成器可以学到自然图像到稀疏对抗图像的映射，生成器的参数是由数据分布学习到的，而不是单个图像。大量的训练数据可以减轻过拟合，增加迁移性。</p>
+<p>（这里提出了用生成式的方法提升稀疏样本的迁移性，于是以下该探索如何设计一个生成器架构）。</p>
+<p>但是优化上式是一个Np hard的问题，先前的工作是优化近似的<span
+class="math inline">\(l_1\)</span>约束问题，如SparseFool，但其方法中包含了不可微分的步骤，于是不能进行端到端训练。</p>
+<p>要解决这个<span
+class="math inline">\(l_1\)</span>约束问题最直接的方法就是加一个<span
+class="math inline">\(l_1\)</span>正则化项，但是这样做会使生成的扰动收敛于0，生成稠密扰动，如果直接在这个稠密扰动上面使用二值化（即选某些点保留扰动，其余不扰动），则会丢失信息而导致样本不再有攻击性。本文使用将扰动分解为幅度和位置两个变量的哈达玛乘积来解决这个问题，即<span
+class="math inline">\(\delta =r \odot m\)</span>， 其中<span
+class="math inline">\(r\in R^N\)</span>，是扰动大小，<span
+class="math inline">\(m\in
+\{0,1\}^N\)</span>，是表示此位置是否施加扰动。同时优化这两个向量，并且只给向量
+<span class="math inline">\(m\)</span> 添加 <span
+class="math inline">\(l_1\)</span> 正则，即可实现稀疏的目标。</p>
+<h4 id="framework">Framework</h4>
+<figure>
+<img src="https://s2.loli.net/2022/07/16/YuWkryZzCdJ3UsA.png"
+alt="Figure 1: Our framework for generating transferable sparse adversarial examples." />
+<figcaption aria-hidden="true">Figure 1: Our framework for generating
+transferable sparse adversarial examples.</figcaption>
+</figure>
+<p>如上图，实现了两个分支分别生成 <span class="math inline">\(r\)</span>
+和 <span class="math inline">\(m\)</span>。</p>
+<p>记编码器为<span class="math inline">\(E\)</span>，
+则编码器生成的latent code <span class="math inline">\(z =
+E(x)\)</span>，之后 $z $ 将被送入<span
+class="math inline">\(D_1,D_2\)</span>两个解码器。</p>
+<p><span class="math inline">\(D_1\)</span> 生成对抗扰动的大小，结果
+<span class="math inline">\(r\)</span> 将<span
+class="math inline">\(D_1(z)\)</span> 缩放到<span
+class="math inline">\([-255, 255]\)</span> 之间。</p>
+<p><span class="math inline">\(D_2\)</span> 生成向量<span
+class="math inline">\(Q\in [0,1]^N\)</span>，为得到离散的向量 <span
+class="math inline">\(m\)</span>，使用一个二值化算子 <span
+class="math inline">\(q\)</span></p>
+<p><img src="https://s2.loli.net/2022/07/16/sw3Kqa2IdBvmi7y.png" /></p>
+<p>但显然这个函数的梯度都是0，会导致<span
+class="math inline">\(D_2\)</span>的参数无法更新，于是本文设计了一个随机算子，随机变量<span
+class="math inline">\(X\in \{0, 1\}\)</span>，如果<span
+class="math inline">\(X=1\)</span>，则<span
+class="math inline">\(Q_{i,j}\)</span>被量化为0,1，否则<span
+class="math inline">\(q_{i,j}=Q_{i,j}\)</span>。其中<span
+class="math inline">\(X\)</span>服从参数为p的伯努利分布，p为<span
+class="math inline">\(X=1\)</span>的概率。</p>
+<p>其实就是，如果<span class="math inline">\(X=1\)</span>，则<span
+class="math inline">\(Q\)</span>被量化，阻断反向传播；如果<span
+class="math inline">\(X=0\)</span>，则<span
+class="math inline">\(Q\)</span>保持原状，允许梯度传递，从而可以更改<span
+class="math inline">\(D_2\)</span>的参数。</p>
+<p>在推理过程中， p设置为1。</p>
+<h4 id="loss-functions">Loss functions</h4>
+<h5 id="adversial-loss">Adversial loss</h5>
+<p>这里使用C&amp;W的loss</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/16/OqhxTN7yS2Ufk4H.png"
+alt="image-20220716235916816" />
+<figcaption aria-hidden="true">image-20220716235916816</figcaption>
+</figure>
+<p>如果是有目标攻击的话，使用</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/17/ZHVzntyFrb1vPIf.png"
+alt="image-20220717000312986" />
+<figcaption aria-hidden="true">image-20220717000312986</figcaption>
+</figure>
+<p>代替第一项。</p>
+<h5 id="sparse-loss">Sparse loss</h5>
+<figure>
+<img src="https://s2.loli.net/2022/07/17/cInl2au5YNAbTeG.png"
+alt="image-20220717000021247" />
+<figcaption aria-hidden="true">image-20220717000021247</figcaption>
+</figure>
+<p>本方法的稀疏度主要是由 <span class="math inline">\(m\)</span>
+决定的，由于<span
+class="math inline">\(L_0\)</span>很难优化求解，于是使用<span
+class="math inline">\(L_1\)</span>代替（L1范数是L0范数的最优凸近似，且L1范数容易优化求解），相应的，在下面的loss中，我们要让<span
+class="math inline">\(m\)</span>中的值尽量趋近于0或者1。</p>
+<h5 id="quantization-loss">Quantization loss</h5>
+<p>为减小训练和测试之间的gap，在损失函数中增加一项，使得Qij的值趋近于0或1</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/17/3eSnOVKMZ6AUtTY.png"
+alt="image-20220717000249309" />
+<figcaption aria-hidden="true">image-20220717000249309</figcaption>
+</figure>
+<p>总体loss为</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/17/WPTr6gS25Fopn38.png"
+alt="image-20220717000344684" />
+<figcaption aria-hidden="true">image-20220717000344684</figcaption>
+</figure>
+<h3 id="实验">实验</h3>
+<p>大致进行了四个实验。</p>
+<ol type="1">
+<li>在类似的稀疏约束条件下，在不同的<span
+class="math inline">\(l_\infin\)</span>条件下，测试与另外三个稀疏对抗攻击算法的Non-target的性能。</li>
+<li>在类似的稀疏约束条件下，测试与另外两个稀疏对抗攻击算法在Target设定下的性能。但目标类别只有两个，“秃鹫”和“泡泡”。</li>
+<li>与GAP和Cross-domain
+perturbations在Non-target设定下进行相似评估。</li>
+<li>消融实验：（1）不解耦为幅度和位置分量的性能；（2）训练时使p=0时（即不进行量化）的性能，q=STE的性能；（3）不使用稀疏性约束loss（即不要L0约束）的性能；（4）不使用量化损失的性能；（5）对于每张图片训练自己的生成器的性能。</li>
+</ol>
+<p>实验结果描述为：</p>
+<ol type="1">
+<li><p>相比于其他三个类似的方法，这个方法在Non-target下的迁移性大大提升，（白盒下效果反而不好，这是由于使用训练好的生成器做的原因，不过不重要）</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/17/qUTpRi6z9xoZV1P.png"
+alt="Table 1: `∞ = 255 constrained non-targeted attack transferability comparison on ImageNet dataset. The best speed and transfer rate are shown in bold. ‘*’ means white-box setting." />
+<figcaption aria-hidden="true">Table 1: `∞ = 255 constrained
+non-targeted attack transferability comparison on ImageNet dataset. The
+best speed and transfer rate are shown in bold. ‘*’ means white-box
+setting.</figcaption>
+</figure>
+<p>Table 1: `∞ = 255 constrained non-targeted attack transferability
+comparison on ImageNet dataset. The best speed and transfer rate are
+shown in bold. ‘*’ means white-box setting.</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/17/KJtF6GQMDCnwN3g.png"
+alt="Table 2: `∞ = 10 constrained non-targeted attack transferability comparison on ImageNet dataset. The best speed and transfer rate are shown in bold. ‘*’ means white-box setting." />
+<figcaption aria-hidden="true">Table 2: `∞ = 10 constrained non-targeted
+attack transferability comparison on ImageNet dataset. The best speed
+and transfer rate are shown in bold. ‘*’ means white-box
+setting.</figcaption>
+</figure>
+<p>Table 2: `∞ = 10 constrained non-targeted attack transferability
+comparison on ImageNet dataset. The best speed and transfer rate are
+shown in bold. ‘*’ means white-box setting.</p></li>
+<li><p>相比于其他两个类似的方法，这个方法在Target设定下也有一定的迁移效果，其他两种方法迁移性很差。随有提升，但貌似也不高。在实验中只进行了两个target
+class的实验，迁移性差别明显，可能是未来研究的一个方向。</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/17/zKREC3Ng4hPJes8.png"
+alt="Table 3: Targeted attack transferability comparison. The source model is IncV3 and attacks are performed on ImageNet dataset, with `∞ = 255 constraint. The best speed and transfer rate are shown in bold. ‘*’ means white-box setting." />
+<figcaption aria-hidden="true">Table 3: Targeted attack transferability
+comparison. The source model is IncV3 and attacks are performed on
+ImageNet dataset, with `∞ = 255 constraint. The best speed and transfer
+rate are shown in bold. ‘*’ means white-box setting.</figcaption>
+</figure>
+<p>Table 3: Targeted attack transferability comparison. The source model
+is IncV3 and attacks are performed on ImageNet dataset, with `∞ = 255
+constraint. The best speed and transfer rate are shown in bold. ‘*’
+means white-box setting.</p></li>
+<li><p>相比于其他的基于生成的方法，发现在进行更少的扰动的情况下，也能达到甚至超过稠密扰动的生成式方法，这表明有很多扰动是无用的，甚至有负优化。</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/17/FNbl83EtUmn2RhQ.png"
+alt="Table 4: Comparison with generator-based dense attacks. Results are sparsity(%) and fooling rate(%) on different models. ‘*’ means white-box setting." />
+<figcaption aria-hidden="true">Table 4: Comparison with generator-based
+dense attacks. Results are sparsity(%) and fooling rate(%) on different
+models. ‘*’ means white-box setting.</figcaption>
+</figure>
+<p>Table 4: Comparison with generator-based dense attacks. Results are
+sparsity(%) and fooling rate(%) on different models. ‘*’ means white-box
+setting.</p></li>
+<li><p>（1）去掉解耦，发现不能真正的实现稀疏。</p>
+<p>（2）去掉量化，即使训练中的p=0，发现仍能实现稀疏，但是生成的对抗样本迁移性下降。并且与STE方法比较，发现结果比STE方法好。</p>
+<p>（3）去掉sparse loss，生成的对抗样本变为100%的dense attack。</p>
+<p>（4）去掉quantization
+loss，稀疏程度提高了（更改像素变多），并且迁移性降低了，验证了量化操作带来的信息损失会影响测试时的性能。</p>
+<p>（5）使用每张图片生成自己的生成器的方法，发现白盒攻击效果提高了，但是黑盒攻击迁移性降低了，证明使用大量数据进行训练可以减小过拟合并提高迁移性的假设是正确的。</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/17/npc5NCajtmWSHPF.png"
+alt="Table 5: Ablation study of the proposed framework. Results are sparsity(%) and fooling rate(%) on different models (fooling rate is not studied if sparsity is not satisfactory). ‘*’ means white-box setting." />
+<figcaption aria-hidden="true">Table 5: Ablation study of the proposed
+framework. Results are sparsity(%) and fooling rate(%) on different
+models (fooling rate is not studied if sparsity is not satisfactory).
+‘*’ means white-box setting.</figcaption>
+</figure>
+<p>Table 5: Ablation study of the proposed framework. Results are
+sparsity(%) and fooling rate(%) on different models (fooling rate is not
+studied if sparsity is not satisfactory). ‘*’ means white-box
+setting.</p></li>
+</ol>
+<h3 id="结论">结论</h3>
+<p>本文提出了一种基于生成器的稀疏对抗攻击框架。在相同的稀疏性条件下，该方法比现有的现有方法具有更强的可迁移性，推理速度更快。根据经验，我们观察到，当对大规模ImageNet攻击时，我们的方法产生最先进的结果。我们的工作阐明了可转移的基于<span
+class="math inline">\(l_0\)</span>的稀疏对抗样本的存在，并说明了最先进的白盒稀疏攻击方法倾向于找到修改像素数量最少但不具有迁移性的对抗样本。这两种类型的稀疏对抗攻击对于分析dnn的漏洞和评估安全风险(如在物理世界中创建可转移的对抗补丁来欺骗自动驾驶汽车)同样重要。</p>
+<h3 id="思考">思考</h3>
+<p>方法的局限或问题：</p>
+<ol type="1">
+<li>用的损失函数是C&amp;W的loss，与人脸识别中通常使用的特征图的余弦值或L2dis不同。</li>
+<li>直觉上觉得，这个方法只适用于黑盒模型训练数据已知的情况。①如果黑盒模型训练数据未知（这里想强调的是类别不知道），则无法使用C&amp;W
+loss，无法使用logits。②如果训练数据未知，那么学出的样本到对抗样本之间的映射，是不是有domain
+shift。</li>
+</ol>
+<p>几个想法：</p>
+<ol type="1">
+<li>在训练数据未知的情况下。如果使用大量数据进行预训练，并且在单张图片上进行fine
+tune的效果如何？</li>
+<li>如何将这个方法迁移到人脸识别系统的攻击上。这个方法是否与对抗补丁有联系。</li>
+<li>提出的随机化量化方法很有趣，模型性能与p的关系是什么呢。当Q被量化为0,1时，阻断反向传播，这时Dec2参数不更新，并按照测试条件更新Dec1参数；当Q不被量化时，允许梯度的传递，这时Dec2参数进行更新（既有让结果趋近0或1，也有生成效果更好的对抗样本），同时Dec1也在更新参数，只不过设定是训练条件下。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢阅读-------------</div>
+    
+</div>
+  
+</div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 深度学习</a>
+              <a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" rel="tag"><i class="fa fa-tag"></i> 论文阅读</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/15/%E6%9D%8E%E5%AE%8F%E6%AF%85ML2020Spring-HW4/" rel="prev" title="李宏毅ML2020Spring-HW4">
+      <i class="fa fa-chevron-left"></i> 李宏毅ML2020Spring-HW4
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%91%98%E8%A6%81%E7%BF%BB%E8%AF%91"><span class="nav-number">1.</span> <span class="nav-text">摘要翻译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">基本问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#method"><span class="nav-number">3.</span> <span class="nav-text">Method</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#analysis"><span class="nav-number">3.1.</span> <span class="nav-text">Analysis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#framework"><span class="nav-number">3.2.</span> <span class="nav-text">Framework</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#loss-functions"><span class="nav-number">3.3.</span> <span class="nav-text">Loss functions</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#adversial-loss"><span class="nav-number">3.3.1.</span> <span class="nav-text">Adversial loss</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sparse-loss"><span class="nav-number">3.3.2.</span> <span class="nav-text">Sparse loss</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#quantization-loss"><span class="nav-number">3.3.3.</span> <span class="nav-text">Quantization loss</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C"><span class="nav-number">4.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">5.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">思考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zZhBr"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">zZhBr</p>
+  <div class="site-description" itemprop="description">向梦想中自己的样子疯狂努力！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zzhbrr" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zzhbrr" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1376447388@qq.com" title="E-Mail → mailto:1376447388@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">true</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">48k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">44 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'LwPA3YYjR79z4KVjpTUbE7sO-gzGzoHsz',
+      appKey     : 'znhl6YoHSnBwGqSD5ofRNUmK',
+      placeholder: "请在此输入你的留言",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
