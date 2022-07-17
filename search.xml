@@ -21,7 +21,8 @@ CVPR2022 可迁移的稀疏对抗攻击
 <p>题目：Transferable Sparse Adversarial Attack</p>
 <p>作者：Ziwen He</p>
 <p>会议：CVPR2022</p>
-<p>连接：https://openaccess.thecvf.com/content/CVPR2022/papers/He_Transferable_Sparse_Adversarial_Attack_CVPR_2022_paper.pdf</p>
+<p>链接：<a
+href="https://openaccess.thecvf.com/content/CVPR2022/papers/He_Transferable_Sparse_Adversarial_Attack_CVPR_2022_paper.pdf">文章链接</a></p>
 <hr />
 <h3 id="摘要翻译">摘要翻译</h3>
 <p>​
@@ -48,7 +49,7 @@ class="math inline">\(l_0\)</span>范数限制的稀疏对抗样本的迁移性�
 <p>对于无目标攻击，要优化的问题是：</p>
 <p><img src="https://s2.loli.net/2022/07/16/QZKBAzEDCjrf5s2.png" /></p>
 <p>其中 <span class="math inline">\(\epsilon\)</span> 是<span
-class="math inline">\(l_\infin\)</span>的扰动限制，如果是有目标攻击，则第二行要换为<span
+class="math inline">\(l_\infty\)</span>的扰动限制，如果是有目标攻击，则第二行要换为<span
 class="math inline">\(arg\,max_c\,\,F(x_{adv})_c=y_t\)</span>， <span
 class="math inline">\(f(x)_c\)</span> 是类别c的logit值，目标类别是<span
 class="math inline">\(y_t\)</span> 。</p>
@@ -104,24 +105,12 @@ class="math inline">\(D_2\)</span>的参数。</p>
 <h4 id="loss-functions">Loss functions</h4>
 <h5 id="adversial-loss">Adversial loss</h5>
 <p>这里使用C&amp;W的loss</p>
-<figure>
-<img src="https://s2.loli.net/2022/07/16/OqhxTN7yS2Ufk4H.png"
-alt="image-20220716235916816" />
-<figcaption aria-hidden="true">image-20220716235916816</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2022/07/16/OqhxTN7yS2Ufk4H.png" /></p>
 <p>如果是有目标攻击的话，使用</p>
-<figure>
-<img src="https://s2.loli.net/2022/07/17/ZHVzntyFrb1vPIf.png"
-alt="image-20220717000312986" />
-<figcaption aria-hidden="true">image-20220717000312986</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2022/07/17/ZHVzntyFrb1vPIf.png" /></p>
 <p>代替第一项。</p>
 <h5 id="sparse-loss">Sparse loss</h5>
-<figure>
-<img src="https://s2.loli.net/2022/07/17/cInl2au5YNAbTeG.png"
-alt="image-20220717000021247" />
-<figcaption aria-hidden="true">image-20220717000021247</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2022/07/17/cInl2au5YNAbTeG.png" /></p>
 <p>本方法的稀疏度主要是由 <span class="math inline">\(m\)</span>
 决定的，由于<span
 class="math inline">\(L_0\)</span>很难优化求解，于是使用<span
@@ -129,17 +118,9 @@ class="math inline">\(L_1\)</span>代替（L1范数是L0范数的最优凸近似
 class="math inline">\(m\)</span>中的值尽量趋近于0或者1。</p>
 <h5 id="quantization-loss">Quantization loss</h5>
 <p>为减小训练和测试之间的gap，在损失函数中增加一项，使得Qij的值趋近于0或1</p>
-<figure>
-<img src="https://s2.loli.net/2022/07/17/3eSnOVKMZ6AUtTY.png"
-alt="image-20220717000249309" />
-<figcaption aria-hidden="true">image-20220717000249309</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2022/07/17/3eSnOVKMZ6AUtTY.png" /></p>
 <p>总体loss为</p>
-<figure>
-<img src="https://s2.loli.net/2022/07/17/WPTr6gS25Fopn38.png"
-alt="image-20220717000344684" />
-<figcaption aria-hidden="true">image-20220717000344684</figcaption>
-</figure>
+<p><img src="https://s2.loli.net/2022/07/17/WPTr6gS25Fopn38.png" /></p>
 <h3 id="实验">实验</h3>
 <p>大致进行了四个实验。</p>
 <ol type="1">
@@ -161,9 +142,6 @@ non-targeted attack transferability comparison on ImageNet dataset. The
 best speed and transfer rate are shown in bold. ‘*’ means white-box
 setting.</figcaption>
 </figure>
-<p>Table 1: `∞ = 255 constrained non-targeted attack transferability
-comparison on ImageNet dataset. The best speed and transfer rate are
-shown in bold. ‘*’ means white-box setting.</p>
 <figure>
 <img src="https://s2.loli.net/2022/07/17/KJtF6GQMDCnwN3g.png"
 alt="Table 2: `∞ = 10 constrained non-targeted attack transferability comparison on ImageNet dataset. The best speed and transfer rate are shown in bold. ‘*’ means white-box setting." />
@@ -171,10 +149,7 @@ alt="Table 2: `∞ = 10 constrained non-targeted attack transferability comparis
 attack transferability comparison on ImageNet dataset. The best speed
 and transfer rate are shown in bold. ‘*’ means white-box
 setting.</figcaption>
-</figure>
-<p>Table 2: `∞ = 10 constrained non-targeted attack transferability
-comparison on ImageNet dataset. The best speed and transfer rate are
-shown in bold. ‘*’ means white-box setting.</p></li>
+</figure></li>
 <li><p>相比于其他两个类似的方法，这个方法在Target设定下也有一定的迁移效果，其他两种方法迁移性很差。随有提升，但貌似也不高。在实验中只进行了两个target
 class的实验，迁移性差别明显，可能是未来研究的一个方向。</p>
 <figure>
@@ -184,11 +159,7 @@ alt="Table 3: Targeted attack transferability comparison. The source model is In
 comparison. The source model is IncV3 and attacks are performed on
 ImageNet dataset, with `∞ = 255 constraint. The best speed and transfer
 rate are shown in bold. ‘*’ means white-box setting.</figcaption>
-</figure>
-<p>Table 3: Targeted attack transferability comparison. The source model
-is IncV3 and attacks are performed on ImageNet dataset, with `∞ = 255
-constraint. The best speed and transfer rate are shown in bold. ‘*’
-means white-box setting.</p></li>
+</figure></li>
 <li><p>相比于其他的基于生成的方法，发现在进行更少的扰动的情况下，也能达到甚至超过稠密扰动的生成式方法，这表明有很多扰动是无用的，甚至有负优化。</p>
 <figure>
 <img src="https://s2.loli.net/2022/07/17/FNbl83EtUmn2RhQ.png"
@@ -196,10 +167,7 @@ alt="Table 4: Comparison with generator-based dense attacks. Results are sparsit
 <figcaption aria-hidden="true">Table 4: Comparison with generator-based
 dense attacks. Results are sparsity(%) and fooling rate(%) on different
 models. ‘*’ means white-box setting.</figcaption>
-</figure>
-<p>Table 4: Comparison with generator-based dense attacks. Results are
-sparsity(%) and fooling rate(%) on different models. ‘*’ means white-box
-setting.</p></li>
+</figure></li>
 <li><p>（1）去掉解耦，发现不能真正的实现稀疏。</p>
 <p>（2）去掉量化，即使训练中的p=0，发现仍能实现稀疏，但是生成的对抗样本迁移性下降。并且与STE方法比较，发现结果比STE方法好。</p>
 <p>（3）去掉sparse loss，生成的对抗样本变为100%的dense attack。</p>
@@ -213,11 +181,7 @@ alt="Table 5: Ablation study of the proposed framework. Results are sparsity(%) 
 framework. Results are sparsity(%) and fooling rate(%) on different
 models (fooling rate is not studied if sparsity is not satisfactory).
 ‘*’ means white-box setting.</figcaption>
-</figure>
-<p>Table 5: Ablation study of the proposed framework. Results are
-sparsity(%) and fooling rate(%) on different models (fooling rate is not
-studied if sparsity is not satisfactory). ‘*’ means white-box
-setting.</p></li>
+</figure></li>
 </ol>
 <h3 id="结论">结论</h3>
 <p>本文提出了一种基于生成器的稀疏对抗攻击框架。在相同的稀疏性条件下，该方法比现有的现有方法具有更强的可迁移性，推理速度更快。根据经验，我们观察到，当对大规模ImageNet攻击时，我们的方法产生最先进的结果。我们的工作阐明了可转移的基于<span
