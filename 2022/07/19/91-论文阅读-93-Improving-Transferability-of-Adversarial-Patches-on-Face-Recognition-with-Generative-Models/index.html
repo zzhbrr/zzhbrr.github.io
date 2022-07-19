@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-loading-bar.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zzhbrr.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="CVPR2021 使用生成模型提高对抗补丁在人脸识别上的迁移性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[论文阅读] Improving Transferability of Adversarial Patches on Face Recognition with Generative Models">
+<meta property="og:url" content="https://zzhbrr.github.io/2022/07/19/91-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-93-Improving-Transferability-of-Adversarial-Patches-on-Face-Recognition-with-Generative-Models/index.html">
+<meta property="og:site_name" content="zZh的小窝">
+<meta property="og:description" content="CVPR2021 使用生成模型提高对抗补丁在人脸识别上的迁移性">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/07/19/v78yOS1ZD5UBE4P.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/19/MmCz4tTw8N7g1QR.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/19/bW83wMTnCIDaYpB.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/19/nJlSVLjtKED96sw.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/19/9pFTxP64WBEjcIZ.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/19/5UEjCk4NvOJD9hQ.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/19/8phkHbiSEfewnG5.png">
+<meta property="og:image" content="https://pdf.cdn.readpaper.com/parsed/fetch_target/0ffae3af6739db9fec3b99e94d47e6ec_7_Table_4.png">
+<meta property="article:published_time" content="2022-07-19T07:57:52.000Z">
+<meta property="article:modified_time" content="2022-07-19T09:59:57.978Z">
+<meta property="article:author" content="zZhBr">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="论文阅读">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2022/07/19/v78yOS1ZD5UBE4P.png">
+
+<link rel="canonical" href="https://zzhbrr.github.io/2022/07/19/91-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-93-Improving-Transferability-of-Adversarial-Patches-on-Face-Recognition-with-Generative-Models/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>[论文阅读] Improving Transferability of Adversarial Patches on Face Recognition with Generative Models | zZh的小窝</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">zZh的小窝</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">研究中做一个傻子</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>留言板</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zzhbrr.github.io/2022/07/19/91-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-93-Improving-Transferability-of-Adversarial-Patches-on-Face-Recognition-with-Generative-Models/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zZhBr">
+      <meta itemprop="description" content="向梦想中自己的样子疯狂努力！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zZh的小窝">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [论文阅读] Improving Transferability of Adversarial Patches on Face Recognition with Generative Models
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-19 15:57:52 / 修改时间：17:59:57" itemprop="dateCreated datePublished" datetime="2022-07-19T15:57:52+08:00">2022-07-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">论文阅读</span></a>
+                </span>
+                  >
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E5%AF%B9%E6%8A%97%E6%94%BB%E5%87%BB/" itemprop="url" rel="index"><span itemprop="name">对抗攻击</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/07/19/91-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-93-Improving-Transferability-of-Adversarial-Patches-on-Face-Recognition-with-Generative-Models/" class="post-meta-item leancloud_visitors" data-flag-title="[论文阅读] Improving Transferability of Adversarial Patches on Face Recognition with Generative Models" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/07/19/91-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-93-Improving-Transferability-of-Adversarial-Patches-on-Face-Recognition-with-Generative-Models/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/07/19/91-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-93-Improving-Transferability-of-Adversarial-Patches-on-Face-Recognition-with-Generative-Models/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center>
+CVPR2021 使用生成模型提高对抗补丁在人脸识别上的迁移性
+</center>
+<span id="more"></span>
+<p>题目： Improving Transferability of Adversarial Patches on Face
+Recognition with Generative Models</p>
+<p>作者： Zihao Xiao, ..., Jun Zhu</p>
+<p>会议：CVPR2021</p>
+<p>连接：<a
+target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2021/papers/Xiao_Improving_Transferability_of_Adversarial_Patches_on_Face_Recognition_With_Generative_CVPR_2021_paper.pdf">文章链接</a></p>
+<hr />
+<h3 id="摘要翻译">摘要翻译</h3>
+<p>       深度卷积神经网络大大提升了人脸识别性能。最近，人脸识别模型已经被用于安全敏感应用的身份认证。然而，深度CNN对于对抗补丁来说很脆弱，这些对抗补丁可以在现实中实现并且隐蔽，这对这些模型在现实世界中的应用提出的新的安全问题。</p>
+<p>       在本文中，我们使用基于可迁移的对抗补丁来<strong>评估人脸识别模型的鲁棒性</strong>，其中攻击者对目标模型的可访问性有限。</p>
+<p>       首先，我们<strong>对现有的基于迁移的攻击方法进行扩展</strong>，生成可迁移的对抗补丁。然而，我们发现迁移性对初始化很敏感，当扰动较大时迁移性下降，表明对替代模型过拟合。</p>
+<p>       其次，我们提出了<strong>在低维数据流形上对对抗补丁进行正则化</strong>。这个流形有在合法人脸图像上预训练的生成模型表示。将像人脸的特征(face-like
+feature)作为对抗扰动，通过在流形上的优化，我们表明替代模型和目标模型之间的响应差距显著减小，并且表现出更好的迁移性。</p>
+<p>       大量的数字世界实验证明了该方法在黑箱设定下的优越性。我们也将提出的方法应用于物理世界中。</p>
+<h3 id="基本问题">基本问题</h3>
+<ul>
+<li><p><strong>论文解决的问题：</strong>提升人脸识别中对抗补丁的迁移性</p></li>
+<li><p><strong>动机：</strong></p>
+<p>       先前的对抗补丁的工作基于白盒设定，或者基于询问的设定，但部署在现实世界中的模型不能轻易被访问。所以本文聚焦于提升<strong>query-free
+black-box
+setting</strong>的迁移性。在这个设定下，基于迁移的对抗攻击被广泛使用。</p>
+<p>       现有的提升对抗样本迁移性的方法聚焦于使用先进的非凸优化、数据增强等方法，这些方法通常是为了生成<span
+class="math inline">\(L_p\)</span>约束的对抗样本，我们发现这些方法也提升对抗补丁的迁移性，但我们发现这样也容易陷入局部最优，迁移性不令人满意的。首先，迁移性对算法的初始化很敏感。其次，随着扰动强度增加，迁移性先上升后下降，有过拟合现象。所以需要<strong>新的正则化方法</strong>以减轻对代理模型的过拟合。</p></li>
+<li><p><strong>相关工作</strong></p>
+<ul>
+<li>对抗补丁。先前工作都是基于白盒设定的。</li>
+<li>可迁移的对抗样本。大多数是用在生成<span
+class="math inline">\(L_p\)</span>约束下的对抗样本，但可以被迁移至对抗补丁中。但易陷入局部最优。</li>
+<li>对抗样本的生成式模型。现有的生成式方法迁移性有限，如SemanticAdv。</li>
+</ul></li>
+<li><p><strong>科学假设：</strong>不同的人脸识别模型对<strong>类人脸特征(face-like
+features)</strong>的响应是有效相关的，这可以提高对抗补丁的迁移性。</p></li>
+<li><p><strong>贡献：</strong>提出通过在低维流形上对对抗补丁进行优化来进行正则化，流形用生成模型表示，在其latent
+space内进行优化。</p></li>
+</ul>
+<h3 id="方法">方法</h3>
+<h4 id="tap-tidim">TAP-TIDIM</h4>
+<p>即用momentum、diversity
+input、transform方法生成可迁移对抗补丁，很简单。</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/19/v78yOS1ZD5UBE4P.png"
+alt="TAP-TIDIM algorithm" />
+<figcaption aria-hidden="true">TAP-TIDIM algorithm</figcaption>
+</figure>
+<p>但容易过拟合，</p>
+<ul>
+<li><p>迁移性对初值很敏感。对于目标攻击，仅把初始值换成目标人脸，就有很大的迁移性提升。</p></li>
+<li><p>当搜索空间变大时，迁移性降低。对于<span
+class="math inline">\(L_\infin\)</span>约束，当可改变像素值越大时，性能先提升后下降，这是过拟合的体现。</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/19/MmCz4tTw8N7g1QR.png"
+alt="Figure 3. The success rates of TAP-TIDIM on the black-box models first rise and then fall when the maximal perturbation magnitude increases. This indicates that the adversarial patches are overfitting the substitute model. The results are black-box impersonation attack on FaceNet and CosFace under the face verification task. The adversarial examples are generated against ArcFace by restricting the adversarial patches to an eyeglass frame region. 200 image pairs from the LFW dataset are used." />
+<figcaption aria-hidden="true">Figure 3. The success rates of TAP-TIDIM
+on the black-box models first rise and then fall when the maximal
+perturbation magnitude increases. This indicates that the adversarial
+patches are overfitting the substitute model. The results are black-box
+impersonation attack on FaceNet and CosFace under the face verification
+task. The adversarial examples are generated against ArcFace by
+restricting the adversarial patches to an eyeglass frame region. 200
+image pairs from the LFW dataset are used.</figcaption>
+</figure></li>
+</ul>
+<h4 id="generative-adversarial-patch">Generative adversarial patch</h4>
+<p>提出在低维流形上对对抗补丁进行正则化优化，以避免优化问题中迁移性不佳的局部最优情况。</p>
+<p>这个流形需要具备的性质：</p>
+<ul>
+<li>足够的能力。即可以成功攻击白盒代理模型。</li>
+<li>良好的正则化。即使代理模型和目标模型的响应是相关的，以减轻过拟合。</li>
+</ul>
+<p>文章使用了一个生成模型学习到的流形，这个生成模型是在正常人脸图像上训练的。使用<span
+class="math inline">\(h(S):S\to R^n\)</span> 表示这个生成模型，<span
+class="math inline">\(S\)</span>表示latent space。之后就是对某一个latent
+code进行优化，文章中用的Adam。</p>
+<p>优化问题就变为：</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/19/bW83wMTnCIDaYpB.png"
+alt="优化问题" />
+<figcaption aria-hidden="true">优化问题</figcaption>
+</figure>
+<h3 id="实验">实验</h3>
+<h4 id="实验设定">实验设定</h4>
+<ul>
+<li><p><strong>数据集</strong>：LFW和Celeb_HQ。对于face
+verification，选择400对不同身份的人脸图像。对于face
+identification，选择400个图像作为gallery
+set，选择与之前400对应相同身份的400张图片作为probe set。</p></li>
+<li><p><strong>人脸识别模型</strong>：FaceNet, CosFace,
+ArcFace，在LFW数据集上达到了99%正确率。每个模型的cosine相似度阈值都是通过在6000对（3000对相同身份、3000对不同身份）图像上测试的最好阈值。同时用了Face++和Aliyun的模型。</p></li>
+<li><p><strong>生成模型</strong>：ProGAN, StyleGAN, StyleGAN2</p></li>
+<li><p><strong>补丁位置</strong>：眼镜和口罩....</p>
+<p><img src="https://s2.loli.net/2022/07/19/nJlSVLjtKED96sw.png" alt="Figure 2. The binary masks M indicating the regions of the designed patches. (a) An eyeglass frame. (b) A respirator." style="zoom:50%;" /></p></li>
+<li><p><strong>度量准则</strong>：对于face verification使用阈值，对face
+identification使用最近邻。用成功率衡量。</p></li>
+</ul>
+<h4 id="实验结果">实验结果</h4>
+<p>在dodging和impersonation设定下分别进行实验</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/19/9pFTxP64WBEjcIZ.png"
+alt="Table 1. The success rates of black-box dodging attack on FaceNet, CosFace, ArcFace, Face++ and Aliyun in the digital world under the face verification task. The adversarial examples are generated against FaceNet, CosFace, and ArcFace by restricting the adversarial patches to an eyeglass frame region. ∗ indicates white-box attacks." />
+<figcaption aria-hidden="true">Table 1. The success rates of black-box
+dodging attack on FaceNet, CosFace, ArcFace, Face++ and Aliyun in the
+digital world under the face verification task. The adversarial examples
+are generated against FaceNet, CosFace, and ArcFace by restricting the
+adversarial patches to an eyeglass frame region. ∗ indicates white-box
+attacks.</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2022/07/19/5UEjCk4NvOJD9hQ.png"
+alt="Table 2. The success rates of black-box impersonation attack on FaceNet, CosFace, ArcFace, Face++ and Aliyun in the digital world under the face verification task. The adversarial examples are generated against FaceNet, CosFace, and ArcFace by restricting the adversarial patches to an eyeglass frame region. ∗ indicates white-box attacks." />
+<figcaption aria-hidden="true">Table 2. The success rates of black-box
+impersonation attack on FaceNet, CosFace, ArcFace, Face++ and Aliyun in
+the digital world under the face verification task. The adversarial
+examples are generated against FaceNet, CosFace, and ArcFace by
+restricting the adversarial patches to an eyeglass frame region. ∗
+indicates white-box attacks.</figcaption>
+</figure>
+<ol type="1">
+<li>TAP-TIDIM表现好于TAP-MIM。表明先前提高迁移性的方法在对抗补丁上仍然有用。</li>
+<li>单纯的GenAP在大多数情况下好于TAP方法，证明提出的正则化方法的有效性。</li>
+<li>GenAP和GenAP-DI表现相似，在本方法上增加di没用。</li>
+<li>GenAP比简单的PASTE效果好很多，表明GenAP不仅在生成目标人脸的特征，也在寻找适合攻击者面部特征的对抗性特征。</li>
+<li>商业模型Face++和Aliyun对对抗补丁的脆弱性。</li>
+</ol>
+<h4 id="ablation-study-on-genap">Ablation study on GenAP</h4>
+<figure>
+<img src="https://s2.loli.net/2022/07/19/8phkHbiSEfewnG5.png"
+alt="Table 3. The success rates of black-box impersonation attack when the architectures, the parameter and the latent space are changed in the proposed GenAP algorithm. The adversarial examples are generated against ArcFace by restricting the adversarial patches to an eyeglass frame region, and are tested on FaceNet, CosFace and ArcFace in the digital world under the face verification task. ∗ indicates white-box attacks. The ablation studies are on (a) the parameters (RAND, CAR and FFHQ) of the StyleGAN2, (b) the architectures of the generative model (ProGAN, StyleGAN, StyleGAN2) and (c) the latent space (Z,W,W+ and noise) used by StyleGAN2 trained on FFHQ." />
+<figcaption aria-hidden="true">Table 3. The success rates of black-box
+impersonation attack when the architectures, the parameter and the
+latent space are changed in the proposed GenAP algorithm. The
+adversarial examples are generated against ArcFace by restricting the
+adversarial patches to an eyeglass frame region, and are tested on
+FaceNet, CosFace and ArcFace in the digital world under the face
+verification task. ∗ indicates white-box attacks. The ablation studies
+are on (a) the parameters (RAND, CAR and FFHQ) of the StyleGAN2, (b) the
+architectures of the generative model (ProGAN, StyleGAN, StyleGAN2) and
+(c) the latent space (Z,W,W+ and noise) used by StyleGAN2 trained on
+FFHQ.</figcaption>
+</figure>
+<h5 id="生成器模型的参数">生成器模型的参数</h5>
+<p>使用StyleGAN2，改变参数进行实验。分别是随机、在car数据集上训练、在人脸数据集上训练。</p>
+<p>使用<span class="math inline">\(W^+\)</span>和Noise作为latent
+space。</p>
+<p>Table3(a)说明，在CAR数据集上训练的模型白盒攻击表现较好，但是基本没有迁移性；在人脸数据集上训练迁移性好很多。表明使用face-like特征作为扰动，
+is important for bridging the gap between the substitute and the target
+face recognition models to improve transferability in the GenAP
+methods.</p>
+<h5 id="生成器模型架构">生成器模型架构</h5>
+<p>Table3(b)， StyleGAN2表现最好。</p>
+<h5 id="生成模型的latent-space">生成模型的latent space</h5>
+<p>Table3(c)， <span class="math inline">\(W^+\)</span>+ Noise
+最好。</p>
+<p>（这跟跟直觉很符合，靠近StyleGAN主干更利于编辑，更富于语义信息）</p>
+<h4 id="物理世界实验">物理世界实验</h4>
+<p>具体来说，从CelebA-HQ数据集中选择了一名志愿者作为攻击者和3个目标身份(一男两女)。对于每个目标身份，我们为攻击者生成一个眼镜框来模拟该身份。攻击者戴上对抗性镜框后，我们从正面拍摄他的视频，随机选取100帧视频。视频帧用于人脸验证。我们使用余弦相似度来评估补丁的可转移性。相似度越高，可转移性越好。从图4的结果可以看出，本文所提出的GenAP-DI生成的patch在打印和拍照后仍然保持较高的可转移性。</p>
+<p><img src="https://pdf.cdn.readpaper.com/parsed/fetch_target/0ffae3af6739db9fec3b99e94d47e6ec_7_Table_4.png" alt="Table 4. The cosine similarties between the attacker wearing the adversarial eyeglass frame and three different target identities in the physical-world. The target identities are randomly drawn from CelebA-HQ. The adversarial eyeglass frame is crafted by the TAPTIDIMv2 and the proposed GenAP-DI algorithms on ArcFace, and is tested on CosFace and FaceNet." style="zoom:67%;" /></p>
+<h4 id="其他实验">其他实验</h4>
+<p>说明了SemanticAdv方法的次优，并将本方法拓展到其他任务。</p>
+<p>待填！！！！！！！！！！！！！！</p>
+<h3 id="结论">结论</h3>
+<p>本文研究了query-free
+black-box设定下人脸识别模型对对抗补丁的鲁棒性。首先，我们将现有的技术从<span
+class="math inline">\(l_p\)</span>约束(p &gt;
+0)的设置扩展到patch的设定，生成可迁移的对抗patch的TAP算法。然而，一些实验现象表明，TAP算法很难摆脱局部最优，迁移性性不理想。因此，我们提出在人脸图像上预先训练的生成模型学习的流形上对对抗补丁进行正则化。所提出的GenAP算法中的扰动类似于人脸特征，这对于减少替代模型与目标人脸识别模型之间的差距具有重要意义。实验验证了所提方法的优越性。</p>
+<h3 id="思考">思考</h3>
+<p>问题：</p>
+<ol type="1">
+<li>使用StyleGAN模型有点庞大。</li>
+</ol>
+<p>思考：</p>
+<ol type="1">
+<li><p>不同GAN模型之间的差距还是很大的，越有语义编辑特性的模型效果越好。并且对Z的优化竟然效果那么差....原因？</p></li>
+<li><p>为什么之前的方法那么容易陷入局部最优。</p></li>
+<li><p>新提出的正则方法就是将扰动局限在人脸特征中，并且还能在这个latent
+space中找到对抗样本，对GAN的要求有点高。</p></li>
+<li><p>有没有别的方法可以达到类似的效果</p></li>
+<li><p>发现这个方法有目标攻击生成的补丁和目标人的特征很相似，其实就相当于保留目标人脸的特征的前提下（本文提出的正则化），尽可能搜索对抗样本。有没有其他方法可以在修改的时候既保留人脸特征又有对抗性？</p></li>
+</ol>
+<figure>
+<img
+src="https://pdf.cdn.readpaper.com/parsed/fetch_target/0ffae3af6739db9fec3b99e94d47e6ec_12_Figure_4.png"
+alt="Figure 4. Visualization of adversarial eyeglass frames generated by the TAP-TIDIM and the GenAP-DI methods for dodging attack. The first three rows are the demonstrations on CelebA-HQ dataset and the others are from LFW dataset. And the three columns denotes the pictures of attackers and attackers with the adversarial eyeglass frames by generated by TAP-TIDIM and GenAP-DI methods separately. In TAP-TIDIM, we use = 255." />
+<figcaption aria-hidden="true">Figure 4. Visualization of adversarial
+eyeglass frames generated by the TAP-TIDIM and the GenAP-DI methods for
+dodging attack. The first three rows are the demonstrations on CelebA-HQ
+dataset and the others are from LFW dataset. And the three columns
+denotes the pictures of attackers and attackers with the adversarial
+eyeglass frames by generated by TAP-TIDIM and GenAP-DI methods
+separately. In TAP-TIDIM, we use = 255.</figcaption>
+</figure>
+<figure>
+<img
+src="https://pdf.cdn.readpaper.com/parsed/fetch_target/0ffae3af6739db9fec3b99e94d47e6ec_13_Figure_5.png"
+alt="Figure 5. Visualization of adversarial eyeglass frames generated by the TAP-TIDIM and the GenAP-DI methods for impersonation attack. The first three rows are the demonstrations on CelebA-HQ dataset and the others are from LFW dataset. The first two columns are the photos of attackers and their target identities, and the following two columns show the attackers with the adversarial eyeglass frames generated by the proposed TAP-TIDIM and GenAP-DI methods. In TAP-TIDIM, we use = 40." />
+<figcaption aria-hidden="true">Figure 5. Visualization of adversarial
+eyeglass frames generated by the TAP-TIDIM and the GenAP-DI methods for
+impersonation attack. The first three rows are the demonstrations on
+CelebA-HQ dataset and the others are from LFW dataset. The first two
+columns are the photos of attackers and their target identities, and the
+following two columns show the attackers with the adversarial eyeglass
+frames generated by the proposed TAP-TIDIM and GenAP-DI methods. In
+TAP-TIDIM, we use = 40.</figcaption>
+</figure>
+
+    </div>
+
+    
+    
+    
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢阅读-------------</div>
+    
+</div>
+  
+</div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 深度学习</a>
+              <a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" rel="tag"><i class="fa fa-tag"></i> 论文阅读</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/16/91-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-93-Transferable-Sparse-Adversarial-Attack/" rel="prev" title="[论文阅读] Transferable Sparse Adversarial Attack">
+      <i class="fa fa-chevron-left"></i> [论文阅读] Transferable Sparse Adversarial Attack
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%91%98%E8%A6%81%E7%BF%BB%E8%AF%91"><span class="nav-number">1.</span> <span class="nav-text">摘要翻译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">基本问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#tap-tidim"><span class="nav-number">3.1.</span> <span class="nav-text">TAP-TIDIM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#generative-adversarial-patch"><span class="nav-number">3.2.</span> <span class="nav-text">Generative adversarial patch</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C"><span class="nav-number">4.</span> <span class="nav-text">实验</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E8%AE%BE%E5%AE%9A"><span class="nav-number">4.1.</span> <span class="nav-text">实验设定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">4.2.</span> <span class="nav-text">实验结果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ablation-study-on-genap"><span class="nav-number">4.3.</span> <span class="nav-text">Ablation study on GenAP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%99%A8%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">4.3.1.</span> <span class="nav-text">生成器模型的参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%99%A8%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84"><span class="nav-number">4.3.2.</span> <span class="nav-text">生成器模型架构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E7%9A%84latent-space"><span class="nav-number">4.3.3.</span> <span class="nav-text">生成模型的latent space</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E4%B8%96%E7%95%8C%E5%AE%9E%E9%AA%8C"><span class="nav-number">4.4.</span> <span class="nav-text">物理世界实验</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%AE%9E%E9%AA%8C"><span class="nav-number">4.5.</span> <span class="nav-text">其他实验</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">5.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">思考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zZhBr"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">zZhBr</p>
+  <div class="site-description" itemprop="description">向梦想中自己的样子疯狂努力！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zzhbrr" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zzhbrr" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1376447388@qq.com" title="E-Mail → mailto:1376447388@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">true</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">53k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">48 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'LwPA3YYjR79z4KVjpTUbE7sO-gzGzoHsz',
+      appKey     : 'znhl6YoHSnBwGqSD5ofRNUmK',
+      placeholder: "请在此输入你的留言",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

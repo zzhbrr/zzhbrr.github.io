@@ -125,7 +125,7 @@ class="math inline">\(m\)</span>中的值尽量趋近于0或者1。</p>
 <p>大致进行了四个实验。</p>
 <ol type="1">
 <li>在类似的稀疏约束条件下，在不同的<span
-class="math inline">\(l_\infin\)</span>条件下，测试与另外三个稀疏对抗攻击算法的Non-target的性能。</li>
+class="math inline">\(l_\infty\)</span>条件下，测试与另外三个稀疏对抗攻击算法的Non-target的性能。</li>
 <li>在类似的稀疏约束条件下，测试与另外两个稀疏对抗攻击算法在Target设定下的性能。但目标类别只有两个，“秃鹫”和“泡泡”。</li>
 <li>与GAP和Cross-domain
 perturbations在Non-target设定下进行相似评估。</li>
@@ -1491,6 +1491,226 @@ baseline还有很远距离，但实在没有心情train它了。</p>
       </categories>
       <tags>
         <tag>深度学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[论文阅读] Improving Transferability of Adversarial Patches on Face Recognition with Generative Models</title>
+    <url>/2022/07/19/91-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-93-Improving-Transferability-of-Adversarial-Patches-on-Face-Recognition-with-Generative-Models/</url>
+    <content><![CDATA[<center>
+CVPR2021 使用生成模型提高对抗补丁在人脸识别上的迁移性
+</center>
+<span id="more"></span>
+<p>题目： Improving Transferability of Adversarial Patches on Face
+Recognition with Generative Models</p>
+<p>作者： Zihao Xiao, ..., Jun Zhu</p>
+<p>会议：CVPR2021</p>
+<p>连接：<a
+href="https://openaccess.thecvf.com/content/CVPR2021/papers/Xiao_Improving_Transferability_of_Adversarial_Patches_on_Face_Recognition_With_Generative_CVPR_2021_paper.pdf">文章链接</a></p>
+<hr />
+<h3 id="摘要翻译">摘要翻译</h3>
+<p>       深度卷积神经网络大大提升了人脸识别性能。最近，人脸识别模型已经被用于安全敏感应用的身份认证。然而，深度CNN对于对抗补丁来说很脆弱，这些对抗补丁可以在现实中实现并且隐蔽，这对这些模型在现实世界中的应用提出的新的安全问题。</p>
+<p>       在本文中，我们使用基于可迁移的对抗补丁来<strong>评估人脸识别模型的鲁棒性</strong>，其中攻击者对目标模型的可访问性有限。</p>
+<p>       首先，我们<strong>对现有的基于迁移的攻击方法进行扩展</strong>，生成可迁移的对抗补丁。然而，我们发现迁移性对初始化很敏感，当扰动较大时迁移性下降，表明对替代模型过拟合。</p>
+<p>       其次，我们提出了<strong>在低维数据流形上对对抗补丁进行正则化</strong>。这个流形有在合法人脸图像上预训练的生成模型表示。将像人脸的特征(face-like
+feature)作为对抗扰动，通过在流形上的优化，我们表明替代模型和目标模型之间的响应差距显著减小，并且表现出更好的迁移性。</p>
+<p>       大量的数字世界实验证明了该方法在黑箱设定下的优越性。我们也将提出的方法应用于物理世界中。</p>
+<h3 id="基本问题">基本问题</h3>
+<ul>
+<li><p><strong>论文解决的问题：</strong>提升人脸识别中对抗补丁的迁移性</p></li>
+<li><p><strong>动机：</strong></p>
+<p>       先前的对抗补丁的工作基于白盒设定，或者基于询问的设定，但部署在现实世界中的模型不能轻易被访问。所以本文聚焦于提升<strong>query-free
+black-box
+setting</strong>的迁移性。在这个设定下，基于迁移的对抗攻击被广泛使用。</p>
+<p>       现有的提升对抗样本迁移性的方法聚焦于使用先进的非凸优化、数据增强等方法，这些方法通常是为了生成<span
+class="math inline">\(L_p\)</span>约束的对抗样本，我们发现这些方法也提升对抗补丁的迁移性，但我们发现这样也容易陷入局部最优，迁移性不令人满意的。首先，迁移性对算法的初始化很敏感。其次，随着扰动强度增加，迁移性先上升后下降，有过拟合现象。所以需要<strong>新的正则化方法</strong>以减轻对代理模型的过拟合。</p></li>
+<li><p><strong>相关工作</strong></p>
+<ul>
+<li>对抗补丁。先前工作都是基于白盒设定的。</li>
+<li>可迁移的对抗样本。大多数是用在生成<span
+class="math inline">\(L_p\)</span>约束下的对抗样本，但可以被迁移至对抗补丁中。但易陷入局部最优。</li>
+<li>对抗样本的生成式模型。现有的生成式方法迁移性有限，如SemanticAdv。</li>
+</ul></li>
+<li><p><strong>科学假设：</strong>不同的人脸识别模型对<strong>类人脸特征(face-like
+features)</strong>的响应是有效相关的，这可以提高对抗补丁的迁移性。</p></li>
+<li><p><strong>贡献：</strong>提出通过在低维流形上对对抗补丁进行优化来进行正则化，流形用生成模型表示，在其latent
+space内进行优化。</p></li>
+</ul>
+<h3 id="方法">方法</h3>
+<h4 id="tap-tidim">TAP-TIDIM</h4>
+<p>即用momentum、diversity
+input、transform方法生成可迁移对抗补丁，很简单。</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/19/v78yOS1ZD5UBE4P.png"
+alt="TAP-TIDIM algorithm" />
+<figcaption aria-hidden="true">TAP-TIDIM algorithm</figcaption>
+</figure>
+<p>但容易过拟合，</p>
+<ul>
+<li><p>迁移性对初值很敏感。对于目标攻击，仅把初始值换成目标人脸，就有很大的迁移性提升。</p></li>
+<li><p>当搜索空间变大时，迁移性降低。对于<span
+class="math inline">\(L_\infin\)</span>约束，当可改变像素值越大时，性能先提升后下降，这是过拟合的体现。</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/19/MmCz4tTw8N7g1QR.png"
+alt="Figure 3. The success rates of TAP-TIDIM on the black-box models first rise and then fall when the maximal perturbation magnitude increases. This indicates that the adversarial patches are overfitting the substitute model. The results are black-box impersonation attack on FaceNet and CosFace under the face verification task. The adversarial examples are generated against ArcFace by restricting the adversarial patches to an eyeglass frame region. 200 image pairs from the LFW dataset are used." />
+<figcaption aria-hidden="true">Figure 3. The success rates of TAP-TIDIM
+on the black-box models first rise and then fall when the maximal
+perturbation magnitude increases. This indicates that the adversarial
+patches are overfitting the substitute model. The results are black-box
+impersonation attack on FaceNet and CosFace under the face verification
+task. The adversarial examples are generated against ArcFace by
+restricting the adversarial patches to an eyeglass frame region. 200
+image pairs from the LFW dataset are used.</figcaption>
+</figure></li>
+</ul>
+<h4 id="generative-adversarial-patch">Generative adversarial patch</h4>
+<p>提出在低维流形上对对抗补丁进行正则化优化，以避免优化问题中迁移性不佳的局部最优情况。</p>
+<p>这个流形需要具备的性质：</p>
+<ul>
+<li>足够的能力。即可以成功攻击白盒代理模型。</li>
+<li>良好的正则化。即使代理模型和目标模型的响应是相关的，以减轻过拟合。</li>
+</ul>
+<p>文章使用了一个生成模型学习到的流形，这个生成模型是在正常人脸图像上训练的。使用<span
+class="math inline">\(h(S):S\to R^n\)</span> 表示这个生成模型，<span
+class="math inline">\(S\)</span>表示latent space。之后就是对某一个latent
+code进行优化，文章中用的Adam。</p>
+<p>优化问题就变为：</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/19/bW83wMTnCIDaYpB.png"
+alt="优化问题" />
+<figcaption aria-hidden="true">优化问题</figcaption>
+</figure>
+<h3 id="实验">实验</h3>
+<h4 id="实验设定">实验设定</h4>
+<ul>
+<li><p><strong>数据集</strong>：LFW和Celeb_HQ。对于face
+verification，选择400对不同身份的人脸图像。对于face
+identification，选择400个图像作为gallery
+set，选择与之前400对应相同身份的400张图片作为probe set。</p></li>
+<li><p><strong>人脸识别模型</strong>：FaceNet, CosFace,
+ArcFace，在LFW数据集上达到了99%正确率。每个模型的cosine相似度阈值都是通过在6000对（3000对相同身份、3000对不同身份）图像上测试的最好阈值。同时用了Face++和Aliyun的模型。</p></li>
+<li><p><strong>生成模型</strong>：ProGAN, StyleGAN, StyleGAN2</p></li>
+<li><p><strong>补丁位置</strong>：眼镜和口罩....</p>
+<p><img src="https://s2.loli.net/2022/07/19/nJlSVLjtKED96sw.png" alt="Figure 2. The binary masks M indicating the regions of the designed patches. (a) An eyeglass frame. (b) A respirator." style="zoom:50%;" /></p></li>
+<li><p><strong>度量准则</strong>：对于face verification使用阈值，对face
+identification使用最近邻。用成功率衡量。</p></li>
+</ul>
+<h4 id="实验结果">实验结果</h4>
+<p>在dodging和impersonation设定下分别进行实验</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/19/9pFTxP64WBEjcIZ.png"
+alt="Table 1. The success rates of black-box dodging attack on FaceNet, CosFace, ArcFace, Face++ and Aliyun in the digital world under the face verification task. The adversarial examples are generated against FaceNet, CosFace, and ArcFace by restricting the adversarial patches to an eyeglass frame region. ∗ indicates white-box attacks." />
+<figcaption aria-hidden="true">Table 1. The success rates of black-box
+dodging attack on FaceNet, CosFace, ArcFace, Face++ and Aliyun in the
+digital world under the face verification task. The adversarial examples
+are generated against FaceNet, CosFace, and ArcFace by restricting the
+adversarial patches to an eyeglass frame region. ∗ indicates white-box
+attacks.</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2022/07/19/5UEjCk4NvOJD9hQ.png"
+alt="Table 2. The success rates of black-box impersonation attack on FaceNet, CosFace, ArcFace, Face++ and Aliyun in the digital world under the face verification task. The adversarial examples are generated against FaceNet, CosFace, and ArcFace by restricting the adversarial patches to an eyeglass frame region. ∗ indicates white-box attacks." />
+<figcaption aria-hidden="true">Table 2. The success rates of black-box
+impersonation attack on FaceNet, CosFace, ArcFace, Face++ and Aliyun in
+the digital world under the face verification task. The adversarial
+examples are generated against FaceNet, CosFace, and ArcFace by
+restricting the adversarial patches to an eyeglass frame region. ∗
+indicates white-box attacks.</figcaption>
+</figure>
+<ol type="1">
+<li>TAP-TIDIM表现好于TAP-MIM。表明先前提高迁移性的方法在对抗补丁上仍然有用。</li>
+<li>单纯的GenAP在大多数情况下好于TAP方法，证明提出的正则化方法的有效性。</li>
+<li>GenAP和GenAP-DI表现相似，在本方法上增加di没用。</li>
+<li>GenAP比简单的PASTE效果好很多，表明GenAP不仅在生成目标人脸的特征，也在寻找适合攻击者面部特征的对抗性特征。</li>
+<li>商业模型Face++和Aliyun对对抗补丁的脆弱性。</li>
+</ol>
+<h4 id="ablation-study-on-genap">Ablation study on GenAP</h4>
+<figure>
+<img src="https://s2.loli.net/2022/07/19/8phkHbiSEfewnG5.png"
+alt="Table 3. The success rates of black-box impersonation attack when the architectures, the parameter and the latent space are changed in the proposed GenAP algorithm. The adversarial examples are generated against ArcFace by restricting the adversarial patches to an eyeglass frame region, and are tested on FaceNet, CosFace and ArcFace in the digital world under the face verification task. ∗ indicates white-box attacks. The ablation studies are on (a) the parameters (RAND, CAR and FFHQ) of the StyleGAN2, (b) the architectures of the generative model (ProGAN, StyleGAN, StyleGAN2) and (c) the latent space (Z,W,W+ and noise) used by StyleGAN2 trained on FFHQ." />
+<figcaption aria-hidden="true">Table 3. The success rates of black-box
+impersonation attack when the architectures, the parameter and the
+latent space are changed in the proposed GenAP algorithm. The
+adversarial examples are generated against ArcFace by restricting the
+adversarial patches to an eyeglass frame region, and are tested on
+FaceNet, CosFace and ArcFace in the digital world under the face
+verification task. ∗ indicates white-box attacks. The ablation studies
+are on (a) the parameters (RAND, CAR and FFHQ) of the StyleGAN2, (b) the
+architectures of the generative model (ProGAN, StyleGAN, StyleGAN2) and
+(c) the latent space (Z,W,W+ and noise) used by StyleGAN2 trained on
+FFHQ.</figcaption>
+</figure>
+<h5 id="生成器模型的参数">生成器模型的参数</h5>
+<p>使用StyleGAN2，改变参数进行实验。分别是随机、在car数据集上训练、在人脸数据集上训练。</p>
+<p>使用<span class="math inline">\(W^+\)</span>和Noise作为latent
+space。</p>
+<p>Table3(a)说明，在CAR数据集上训练的模型白盒攻击表现较好，但是基本没有迁移性；在人脸数据集上训练迁移性好很多。表明使用face-like特征作为扰动，
+is important for bridging the gap between the substitute and the target
+face recognition models to improve transferability in the GenAP
+methods.</p>
+<h5 id="生成器模型架构">生成器模型架构</h5>
+<p>Table3(b)， StyleGAN2表现最好。</p>
+<h5 id="生成模型的latent-space">生成模型的latent space</h5>
+<p>Table3(c)， <span class="math inline">\(W^+\)</span>+ Noise
+最好。</p>
+<p>（这跟跟直觉很符合，靠近StyleGAN主干更利于编辑，更富于语义信息）</p>
+<h4 id="物理世界实验">物理世界实验</h4>
+<p>具体来说，从CelebA-HQ数据集中选择了一名志愿者作为攻击者和3个目标身份(一男两女)。对于每个目标身份，我们为攻击者生成一个眼镜框来模拟该身份。攻击者戴上对抗性镜框后，我们从正面拍摄他的视频，随机选取100帧视频。视频帧用于人脸验证。我们使用余弦相似度来评估补丁的可转移性。相似度越高，可转移性越好。从图4的结果可以看出，本文所提出的GenAP-DI生成的patch在打印和拍照后仍然保持较高的可转移性。</p>
+<p><img src="https://pdf.cdn.readpaper.com/parsed/fetch_target/0ffae3af6739db9fec3b99e94d47e6ec_7_Table_4.png" alt="Table 4. The cosine similarties between the attacker wearing the adversarial eyeglass frame and three different target identities in the physical-world. The target identities are randomly drawn from CelebA-HQ. The adversarial eyeglass frame is crafted by the TAPTIDIMv2 and the proposed GenAP-DI algorithms on ArcFace, and is tested on CosFace and FaceNet." style="zoom:67%;" /></p>
+<h4 id="其他实验">其他实验</h4>
+<p>说明了SemanticAdv方法的次优，并将本方法拓展到其他任务。</p>
+<p>待填！！！！！！！！！！！！！！</p>
+<h3 id="结论">结论</h3>
+<p>本文研究了query-free
+black-box设定下人脸识别模型对对抗补丁的鲁棒性。首先，我们将现有的技术从<span
+class="math inline">\(l_p\)</span>约束(p &gt;
+0)的设置扩展到patch的设定，生成可迁移的对抗patch的TAP算法。然而，一些实验现象表明，TAP算法很难摆脱局部最优，迁移性性不理想。因此，我们提出在人脸图像上预先训练的生成模型学习的流形上对对抗补丁进行正则化。所提出的GenAP算法中的扰动类似于人脸特征，这对于减少替代模型与目标人脸识别模型之间的差距具有重要意义。实验验证了所提方法的优越性。</p>
+<h3 id="思考">思考</h3>
+<p>问题：</p>
+<ol type="1">
+<li>使用StyleGAN模型有点庞大。</li>
+</ol>
+<p>思考：</p>
+<ol type="1">
+<li><p>不同GAN模型之间的差距还是很大的，越有语义编辑特性的模型效果越好。并且对Z的优化竟然效果那么差....原因？</p></li>
+<li><p>为什么之前的方法那么容易陷入局部最优。</p></li>
+<li><p>新提出的正则方法就是将扰动局限在人脸特征中，并且还能在这个latent
+space中找到对抗样本，对GAN的要求有点高。</p></li>
+<li><p>有没有别的方法可以达到类似的效果</p></li>
+<li><p>发现这个方法有目标攻击生成的补丁和目标人的特征很相似，其实就相当于保留目标人脸的特征的前提下（本文提出的正则化），尽可能搜索对抗样本。有没有其他方法可以在修改的时候既保留人脸特征又有对抗性？</p></li>
+</ol>
+<figure>
+<img
+src="https://pdf.cdn.readpaper.com/parsed/fetch_target/0ffae3af6739db9fec3b99e94d47e6ec_12_Figure_4.png"
+alt="Figure 4. Visualization of adversarial eyeglass frames generated by the TAP-TIDIM and the GenAP-DI methods for dodging attack. The first three rows are the demonstrations on CelebA-HQ dataset and the others are from LFW dataset. And the three columns denotes the pictures of attackers and attackers with the adversarial eyeglass frames by generated by TAP-TIDIM and GenAP-DI methods separately. In TAP-TIDIM, we use = 255." />
+<figcaption aria-hidden="true">Figure 4. Visualization of adversarial
+eyeglass frames generated by the TAP-TIDIM and the GenAP-DI methods for
+dodging attack. The first three rows are the demonstrations on CelebA-HQ
+dataset and the others are from LFW dataset. And the three columns
+denotes the pictures of attackers and attackers with the adversarial
+eyeglass frames by generated by TAP-TIDIM and GenAP-DI methods
+separately. In TAP-TIDIM, we use = 255.</figcaption>
+</figure>
+<figure>
+<img
+src="https://pdf.cdn.readpaper.com/parsed/fetch_target/0ffae3af6739db9fec3b99e94d47e6ec_13_Figure_5.png"
+alt="Figure 5. Visualization of adversarial eyeglass frames generated by the TAP-TIDIM and the GenAP-DI methods for impersonation attack. The first three rows are the demonstrations on CelebA-HQ dataset and the others are from LFW dataset. The first two columns are the photos of attackers and their target identities, and the following two columns show the attackers with the adversarial eyeglass frames generated by the proposed TAP-TIDIM and GenAP-DI methods. In TAP-TIDIM, we use = 40." />
+<figcaption aria-hidden="true">Figure 5. Visualization of adversarial
+eyeglass frames generated by the TAP-TIDIM and the GenAP-DI methods for
+impersonation attack. The first three rows are the demonstrations on
+CelebA-HQ dataset and the others are from LFW dataset. The first two
+columns are the photos of attackers and their target identities, and the
+following two columns show the attackers with the adversarial eyeglass
+frames generated by the proposed TAP-TIDIM and GenAP-DI methods. In
+TAP-TIDIM, we use = 40.</figcaption>
+</figure>
+]]></content>
+      <categories>
+        <category>论文阅读</category>
+        <category>对抗攻击</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>论文阅读</tag>
       </tags>
   </entry>
 </search>
