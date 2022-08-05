@@ -12,206 +12,6 @@
       </categories>
   </entry>
   <entry>
-    <title>[论文阅读] Transferable Sparse Adversarial Attack</title>
-    <url>/2022/07/16/91-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-93-Transferable-Sparse-Adversarial-Attack/</url>
-    <content><![CDATA[<center>
-CVPR2022 可迁移的稀疏对抗攻击
-</center>
-<span id="more"></span>
-<p>题目：Transferable Sparse Adversarial Attack</p>
-<p>作者：Ziwen He</p>
-<p>会议：CVPR2022</p>
-<p>链接：<a
-href="https://openaccess.thecvf.com/content/CVPR2022/papers/He_Transferable_Sparse_Adversarial_Attack_CVPR_2022_paper.pdf">文章链接</a></p>
-<hr />
-<h3 id="摘要翻译">摘要翻译</h3>
-<p>​
-深度神经网络已经表现出对对抗攻击的脆弱性。在本文中，我们聚焦于<strong>基于l0范数的稀疏对抗攻击</strong>，只用次改几个像素即可攻击成功。先前的稀疏攻击方法尽管有高攻击成功率，但在黑盒设置下，由于对代理模型的过拟合，对抗样本具有较低的迁移性。因此，我们提出了一个生成器架构去减轻过拟合问题，并且有效地生成可迁移的稀疏对抗样本。<strong>特别的，我们提出的生成器将稀疏扰动解耦为振幅和位置分量。我们精心设计了一个随机量化算子，以用端到端的方法联合优化这两个分量。</strong>实验表明我们的方法在相似的系数性设置下，相比于SOTA已经大大提升了迁移性。除此之外，我们的方法也实现了优越的<strong>推理速度</strong>，比其他基于优化的方法快了700倍。代码已公开。</p>
-<h3 id="基本问题">基本问题</h3>
-<ul>
-<li><strong>论文解决的问题：</strong> 基于L0范数的稀疏对抗攻击</li>
-<li><strong>动机：</strong>
-<ol type="1">
-<li>现有的稀疏对抗方法如PGD0, SparseFool,
-GreedyFool依赖于目标模型的梯度或其估计，具有较低的迁移性。并且有研究表明<span
-class="math inline">\(l_2\)</span>和<span
-class="math inline">\(l_\infin\)</span>范数限制的攻击在不同架构模型下更具有迁移性，<span
-class="math inline">\(l_0\)</span>范数限制的稀疏对抗样本的迁移性还未知。</li>
-<li>之前的生成式方法都只生成稠密扰动，本文工作与之前生成式方法最大的不同就是有稀疏性的限制。</li>
-</ol></li>
-<li><strong>贡献：</strong>
-<ul>
-<li>探索稀疏对抗样本迁移性问题，并提出一个生成可迁移的稀疏对抗样本的方法。</li>
-</ul></li>
-</ul>
-<h3 id="method">Method</h3>
-<h4 id="analysis">Analysis</h4>
-<p>对于无目标攻击，要优化的问题是：</p>
-<p><img src="https://s2.loli.net/2022/07/16/QZKBAzEDCjrf5s2.png" /></p>
-<p>其中 <span class="math inline">\(\epsilon\)</span> 是<span
-class="math inline">\(l_\infty\)</span>的扰动限制，如果是有目标攻击，则第二行要换为<span
-class="math inline">\(arg\,max_c\,\,F(x_{adv})_c=y_t\)</span>， <span
-class="math inline">\(f(x)_c\)</span> 是类别c的logit值，目标类别是<span
-class="math inline">\(y_t\)</span> 。</p>
-<p>之前的稀疏攻击方法很大的依赖于单个图像的梯度，而基于生成的方法，生成器可以学到自然图像到稀疏对抗图像的映射，生成器的参数是由数据分布学习到的，而不是单个图像。大量的训练数据可以减轻过拟合，增加迁移性。</p>
-<p>（这里提出了用生成式的方法提升稀疏样本的迁移性，于是以下该探索如何设计一个生成器架构）。</p>
-<p>但是优化上式是一个Np hard的问题，先前的工作是优化近似的<span
-class="math inline">\(l_1\)</span>约束问题，如SparseFool，但其方法中包含了不可微分的步骤，于是不能进行端到端训练。</p>
-<p>要解决这个<span
-class="math inline">\(l_1\)</span>约束问题最直接的方法就是加一个<span
-class="math inline">\(l_1\)</span>正则化项，但是这样做会使生成的扰动收敛于0，生成稠密扰动，如果直接在这个稠密扰动上面使用二值化（即选某些点保留扰动，其余不扰动），则会丢失信息而导致样本不再有攻击性。本文使用将扰动分解为幅度和位置两个变量的哈达玛乘积来解决这个问题，即<span
-class="math inline">\(\delta =r \odot m\)</span>， 其中<span
-class="math inline">\(r\in R^N\)</span>，是扰动大小，<span
-class="math inline">\(m\in
-\{0,1\}^N\)</span>，是表示此位置是否施加扰动。同时优化这两个向量，并且只给向量
-<span class="math inline">\(m\)</span> 添加 <span
-class="math inline">\(l_1\)</span> 正则，即可实现稀疏的目标。</p>
-<h4 id="framework">Framework</h4>
-<figure>
-<img src="https://s2.loli.net/2022/07/16/YuWkryZzCdJ3UsA.png"
-alt="Figure 1: Our framework for generating transferable sparse adversarial examples." />
-<figcaption aria-hidden="true">Figure 1: Our framework for generating
-transferable sparse adversarial examples.</figcaption>
-</figure>
-<p>如上图，实现了两个分支分别生成 <span class="math inline">\(r\)</span>
-和 <span class="math inline">\(m\)</span>。</p>
-<p>记编码器为<span class="math inline">\(E\)</span>，
-则编码器生成的latent code <span class="math inline">\(z =
-E(x)\)</span>，之后 $z $ 将被送入<span
-class="math inline">\(D_1,D_2\)</span>两个解码器。</p>
-<p><span class="math inline">\(D_1\)</span> 生成对抗扰动的大小，结果
-<span class="math inline">\(r\)</span> 将<span
-class="math inline">\(D_1(z)\)</span> 缩放到<span
-class="math inline">\([-255, 255]\)</span> 之间。</p>
-<p><span class="math inline">\(D_2\)</span> 生成向量<span
-class="math inline">\(Q\in [0,1]^N\)</span>，为得到离散的向量 <span
-class="math inline">\(m\)</span>，使用一个二值化算子 <span
-class="math inline">\(q\)</span></p>
-<p><img src="https://s2.loli.net/2022/07/16/sw3Kqa2IdBvmi7y.png" /></p>
-<p>但显然这个函数的梯度都是0，会导致<span
-class="math inline">\(D_2\)</span>的参数无法更新，于是本文设计了一个随机算子，随机变量<span
-class="math inline">\(X\in \{0, 1\}\)</span>，如果<span
-class="math inline">\(X=1\)</span>，则<span
-class="math inline">\(Q_{i,j}\)</span>被量化为0,1，否则<span
-class="math inline">\(q_{i,j}=Q_{i,j}\)</span>。其中<span
-class="math inline">\(X\)</span>服从参数为p的伯努利分布，p为<span
-class="math inline">\(X=1\)</span>的概率。</p>
-<p>其实就是，如果<span class="math inline">\(X=1\)</span>，则<span
-class="math inline">\(Q\)</span>被量化，阻断反向传播；如果<span
-class="math inline">\(X=0\)</span>，则<span
-class="math inline">\(Q\)</span>保持原状，允许梯度传递，从而可以更改<span
-class="math inline">\(D_2\)</span>的参数。</p>
-<p>在推理过程中， p设置为1。</p>
-<h4 id="loss-functions">Loss functions</h4>
-<h5 id="adversial-loss">Adversial loss</h5>
-<p>这里使用C&amp;W的loss</p>
-<p><img src="https://s2.loli.net/2022/07/16/OqhxTN7yS2Ufk4H.png" /></p>
-<p>如果是有目标攻击的话，使用</p>
-<p><img src="https://s2.loli.net/2022/07/17/ZHVzntyFrb1vPIf.png" /></p>
-<p>代替第一项。</p>
-<h5 id="sparse-loss">Sparse loss</h5>
-<p><img src="https://s2.loli.net/2022/07/17/cInl2au5YNAbTeG.png" /></p>
-<p>本方法的稀疏度主要是由 <span class="math inline">\(m\)</span>
-决定的，由于<span
-class="math inline">\(L_0\)</span>很难优化求解，于是使用<span
-class="math inline">\(L_1\)</span>代替（L1范数是L0范数的最优凸近似，且L1范数容易优化求解），相应的，在下面的loss中，我们要让<span
-class="math inline">\(m\)</span>中的值尽量趋近于0或者1。</p>
-<h5 id="quantization-loss">Quantization loss</h5>
-<p>为减小训练和测试之间的gap，在损失函数中增加一项，使得Qij的值趋近于0或1</p>
-<p><img src="https://s2.loli.net/2022/07/17/3eSnOVKMZ6AUtTY.png" /></p>
-<p>总体loss为</p>
-<p><img src="https://s2.loli.net/2022/07/17/WPTr6gS25Fopn38.png" /></p>
-<h3 id="实验">实验</h3>
-<p>大致进行了四个实验。</p>
-<ol type="1">
-<li>在类似的稀疏约束条件下，在不同的<span
-class="math inline">\(l_\infty\)</span>条件下，测试与另外三个稀疏对抗攻击算法的Non-target的性能。</li>
-<li>在类似的稀疏约束条件下，测试与另外两个稀疏对抗攻击算法在Target设定下的性能。但目标类别只有两个，“秃鹫”和“泡泡”。</li>
-<li>与GAP和Cross-domain
-perturbations在Non-target设定下进行相似评估。</li>
-<li>消融实验：（1）不解耦为幅度和位置分量的性能；（2）训练时使p=0时（即不进行量化）的性能，q=STE的性能；（3）不使用稀疏性约束loss（即不要L0约束）的性能；（4）不使用量化损失的性能；（5）对于每张图片训练自己的生成器的性能。</li>
-</ol>
-<p>实验结果描述为：</p>
-<ol type="1">
-<li><p>相比于其他三个类似的方法，这个方法在Non-target下的迁移性大大提升，（白盒下效果反而不好，这是由于使用训练好的生成器做的原因，不过不重要）</p>
-<figure>
-<img src="https://s2.loli.net/2022/07/17/qUTpRi6z9xoZV1P.png"
-alt="Table 1: `∞ = 255 constrained non-targeted attack transferability comparison on ImageNet dataset. The best speed and transfer rate are shown in bold. ‘*’ means white-box setting." />
-<figcaption aria-hidden="true">Table 1: `∞ = 255 constrained
-non-targeted attack transferability comparison on ImageNet dataset. The
-best speed and transfer rate are shown in bold. ‘*’ means white-box
-setting.</figcaption>
-</figure>
-<figure>
-<img src="https://s2.loli.net/2022/07/17/KJtF6GQMDCnwN3g.png"
-alt="Table 2: `∞ = 10 constrained non-targeted attack transferability comparison on ImageNet dataset. The best speed and transfer rate are shown in bold. ‘*’ means white-box setting." />
-<figcaption aria-hidden="true">Table 2: `∞ = 10 constrained non-targeted
-attack transferability comparison on ImageNet dataset. The best speed
-and transfer rate are shown in bold. ‘*’ means white-box
-setting.</figcaption>
-</figure></li>
-<li><p>相比于其他两个类似的方法，这个方法在Target设定下也有一定的迁移效果，其他两种方法迁移性很差。随有提升，但貌似也不高。在实验中只进行了两个target
-class的实验，迁移性差别明显，可能是未来研究的一个方向。</p>
-<figure>
-<img src="https://s2.loli.net/2022/07/17/zKREC3Ng4hPJes8.png"
-alt="Table 3: Targeted attack transferability comparison. The source model is IncV3 and attacks are performed on ImageNet dataset, with `∞ = 255 constraint. The best speed and transfer rate are shown in bold. ‘*’ means white-box setting." />
-<figcaption aria-hidden="true">Table 3: Targeted attack transferability
-comparison. The source model is IncV3 and attacks are performed on
-ImageNet dataset, with `∞ = 255 constraint. The best speed and transfer
-rate are shown in bold. ‘*’ means white-box setting.</figcaption>
-</figure></li>
-<li><p>相比于其他的基于生成的方法，发现在进行更少的扰动的情况下，也能达到甚至超过稠密扰动的生成式方法，这表明有很多扰动是无用的，甚至有负优化。</p>
-<figure>
-<img src="https://s2.loli.net/2022/07/17/FNbl83EtUmn2RhQ.png"
-alt="Table 4: Comparison with generator-based dense attacks. Results are sparsity(%) and fooling rate(%) on different models. ‘*’ means white-box setting." />
-<figcaption aria-hidden="true">Table 4: Comparison with generator-based
-dense attacks. Results are sparsity(%) and fooling rate(%) on different
-models. ‘*’ means white-box setting.</figcaption>
-</figure></li>
-<li><p>（1）去掉解耦，发现不能真正的实现稀疏。</p>
-<p>（2）去掉量化，即使训练中的p=0，发现仍能实现稀疏，但是生成的对抗样本迁移性下降。并且与STE方法比较，发现结果比STE方法好。</p>
-<p>（3）去掉sparse loss，生成的对抗样本变为100%的dense attack。</p>
-<p>（4）去掉quantization
-loss，稀疏程度提高了（更改像素变多），并且迁移性降低了，验证了量化操作带来的信息损失会影响测试时的性能。</p>
-<p>（5）使用每张图片生成自己的生成器的方法，发现白盒攻击效果提高了，但是黑盒攻击迁移性降低了，证明使用大量数据进行训练可以减小过拟合并提高迁移性的假设是正确的。</p>
-<figure>
-<img src="https://s2.loli.net/2022/07/17/npc5NCajtmWSHPF.png"
-alt="Table 5: Ablation study of the proposed framework. Results are sparsity(%) and fooling rate(%) on different models (fooling rate is not studied if sparsity is not satisfactory). ‘*’ means white-box setting." />
-<figcaption aria-hidden="true">Table 5: Ablation study of the proposed
-framework. Results are sparsity(%) and fooling rate(%) on different
-models (fooling rate is not studied if sparsity is not satisfactory).
-‘*’ means white-box setting.</figcaption>
-</figure></li>
-</ol>
-<h3 id="结论">结论</h3>
-<p>本文提出了一种基于生成器的稀疏对抗攻击框架。在相同的稀疏性条件下，该方法比现有的现有方法具有更强的可迁移性，推理速度更快。根据经验，我们观察到，当对大规模ImageNet攻击时，我们的方法产生最先进的结果。我们的工作阐明了可转移的基于<span
-class="math inline">\(l_0\)</span>的稀疏对抗样本的存在，并说明了最先进的白盒稀疏攻击方法倾向于找到修改像素数量最少但不具有迁移性的对抗样本。这两种类型的稀疏对抗攻击对于分析dnn的漏洞和评估安全风险(如在物理世界中创建可转移的对抗补丁来欺骗自动驾驶汽车)同样重要。</p>
-<h3 id="思考">思考</h3>
-<p>方法的局限或问题：</p>
-<ol type="1">
-<li>用的损失函数是C&amp;W的loss，与人脸识别中通常使用的特征图的余弦值或L2dis不同。</li>
-<li>直觉上觉得，这个方法只适用于黑盒模型训练数据已知的情况。①如果黑盒模型训练数据未知（这里想强调的是类别不知道），则无法使用C&amp;W
-loss，无法使用logits。②如果训练数据未知，那么学出的样本到对抗样本之间的映射，是不是有domain
-shift。</li>
-</ol>
-<p>几个想法：</p>
-<ol type="1">
-<li>在训练数据未知的情况下。如果使用大量数据进行预训练，并且在单张图片上进行fine
-tune的效果如何？</li>
-<li>如何将这个方法迁移到人脸识别系统的攻击上。这个方法是否与对抗补丁有联系。</li>
-<li>提出的随机化量化方法很有趣，模型性能与p的关系是什么呢。当Q被量化为0,1时，阻断反向传播，这时Dec2参数不更新，并按照测试条件更新Dec1参数；当Q不被量化时，允许梯度的传递，这时Dec2参数进行更新（既有让结果趋近0或1，也有生成效果更好的对抗样本），同时Dec1也在更新参数，只不过设定是训练条件下。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>论文阅读</category>
-        <category>对抗攻击</category>
-      </categories>
-      <tags>
-        <tag>深度学习</tag>
-        <tag>论文阅读</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Study Diary</title>
     <url>/2021/10/09/Study-Diary/</url>
     <content><![CDATA[<center>
@@ -1495,7 +1295,7 @@ baseline还有很远距离，但实在没有心情train它了。</p>
   </entry>
   <entry>
     <title>[论文阅读] Improving Transferability of Adversarial Patches on Face Recognition with Generative Models</title>
-    <url>/2022/07/19/91-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-93-Improving-Transferability-of-Adversarial-Patches-on-Face-Recognition-with-Generative-Models/</url>
+    <url>/2022/07/19/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Improving-Transferability-of-Adversarial-Patches-on-Face-Recognition-with-Generative-Models/</url>
     <content><![CDATA[<center>
 CVPR2021 使用生成模型提高对抗补丁在人脸识别上的迁移性
 </center>
@@ -1504,7 +1304,7 @@ CVPR2021 使用生成模型提高对抗补丁在人脸识别上的迁移性
 Recognition with Generative Models</p>
 <p>作者： Zihao Xiao, ..., Jun Zhu</p>
 <p>会议：CVPR2021</p>
-<p>连接：<a
+<p>链接：<a
 href="https://openaccess.thecvf.com/content/CVPR2021/papers/Xiao_Improving_Transferability_of_Adversarial_Patches_on_Face_Recognition_With_Generative_CVPR_2021_paper.pdf">文章链接</a></p>
 <hr />
 <h3 id="摘要翻译">摘要翻译</h3>
@@ -1703,6 +1503,555 @@ following two columns show the attackers with the adversarial eyeglass
 frames generated by the proposed TAP-TIDIM and GenAP-DI methods. In
 TAP-TIDIM, we use = 40.</figcaption>
 </figure>
+]]></content>
+      <categories>
+        <category>论文阅读</category>
+        <category>对抗攻击</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>论文阅读</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[论文阅读] OPOM: Customized Invisible Cloak towards Face Privacy Protection</title>
+    <url>/2022/08/03/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-OPOM-Customized-Invisible-Cloak-towards-Face-Privacy-Protection/</url>
+    <content><![CDATA[<center>
+TPAMI2022 OPOM-为人脸隐私保护的定制隐身衣
+</center>
+<span id="more"></span>
+<p>题目： OPOM: Customized Invisible Cloak towards Face Privacy
+Protection</p>
+<p>作者： Yaoyao Zhong, Weihong Deng</p>
+<p>链接： <a
+href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=9778974">文章链接</a></p>
+<hr />
+<p>[TOC]</p>
+<h2 id="摘要翻译">1 摘要翻译</h2>
+<p>人脸识别技术虽然在日常生活中很方便，但它可以在没有任何安全限制的情况下高效、隐蔽地分析人脸图像和视频，这也引起了社交媒体上普通用户的隐私担忧。在本文中，我们从技术的角度研究了人脸隐私保护，基于一种新型的定制隐身衣，它可以应用于普通用户的所有图像，以防止恶意的人脸识别系统发现他们的身份。具体地说，我们提出了一种名为“one
+person one
+mask”(OPOM)的新方法，该方法通过优化每个训练样本在<strong>远离源身份特征子空间的方向</strong>来生<strong>成针对个人(类)的通用掩码</strong>。为了充分利用有限的训练图像，我们研究了几种建模方法，包括<strong>仿射包、类中心和凸包</strong>，以更好地描述源身份的特征子空间。针对不同损失函数和网络结构的黑箱人脸识别模型，在普通数据集和名人数据集上评估了该方法的有效性。此外，我们还讨论了该方法的优点和潜在的问题。特别地，我们对视频数据集Sherlock的隐私保护进行了应用研究，以展示所提方法的潜在实际用途。</p>
+<h3 id="基本问题">基本问题</h3>
+<ul>
+<li>论文解决的问题：生成针对个人的<strong>通用掩码</strong>来进行人脸隐私保护，这是一个新问题。</li>
+<li>假设：通过更好地建模身份的特征子空间，可以提高Image
+Universality和Model Transferability。</li>
+</ul>
+<h2 id="introduction">2 Introduction</h2>
+<p>为保护隐私，一些研究旨在对人脸图像进行去识别
+(<strong>de-identify</strong>)，从而保留许多面部特征，但无法可靠地识别图像中的人的身份。考虑到生成的图像与原始图像可能具有不同的视觉外观，或表现不自然，出现不良伪影，一些最新的方法通过生成不易察觉的<strong>对抗样本</strong>作为掩码，既能隐藏识别信息，又能保持人脸图像的视觉质量。尽管这种方法生成的掩码很自然、很有效，但对于普通用户来说，为每张照片或每一帧视频生成不同的隐私掩码是非常<strong>不友好</strong>的。（现有方法不足）</p>
+<p>为公众提供更有效、更简单的面部隐私保护，需要进一步研究。现有的方法针对一个人的不同面部图像生成不同的对抗mask，与之相比，我们的目标是生成一种<strong>针对个人的(类别)通用mask</strong>。通过这种方式，普通用户只用生成一次隐私保护mask，然后将其应用到他所有的照片和视频中。（针对现有方法不足提出的改进方向）</p>
+<p>与image-specific的隐私面具相比，person-specific的通用mask有两方面的好处。首先，只生成一次针对个人的掩码，省去了生成新图像的掩码时间，在<strong>效率</strong>上有利于普通用户和一些实时隐私保护应用。其次，与image-specific掩码需要在用户和服务器之间多次传输新图像相比，person-specific的掩码只需要一次传输，可以<strong>降低隐私泄露的风险</strong>。（提出的改进方向的优点）</p>
+<p>在生成针对个人的隐私掩码方面存在两个挑战。(1) <strong>Individual
+Universality</strong>。与image-specific的隐私掩码相比，person-specific的隐私掩码只需要用一个身份的<strong>少量图像</strong>生成，可以应用于不同的未知图像。而相同身份的面部图像可能因姿势、光照、表情和遮挡而不同。这种多样性无疑会增加为不同人脸图像生成隐私掩码的难度。因此，提高对抗型掩码的<strong>个体普适性</strong>对个人隐私保护至关重要。(2)
+<strong>Model Transferability
+</strong>。隐私掩码需要在不同模型之间有<strong>迁移性</strong>。这意味着它们是由代理模型生成的，并应用于不同的未知识别系统。对于未知的人脸识别模型，有广泛的选择训练数据库，训练损失函数和网络架构。无疑会增加生产可迁移对抗掩码的难度。（提出新方向的挑战）</p>
+<p>在本文中，我们提出了一种名为OPOM (one person one
+mask)的方法，为一个人的所有面部图像提供一个隐私掩码，类似于定制的隐身衣。具体而言，为了增加Individual
+Universality，<strong>OPOM通过解决优化问题生成隐私掩码</strong>，使训练图像的不同深度特征与身份特征子空间之间的距离最大化。我们研究了不同的建模方法，包括<strong>仿射包、类中心和凸包</strong>，以建模每个身份的特征子空间，以<strong>更好地描述有限的图像</strong>。我们通过实证发现，在掩码生成过程中，更好地描述特征子空间，可以提高个体的通用性和模型的可迁移性。此外，为了增加模型的可迁移性，OPOM还可以与多种模型可迁移性方法相结合，如<strong>动量法和DFANet</strong>。本文的主要贡献如下:</p>
+<ul>
+<li>我们揭示了一种新型的<strong>person-specific(class-wise)通用对抗性隐私掩码的存在</strong>，它的生成是为了保护相同身份的不同人脸图像，因此可以更容易地为普通用户使用。</li>
+<li>我们对这种新型的针对个人的隐私掩码进行了研究，<strong>提出了一种高效的对抗式掩码生成方法OPOM</strong>，该方法可以同时提高Image
+Universality和Model Transferability，从而实现更有效的隐私保护。</li>
+<li>与以往的通用对抗扰动方法相比，本文提出的OPOM方法在不同的黑盒深度人脸识别模型下保护无约束人脸图像的<strong>有效性</strong>得到了实证验证。</li>
+</ul>
+<h2 id="person-specific-privacy-masks">3 Person-Specific Privacy
+Masks</h2>
+<h3 id="problem-formulation">3.1 Problem Formulation</h3>
+<p>person-specific对抗掩码的目标是去产生一个扰动<span
+class="math inline">\(\Delta X\)</span>，可以用于任何属于身份<span
+class="math inline">\(k\)</span>的人脸图像<span
+class="math inline">\(X^k=\{X_1^k, X_2^k, \dots,
+X_i^k,\dots\}\)</span>来欺骗各种深度人脸识别模型 <span
+class="math inline">\(f(·)\)</span> ，就是寻找<span
+class="math inline">\(\Delta X\)</span> 使得 <span
+class="math inline">\(X_i^k\in X^k\)</span> <span
+class="math display">\[
+D(f(X_i^k+\Delta X), f_{X^k})&gt;t, ||\Delta X||_\infty &lt;
+\epsilon  \,\,\,\,\,\,\,\,(1)
+\]</span> 其中<span class="math inline">\(f(X_i^k)\in
+R^d\)</span>是图像<span
+class="math inline">\(X_i^k\)</span>的归一化特征，<span
+class="math inline">\(f_{X^k}\)</span>表示身份<span
+class="math inline">\(k\)</span>的特征子空间，<span
+class="math inline">\(t\)</span>是决定两个图像是否是相同身份的阈值。<span
+class="math inline">\(D(x_1,
+x_2)\)</span>是欧几里得距离或者余弦距离。<span
+class="math inline">\(\epsilon\)</span>是控制扰动像素值的范围。</p>
+<h3 id="one-person-one-mask-opom">3.2 One person one mask (OPOM)</h3>
+<p>上式的关键点在于<span
+class="math inline">\(f_{X^k}\)</span>，但对于open-set人脸识别模型，被保护的人可能不在训练集中，就不能像以前的close-set任务的方法一样直接从模型中获取类别信息。因此，唯一的选择是从给定的人脸图像集<span
+class="math inline">\(X_k\)</span>中描述身份<span
+class="math inline">\(f_{X^k}\)</span>。目标是通过尽可能少的图像<span
+class="math inline">\(\tilde X_k=\{X_1^k, X_2^k, \dots,
+X_{n_k}^k\}\)</span>来<strong>近似</strong>描述<span
+class="math inline">\(f_{X_k}\)</span></p>
+<p>提出假设：有对特征子空间更精确的近似，Individual
+Universality可以提升；在近似表达式中有更多样的梯度信息，Model
+Transferability可以提升。</p>
+<p>如图Figure2，用相同代理模型下不同图像的保护成功率来表示Individual
+Universality，用不同黑盒模型的平均保护成功率来表示Model
+Transferability， 实验表明假设成立。</p>
+<figure>
+<img src="https://s2.loli.net/2022/08/03/slWGZjO8ULuknRY.png"
+alt="Fig. 2. With better approximation methods (red) for the feature subspace of each identity in the mask generation process, both individual universality and model transferability can be improved, which will lead to more effective privacy protection. Experimental results on two datasets (Privacy-Commons and Privacy-Celebrities) are shown." />
+<figcaption aria-hidden="true">Fig. 2. With better approximation methods
+(red) for the feature subspace of each identity in the mask generation
+process, both individual universality and model transferability can be
+improved, which will lead to more effective privacy protection.
+Experimental results on two datasets (Privacy-Commons and
+Privacy-Celebrities) are shown.</figcaption>
+</figure>
+<h4 id="approximation-methods-of-the-feature-subspace">3.2.1
+Approximation methods of the feature subspace</h4>
+<h5 id="affine-hulls">3.2.1.1.Affine Hulls</h5>
+<p>使用图像集合中特征的仿射组合来表示特征子空间，即 <span
+class="math display">\[
+H(f_{\tilde
+X^k})=\{x=\sum_{i=1}^{n_k}\alpha_i^kf(X_i^k)|\sum_{i=1}^{n_k}\alpha_i^k=1\}
+\,\,\,\,\,\,\,(2)
+\]</span> 于是可以优化以下式子来生成身份<span
+class="math inline">\(k\)</span>的隐私掩码<span
+class="math inline">\(\Delta X\)</span>：</p>
+<p><img src="https://s2.loli.net/2022/08/03/p2luFcXNgirETOP.png" style="zoom:67%;" /></p>
+<p>其中，<span class="math inline">\(n_k\)</span>是图像数量，<span
+class="math inline">\(H(f_{\tilde
+X^k})\)</span>是归一化特征的仿射包。</p>
+<p>为计算<span class="math inline">\(D(f(X_i^k+\Delta X), H(f_{\tilde
+X^k}))\)</span>，可以把<span class="math inline">\(H(f_{\tilde
+X^k})\)</span>写成以下形式来参数化仿射包：</p>
+<p><img src="https://s2.loli.net/2022/08/03/bhTurCdEB4kLSaV.png" style="zoom:67%;" /></p>
+<p>其中， <span class="math inline">\(\mu
+^k=\frac{1}{n_k}\sum_{i=1}^{n_k}f(X_i^k)\)</span>， <span
+class="math inline">\(U^k\in R^{d\times n_k}\)</span>
+是张成仿射包的正交基，用<span
+class="math inline">\([f(X_1^k)-\mu^k,\dots,
+f(X_{n_k}^k)-\mu^k]\)</span>做SVD求得， <span
+class="math inline">\(V^k\in
+R^{n_k}\)</span>是自由参数的向量，即正交基各方向的坐标。于是<span
+class="math inline">\(D(f(X_i^k+\Delta X), H(f_{\tilde
+X^k}))\)</span>可以写成：</p>
+<p><img src="https://s2.loli.net/2022/08/03/jDNWeTh1ZbxHOMp.png" style="zoom:67%;" /></p>
+<p>这个可以被写为标准的最小二乘问题：</p>
+<p><img src="https://s2.loli.net/2022/08/03/Y6q3Gt4KXgSjciT.png" style="zoom:67%;" /></p>
+<p>这个问题的解为，</p>
+<p><img src="https://s2.loli.net/2022/08/03/198zU5OAYtynRvI.png" style="zoom: 67%;" /></p>
+<p>最后，生成隐私掩码<span class="math inline">\(\Delta
+X\)</span>就把以上(3)公式变为：</p>
+<p><img src="https://s2.loli.net/2022/08/03/MBCs9a7mn3YVX1t.png" style="zoom:67%;" /></p>
+<h5 id="class-centers-and-convex-hulls">3.2.1.2 Class Centers and Convex
+Hulls</h5>
+<p>以上的仿射包对特征子空间进行的估计可能太过于松，因为仿射包上的许多点都没有用，甚至可能有副作用。于是我们引入了<span
+class="math inline">\(a_i^k\)</span>系数的最低值和最高值，来控制松弛度：</p>
+<p><img src="https://s2.loli.net/2022/08/03/hl6CBMW3duPFRmy.png" style="zoom:67%;" /></p>
+<p>如果 <span class="math inline">\(L=-\infty,
+U=\infty\)</span>，则变成了<strong>仿射包</strong>。其他情况下，将会缩减过大的空间。当<span
+class="math inline">\(L=U=1/n_k\)</span>时，身份特征就是<span
+class="math inline">\(H(f_{\tilde
+{X^k}})=\frac{1}{n_k}\sum_{i=1}^{n_k}f(X_i^k)\)</span>，即<strong>类中心</strong>。在这个设定下，隐私掩码的生成可以表示为：</p>
+<p><img src="https://s2.loli.net/2022/08/03/ynVWFtcBTjvzIYl.png" style="zoom:67%;" /></p>
+<p>如果<span class="math inline">\(L=0, U=1\)</span>，则<span
+class="math inline">\(H(f_{\tilde{X^k}})\)</span>就是特征<span
+class="math inline">\(f(X_i^k)\)</span>的<strong>凸包</strong>，这也是实验表明最有效的估计。在这个设定下，计算<span
+class="math inline">\(D(f(X_i^k+\Delta X), H(f_{\tilde
+X^k}))\)</span>就是一个有方形约束的最小二乘问题：</p>
+<p><img src="https://s2.loli.net/2022/08/03/MnQBfNF7HSYmkXo.png" style="zoom:67%;" /></p>
+<p>其中，<span class="math inline">\(F^k\in R^{d\times
+n_k}\)</span>是一个列是<span
+class="math inline">\(f(X_i^k)\)</span>的矩阵，<span
+class="math inline">\(A_k\in R^{n_k}\)</span>是包含对应系数(<span
+class="math inline">\(a_i^k\)</span>)的向量。于是隐私掩码<span
+class="math inline">\(\Delta X\)</span>的生成可以表示为：</p>
+<p><img src="https://s2.loli.net/2022/08/03/9bOIfuyMd2gV5tv.png" style="zoom:67%;" /></p>
+<p>其中<span
+class="math inline">\(A_i^k\)</span>可以由公式(12)求得。</p>
+<h4 id="generation-of-privacy-masks">3.2.2 Generation of Privacy
+Masks</h4>
+<p><img src="https://s2.loli.net/2022/08/03/ZSOmwornlWMyxeI.png" /></p>
+<p><img src="https://s2.loli.net/2022/08/03/xHTihVlmwZQgMCy.png" /></p>
+<p>坐标<span class="math inline">\(V_i^k\)</span>和系数<span
+class="math inline">\(A_i^k\)</span>要在每次迭代开始的时候计算。<span
+class="math inline">\(V_i^k\)</span>有closed-form solution，<span
+class="math inline">\(A_i^k\)</span>没有closed-form
+solution，但可以通过凸优化工具箱CVX高效求解。</p>
+<h4 id="combination-with-model-transferability-methods">3.2.3
+Combination with Model Transferability Methods</h4>
+<p>与MI和DFANet结合。</p>
+<h3 id="comparison-methods">3.3 Comparison methods</h3>
+<p><strong>GD-UAP.</strong></p>
+<p><strong>FI-UAP.</strong></p>
+<p>用UAP的方法与FIM结合。UAP的方法是使用一些图像用DeepFool迭代去求最小扰动，并将它们聚合为通用扰动。我们将<span
+class="math inline">\(\tilde X_k=\{X_1^k, X_2^k, \dots,
+X_{n_k}^k\}\)</span>的梯度聚合去生成person-specific的掩码：</p>
+<p><img src="https://s2.loli.net/2022/08/05/ZiIytX4uYk7oRJQ.png" style="zoom:67%;" /></p>
+<p>可以被看做式子(13)的特殊情况，即对角线只有对应位置为1，其余都是0。</p>
+<p><strong>FI-UAP+.</strong></p>
+<p>FI-UAP也可以使用类内交互来加强，即：</p>
+<p><img src="https://s2.loli.net/2022/08/05/fXr1iLYW4o9t36I.png" style="zoom:67%;" /></p>
+<p>可以看做是OPOM-ClassCenter类似方法。</p>
+<p><strong>FI-UAP-all.</strong></p>
+<p>使用所有的训练图像去做FI-UAP.</p>
+<p><strong>GAP.</strong></p>
+<p>用生成式方法，根据原论文使用ResNet做generator，使用Feature-level
+loss.</p>
+<h2 id="experiments">4 Experiments</h2>
+<p>实验包括：对OPOM保护性能的评估，OPOM与其他可迁移方法的结合性能，对商业API的性能。最后提出了person-specific隐私掩码的优缺点，OPOM在视频隐私保护中的作用和为应对潜在的隐私掩码泄露的掩码多样性。</p>
+<h3 id="实验设置">4.1 实验设置</h3>
+<p>使用正常人和名人两个数据集，使用1:N识别表现来衡量隐私保护率。每个人用M张图片进行测试，测试的时候每次选择1张图片放到gallery
+set中，用剩下M-1张图片加上隐私掩码做probe。使用Top-1和Top-5保护成功率来进行评价。</p>
+<p>代理模型使用在在CAISA-WebFace数据集上训练的Resnet50，分别用 Softmax
+loss, CosFace,
+ArcFace监督。使用六个黑盒模型，其中三个损失函数不同，分别用CosFace,
+ArcFace, SFace;另外三个模型架构不同，分别用SENet, MobileNet,
+Inception-ResNet.</p>
+<h3 id="实验结果">4.2 实验结果</h3>
+<h4 id="opom保护效果">4.2.1 OPOM保护效果</h4>
+<p>在常人数据集合名人数据集的测试结果。</p>
+<figure>
+<img src="https://s2.loli.net/2022/08/05/UOiYkcBQteWFxIf.png"
+alt="TABLE 2 Comparison of different methods to generate person-specific privacy masks (𝜀 = 8) from a single source model to protect face images against black-box models. We report Top-1 and Top-5 protection success rate (%) under 1:N identification setting of the Privacy-Commons dataset. The higher protection success rate is better." />
+<figcaption aria-hidden="true">TABLE 2 Comparison of different methods
+to generate person-specific privacy masks (𝜀 = 8) from a single source
+model to protect face images against black-box models. We report Top-1
+and Top-5 protection success rate (%) under 1:N identification setting
+of the Privacy-Commons dataset. The higher protection success rate is
+better.</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2022/08/05/7uX8QS52dkj6mZC.png"
+alt="TABLE 3 Comparison of different methods to generate person-specific privacy masks (𝜀 = 8) from a single source model to protect face images against black-box models. We report Top-1 and Top-5 protection success rate under 1:N identification setting of the Privacy-Celebrities dataset. The higher protection success rate is better." />
+<figcaption aria-hidden="true">TABLE 3 Comparison of different methods
+to generate person-specific privacy masks (𝜀 = 8) from a single source
+model to protect face images against black-box models. We report Top-1
+and Top-5 protection success rate under 1:N identification setting of
+the Privacy-Celebrities dataset. The higher protection success rate is
+better.</figcaption>
+</figure>
+<p>可以发现，描述特征子空间的近似方法对个体隐私保护任务有影响。</p>
+<p>FI-UAP只使用单个特征，不能使用其他图像的特征。OPOM-AffineHull增加了特征空间，但是过于宽松。OPOM-ClassCenter与FI-UAP+很类似，但它可能忽略不同训练点<span
+class="math inline">\(f(X_i^k+\Delta
+X)\)</span>的差别。OPOM-ConvexHull增加了特征空间到合适的程度，对于不同的训练点<span
+class="math inline">\(f(X_i^k+\Delta
+X)\)</span>使用不同的支撑点，更有效地适应不同人脸图像。</p>
+<h4 id="与可迁移性方法的组合">4.2.2 与可迁移性方法的组合</h4>
+<p>这两张表表示在常人和名人数据集上，与可迁移性方法结合的保护效果的提升。</p>
+<figure>
+<img src="https://s2.loli.net/2022/08/05/RdB51JIDKzNotUh.png"
+alt="TABLE 4 Comparison of different methods combined with the momentum boosting method [32] and DFANet [34] to generate more transferable person-specific privacy masks (𝜀 = 8) from a single source model to protect face images against black-box models. We report Top-1 and Top-5 protection success rate (%) under 1:N identification setting of the Privacy-Commons dataset. The increment compared with TABLE 2 is indicated by symbol ↑." />
+<figcaption aria-hidden="true">TABLE 4 Comparison of different methods
+combined with the momentum boosting method [32] and DFANet [34] to
+generate more transferable person-specific privacy masks (𝜀 = 8) from a
+single source model to protect face images against black-box models. We
+report Top-1 and Top-5 protection success rate (%) under 1:N
+identification setting of the Privacy-Commons dataset. The increment
+compared with TABLE 2 is indicated by symbol ↑.</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2022/08/05/e2pc9RjXKNLwISz.png"
+alt="TABLE 5 Comparison of different methods combined with the momentum boosting method [32] and DFANet [34] to generate more transferable person-specific privacy masks (𝜀 = 8) from a single source model to protect face images against black-box models. We report Top-1 and Top-5 protection success rate (%) under 1:N identification setting of the Privacy-Celebrities dataset. The increment compared with TABLE 3 is indicated by symbol ↑." />
+<figcaption aria-hidden="true">TABLE 5 Comparison of different methods
+combined with the momentum boosting method [32] and DFANet [34] to
+generate more transferable person-specific privacy masks (𝜀 = 8) from a
+single source model to protect face images against black-box models. We
+report Top-1 and Top-5 protection success rate (%) under 1:N
+identification setting of the Privacy-Celebrities dataset. The increment
+compared with TABLE 3 is indicated by symbol ↑.</figcaption>
+</figure>
+<p>随着使用动量法和DFANet，保护成功率进一步提高，但仍有提升空间。</p>
+<h4 id="在商业api上的保护">4.2.3 在商业API上的保护</h4>
+<figure>
+<img src="https://s2.loli.net/2022/08/05/NnTrP5Lb68DOGya.png"
+alt="Fig. 4. Protection against Commercial APIs (Amazon [62], Microsoft [63], Baidu [64] and Face++ [65]). Fifty identities in the PrivacyCommons dataset, each with 5 test images are used for the face verification test. The normalized average similarity/confidence scores are shown (lower is better). The original scores are listed above the bar." />
+<figcaption aria-hidden="true">Fig. 4. Protection against Commercial
+APIs (Amazon [62], Microsoft [63], Baidu [64] and Face++ [65]). Fifty
+identities in the PrivacyCommons dataset, each with 5 test images are
+used for the face verification test. The normalized average
+similarity/confidence scores are shown (lower is better). The original
+scores are listed above the bar.</figcaption>
+</figure>
+<p>可以发现，由于商业的算法训练数据比较大，单纯用CASIA-WebFace数据集训练的代理模型表现并不好，在用更多数据集进行训练后，发现保护效果大大提升。</p>
+<h3 id="discussion">4.3 Discussion</h3>
+<h4 id="failure-case-analysis">4.3.1 Failure Case Analysis</h4>
+<p>文章给出了较容易失败的案例，每一行是一个人，左边是训练数据，中间是容易成功的图像，右边是容易失败的图像。生成的掩码在一定程度上可以泛化到其他图像上，但是如果测试图像和训练图像有显著差异，包括较大的姿势不同、光照和遮挡等，则容易失败。</p>
+<figure>
+<img src="https://s2.loli.net/2022/08/05/ysR3rg5IqQCKBcj.png"
+alt="Fig. 5. Some failure cases, as well as the corresponding training samples and successful easily protected samples for analysis. Each row represents an identity. The privacy masks generated with OPOM can generalize to different testing images to some degree. However, if there are obvious differences between the testing images and the training samples, such as, large poses, different illuminations, and occlusions, the mask protection tends to break down." />
+<figcaption aria-hidden="true">Fig. 5. Some failure cases, as well as
+the corresponding training samples and successful easily protected
+samples for analysis. Each row represents an identity. The privacy masks
+generated with OPOM can generalize to different testing images to some
+degree. However, if there are obvious differences between the testing
+images and the training samples, such as, large poses, different
+illuminations, and occlusions, the mask protection tends to break
+down.</figcaption>
+</figure>
+<h4 id="why-person-spercific-effectiveness-and-efficiency">4.3.2 Why
+person-spercific? Effectiveness and Efficiency</h4>
+<p>文章分析了person-specific, image-specific和universal
+mask的效果和效率。</p>
+<p><strong>Person-specific</strong>: FI-UAP, OPOMAffineHull and
+OPOM-ConvexHull.</p>
+<p><strong>Universal</strong>: GD-UAP, GAP and FIUAP-all.</p>
+<p><strong>Image-specific</strong>: FIM, LowKey and M-DI2-APF</p>
+<p>用六个黑盒模型的平均保护率来表示效果，用Resnet-50生成100张图片的平均时间表示效率：</p>
+<figure>
+<img src="https://s2.loli.net/2022/08/05/2WUM1zjCOklVQDS.png"
+alt="Fig. 6. Comparison of universal, person-specific (class-wise) and imagespecific masks in terms of effectiveness and efficiency." />
+<figcaption aria-hidden="true">Fig. 6. Comparison of universal,
+person-specific (class-wise) and imagespecific masks in terms of
+effectiveness and efficiency.</figcaption>
+</figure>
+<p>相比于Image-specific和Universal
+Mask，Person-specific在效率和效果上进行了tradeoff，更有利于普通用户和实时视频应用程序使用。</p>
+<h4 id="privacy-protection-in-videos">4.3.3 Privacy Protection in
+Videos</h4>
+<p>在《神探夏洛克》上抽取一些帧进行实验，用在6个黑盒模型上的余弦面部相似度的平均值和标准差来证明OPOM有效性。没有隐私掩码很容易识别角色，有隐私掩码可免于被识别。并发现使用15张图片进行训练，保护效果最好。</p>
+<figure>
+<img src="https://s2.loli.net/2022/08/05/qmjBXga1vwRIGCp.png"
+alt="Fig. 8. Application of OPOM in video privacy protection, Sherlock [66]. The privacy masks are trained with other face images of actors (Benedict Cumberbatch and Martin Freeman). The average cosine similarity between the deep features of the detected face in the video and the deep features of the corresponding characters (Sherlock Holmes and Doctor John Watson) is used to demonstrate the effectiveness." />
+<figcaption aria-hidden="true">Fig. 8. Application of OPOM in video
+privacy protection, Sherlock [66]. The privacy masks are trained with
+other face images of actors (Benedict Cumberbatch and Martin Freeman).
+The average cosine similarity between the deep features of the detected
+face in the video and the deep features of the corresponding characters
+(Sherlock Holmes and Doctor John Watson) is used to demonstrate the
+effectiveness.</figcaption>
+</figure>
+<h4 id="diversity-of-privacy-masks">4.3.4 Diversity of Privacy
+Masks</h4>
+<p>如果存在信息泄露，则设计的隐私掩码有可能失效，于是本文设计了多个隐私掩码，向不同的方向进行优化。</p>
+<p><img src="https://s2.loli.net/2022/08/05/mJTHcsVMLphkE3w.png" style="zoom:67%;" /></p>
+<p>即保证隐私保护效果，也让不同掩码之间的距离足够大。</p>
+<p>在实验中，也考虑到不同的被掩码保护的图像放在gallery
+set中，但文章没有给出具体细节。</p>
+<p><img src="https://s2.loli.net/2022/08/05/5TR4HnXC7bOM9om.png"
+alt="TABLE 6 Diverse person-specific privacy masks (𝜀 = 8) from a single source model to protect face images against black-box models. Here, “M-O” denotes that the masked image is used as the probe, while the original image is recorded in the gallery set. “M-M” represents masked image has been collected and applied in the gallery set, and new masked image is used as the probe. (The same mask is used for 𝑛𝑀=1.) We report the Top-1 protection success rate (%) under 1:N identification setting of Privacy-Commons dataset. The higher protection success rate is better." />实验结果表明，person-specific的隐私掩码可以是多样的，但随着隐私掩码数量增多，保护率会下降。</p>
+<h2 id="conclusion">5. Conclusion</h2>
+<p>本文提出了一种class-wise的通用对抗扰动进行隐私保护的方法，通过生成一个可用于一个人所有图像的<strong>person-specific掩码</strong>。实验结果表明了该方法在定制化隐私保护任务中的有效性和优越性。我们已经证明了所提出的方法可以<strong>用于视频</strong>的隐私保护。已经取得了巨大的进展，但仍有许多工作要做。正如之前所说的，如果<strong>测试图像和训练样本之间存在明显的差异，那么提供保护是具有挑战性的</strong>。因此，需要进一步提高<strong>Individual
+Universality</strong>，以覆盖人脸图像潜在的多种变换，如较大姿态不同、不同光照和遮挡。如前所述，我们考虑了多掩码来解决隐私掩码泄漏的潜在问题。然而，<strong>所提出的方法在隐私掩码的多样性和效果方面存在挑战</strong>，因此仍是一个初步的探索。此外，我们目前正处于生成只能用于社交媒体上的数字图像和视频的数字隐身衣的实施阶段。如果它们能应用于<strong>现实世界</strong>的视频监控，将会产生更大的影响。</p>
+<hr />
+<h2 id="总结">总结</h2>
+<ol type="1">
+<li><p>提出person-specific隐私掩码的新方向，有很大的启发意义，后续研究空间也很大。</p></li>
+<li><p>提出的估计特征子空间的方法用到凸优化一些定义，很有趣，但估计特征子空间的方法只有ConvexHull比FI-UAP+(ClassCenter)效果好，提升也不是很大，有较大的改进空间。</p></li>
+<li><p>但有趣的一点是，在与迁移性方法结合后，各方法性能提升都很多，但AffineHull,
+ClassCenter和ConvexHull效果十分相近，文章并没有分析并给出解释。这么看起来就有了疑问，提出的估计特征子空间的方法得到的性能提升，到底是因为估计得更精准而提高了Individual
+Universality，还是在另一个方向上提高了Model Transferability？
+我觉得应该补充实验，在白盒的设定下评估Individual
+Universality。（更正：可能有白盒设定，但文章里写得也不清晰。如果确实有白盒的话，则确实能表示提出的方法在估计特征子空间提高Individual
+Universality的有效性，但为何与迁移性方法结合之后就抹平了差距？）</p></li>
+<li><p>在商业API的实验中，生成的掩码的保护效果与代理模型关系很大，用大量数据训练的代理模型与商业黑盒模型的gap可能更小，得到的掩码保护效果更好（其实还是Model
+Transferability的问题）。</p></li>
+</ol>
+<p><strong>不足</strong></p>
+<ol type="1">
+<li>在处理训练图像与测试图像gap较大场景时效果很差，Individual
+Universality的问题，需要更好的估计特征子空间的方法。</li>
+<li>在代理模型和黑盒模型训练数据有较大差距的时候，即代理模型与黑盒模型gap很大，则生成的掩码效果差，是Model
+Transferability的问题，需要更好的方法来提高迁移性。</li>
+<li>隐私掩码多样性也需要探索，直接生成相距较远的多个隐私掩码，得到的保护率会下降。</li>
+<li>现实世界的应用，较为困难。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>论文阅读</category>
+        <category>对抗攻击</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>论文阅读</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[论文阅读] Transferable Sparse Adversarial Attack</title>
+    <url>/2022/07/16/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Transferable-Sparse-Adversarial-Attack/</url>
+    <content><![CDATA[<center>
+CVPR2022 可迁移的稀疏对抗攻击
+</center>
+<span id="more"></span>
+<p>题目：Transferable Sparse Adversarial Attack</p>
+<p>作者：Ziwen He</p>
+<p>会议：CVPR2022</p>
+<p>链接：<a
+href="https://openaccess.thecvf.com/content/CVPR2022/papers/He_Transferable_Sparse_Adversarial_Attack_CVPR_2022_paper.pdf">文章链接</a></p>
+<hr />
+<h3 id="摘要翻译">摘要翻译</h3>
+<p>​
+深度神经网络已经表现出对对抗攻击的脆弱性。在本文中，我们聚焦于<strong>基于l0范数的稀疏对抗攻击</strong>，只用次改几个像素即可攻击成功。先前的稀疏攻击方法尽管有高攻击成功率，但在黑盒设置下，由于对代理模型的过拟合，对抗样本具有较低的迁移性。因此，我们提出了一个生成器架构去减轻过拟合问题，并且有效地生成可迁移的稀疏对抗样本。<strong>特别的，我们提出的生成器将稀疏扰动解耦为振幅和位置分量。我们精心设计了一个随机量化算子，以用端到端的方法联合优化这两个分量。</strong>实验表明我们的方法在相似的系数性设置下，相比于SOTA已经大大提升了迁移性。除此之外，我们的方法也实现了优越的<strong>推理速度</strong>，比其他基于优化的方法快了700倍。代码已公开。</p>
+<h3 id="基本问题">基本问题</h3>
+<ul>
+<li><strong>论文解决的问题：</strong> 基于L0范数的稀疏对抗攻击</li>
+<li><strong>动机：</strong>
+<ol type="1">
+<li>现有的稀疏对抗方法如PGD0, SparseFool,
+GreedyFool依赖于目标模型的梯度或其估计，具有较低的迁移性。并且有研究表明<span
+class="math inline">\(l_2\)</span>和<span
+class="math inline">\(l_\infin\)</span>范数限制的攻击在不同架构模型下更具有迁移性，<span
+class="math inline">\(l_0\)</span>范数限制的稀疏对抗样本的迁移性还未知。</li>
+<li>之前的生成式方法都只生成稠密扰动，本文工作与之前生成式方法最大的不同就是有稀疏性的限制。</li>
+</ol></li>
+<li><strong>贡献：</strong>
+<ul>
+<li>探索稀疏对抗样本迁移性问题，并提出一个生成可迁移的稀疏对抗样本的方法。</li>
+</ul></li>
+</ul>
+<h3 id="method">Method</h3>
+<h4 id="analysis">Analysis</h4>
+<p>对于无目标攻击，要优化的问题是：</p>
+<p><img src="https://s2.loli.net/2022/07/16/QZKBAzEDCjrf5s2.png" /></p>
+<p>其中 <span class="math inline">\(\epsilon\)</span> 是<span
+class="math inline">\(l_\infty\)</span>的扰动限制，如果是有目标攻击，则第二行要换为<span
+class="math inline">\(arg\,max_c\,\,F(x_{adv})_c=y_t\)</span>， <span
+class="math inline">\(f(x)_c\)</span> 是类别c的logit值，目标类别是<span
+class="math inline">\(y_t\)</span> 。</p>
+<p>之前的稀疏攻击方法很大的依赖于单个图像的梯度，而基于生成的方法，生成器可以学到自然图像到稀疏对抗图像的映射，生成器的参数是由数据分布学习到的，而不是单个图像。大量的训练数据可以减轻过拟合，增加迁移性。</p>
+<p>（这里提出了用生成式的方法提升稀疏样本的迁移性，于是以下该探索如何设计一个生成器架构）。</p>
+<p>但是优化上式是一个Np hard的问题，先前的工作是优化近似的<span
+class="math inline">\(l_1\)</span>约束问题，如SparseFool，但其方法中包含了不可微分的步骤，于是不能进行端到端训练。</p>
+<p>要解决这个<span
+class="math inline">\(l_1\)</span>约束问题最直接的方法就是加一个<span
+class="math inline">\(l_1\)</span>正则化项，但是这样做会使生成的扰动收敛于0，生成稠密扰动，如果直接在这个稠密扰动上面使用二值化（即选某些点保留扰动，其余不扰动），则会丢失信息而导致样本不再有攻击性。本文使用将扰动分解为幅度和位置两个变量的哈达玛乘积来解决这个问题，即<span
+class="math inline">\(\delta =r \odot m\)</span>， 其中<span
+class="math inline">\(r\in R^N\)</span>，是扰动大小，<span
+class="math inline">\(m\in
+\{0,1\}^N\)</span>，是表示此位置是否施加扰动。同时优化这两个向量，并且只给向量
+<span class="math inline">\(m\)</span> 添加 <span
+class="math inline">\(l_1\)</span> 正则，即可实现稀疏的目标。</p>
+<h4 id="framework">Framework</h4>
+<figure>
+<img src="https://s2.loli.net/2022/07/16/YuWkryZzCdJ3UsA.png"
+alt="Figure 1: Our framework for generating transferable sparse adversarial examples." />
+<figcaption aria-hidden="true">Figure 1: Our framework for generating
+transferable sparse adversarial examples.</figcaption>
+</figure>
+<p>如上图，实现了两个分支分别生成 <span class="math inline">\(r\)</span>
+和 <span class="math inline">\(m\)</span>。</p>
+<p>记编码器为<span class="math inline">\(E\)</span>，
+则编码器生成的latent code <span class="math inline">\(z =
+E(x)\)</span>，之后 $z $ 将被送入<span
+class="math inline">\(D_1,D_2\)</span>两个解码器。</p>
+<p><span class="math inline">\(D_1\)</span> 生成对抗扰动的大小，结果
+<span class="math inline">\(r\)</span> 将<span
+class="math inline">\(D_1(z)\)</span> 缩放到<span
+class="math inline">\([-255, 255]\)</span> 之间。</p>
+<p><span class="math inline">\(D_2\)</span> 生成向量<span
+class="math inline">\(Q\in [0,1]^N\)</span>，为得到离散的向量 <span
+class="math inline">\(m\)</span>，使用一个二值化算子 <span
+class="math inline">\(q\)</span></p>
+<p><img src="https://s2.loli.net/2022/07/16/sw3Kqa2IdBvmi7y.png" /></p>
+<p>但显然这个函数的梯度都是0，会导致<span
+class="math inline">\(D_2\)</span>的参数无法更新，于是本文设计了一个随机算子，随机变量<span
+class="math inline">\(X\in \{0, 1\}\)</span>，如果<span
+class="math inline">\(X=1\)</span>，则<span
+class="math inline">\(Q_{i,j}\)</span>被量化为0,1，否则<span
+class="math inline">\(q_{i,j}=Q_{i,j}\)</span>。其中<span
+class="math inline">\(X\)</span>服从参数为p的伯努利分布，p为<span
+class="math inline">\(X=1\)</span>的概率。</p>
+<p>其实就是，如果<span class="math inline">\(X=1\)</span>，则<span
+class="math inline">\(Q\)</span>被量化，阻断反向传播；如果<span
+class="math inline">\(X=0\)</span>，则<span
+class="math inline">\(Q\)</span>保持原状，允许梯度传递，从而可以更改<span
+class="math inline">\(D_2\)</span>的参数。</p>
+<p>在推理过程中， p设置为1。</p>
+<h4 id="loss-functions">Loss functions</h4>
+<h5 id="adversial-loss">Adversial loss</h5>
+<p>这里使用C&amp;W的loss</p>
+<p><img src="https://s2.loli.net/2022/07/16/OqhxTN7yS2Ufk4H.png" /></p>
+<p>如果是有目标攻击的话，使用</p>
+<p><img src="https://s2.loli.net/2022/07/17/ZHVzntyFrb1vPIf.png" /></p>
+<p>代替第一项。</p>
+<h5 id="sparse-loss">Sparse loss</h5>
+<p><img src="https://s2.loli.net/2022/07/17/cInl2au5YNAbTeG.png" /></p>
+<p>本方法的稀疏度主要是由 <span class="math inline">\(m\)</span>
+决定的，由于<span
+class="math inline">\(L_0\)</span>很难优化求解，于是使用<span
+class="math inline">\(L_1\)</span>代替（L1范数是L0范数的最优凸近似，且L1范数容易优化求解），相应的，在下面的loss中，我们要让<span
+class="math inline">\(m\)</span>中的值尽量趋近于0或者1。</p>
+<h5 id="quantization-loss">Quantization loss</h5>
+<p>为减小训练和测试之间的gap，在损失函数中增加一项，使得Qij的值趋近于0或1</p>
+<p><img src="https://s2.loli.net/2022/07/17/3eSnOVKMZ6AUtTY.png" /></p>
+<p>总体loss为</p>
+<p><img src="https://s2.loli.net/2022/07/17/WPTr6gS25Fopn38.png" /></p>
+<h3 id="实验">实验</h3>
+<p>大致进行了四个实验。</p>
+<ol type="1">
+<li>在类似的稀疏约束条件下，在不同的<span
+class="math inline">\(l_\infty\)</span>条件下，测试与另外三个稀疏对抗攻击算法的Non-target的性能。</li>
+<li>在类似的稀疏约束条件下，测试与另外两个稀疏对抗攻击算法在Target设定下的性能。但目标类别只有两个，“秃鹫”和“泡泡”。</li>
+<li>与GAP和Cross-domain
+perturbations在Non-target设定下进行相似评估。</li>
+<li>消融实验：（1）不解耦为幅度和位置分量的性能；（2）训练时使p=0时（即不进行量化）的性能，q=STE的性能；（3）不使用稀疏性约束loss（即不要L0约束）的性能；（4）不使用量化损失的性能；（5）对于每张图片训练自己的生成器的性能。</li>
+</ol>
+<p>实验结果描述为：</p>
+<ol type="1">
+<li><p>相比于其他三个类似的方法，这个方法在Non-target下的迁移性大大提升，（白盒下效果反而不好，这是由于使用训练好的生成器做的原因，不过不重要）</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/17/qUTpRi6z9xoZV1P.png"
+alt="Table 1: `∞ = 255 constrained non-targeted attack transferability comparison on ImageNet dataset. The best speed and transfer rate are shown in bold. ‘*’ means white-box setting." />
+<figcaption aria-hidden="true">Table 1: `∞ = 255 constrained
+non-targeted attack transferability comparison on ImageNet dataset. The
+best speed and transfer rate are shown in bold. ‘*’ means white-box
+setting.</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2022/07/17/KJtF6GQMDCnwN3g.png"
+alt="Table 2: `∞ = 10 constrained non-targeted attack transferability comparison on ImageNet dataset. The best speed and transfer rate are shown in bold. ‘*’ means white-box setting." />
+<figcaption aria-hidden="true">Table 2: `∞ = 10 constrained non-targeted
+attack transferability comparison on ImageNet dataset. The best speed
+and transfer rate are shown in bold. ‘*’ means white-box
+setting.</figcaption>
+</figure></li>
+<li><p>相比于其他两个类似的方法，这个方法在Target设定下也有一定的迁移效果，其他两种方法迁移性很差。随有提升，但貌似也不高。在实验中只进行了两个target
+class的实验，迁移性差别明显，可能是未来研究的一个方向。</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/17/zKREC3Ng4hPJes8.png"
+alt="Table 3: Targeted attack transferability comparison. The source model is IncV3 and attacks are performed on ImageNet dataset, with `∞ = 255 constraint. The best speed and transfer rate are shown in bold. ‘*’ means white-box setting." />
+<figcaption aria-hidden="true">Table 3: Targeted attack transferability
+comparison. The source model is IncV3 and attacks are performed on
+ImageNet dataset, with `∞ = 255 constraint. The best speed and transfer
+rate are shown in bold. ‘*’ means white-box setting.</figcaption>
+</figure></li>
+<li><p>相比于其他的基于生成的方法，发现在进行更少的扰动的情况下，也能达到甚至超过稠密扰动的生成式方法，这表明有很多扰动是无用的，甚至有负优化。</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/17/FNbl83EtUmn2RhQ.png"
+alt="Table 4: Comparison with generator-based dense attacks. Results are sparsity(%) and fooling rate(%) on different models. ‘*’ means white-box setting." />
+<figcaption aria-hidden="true">Table 4: Comparison with generator-based
+dense attacks. Results are sparsity(%) and fooling rate(%) on different
+models. ‘*’ means white-box setting.</figcaption>
+</figure></li>
+<li><p>（1）去掉解耦，发现不能真正的实现稀疏。</p>
+<p>（2）去掉量化，即使训练中的p=0，发现仍能实现稀疏，但是生成的对抗样本迁移性下降。并且与STE方法比较，发现结果比STE方法好。</p>
+<p>（3）去掉sparse loss，生成的对抗样本变为100%的dense attack。</p>
+<p>（4）去掉quantization
+loss，稀疏程度提高了（更改像素变多），并且迁移性降低了，验证了量化操作带来的信息损失会影响测试时的性能。</p>
+<p>（5）使用每张图片生成自己的生成器的方法，发现白盒攻击效果提高了，但是黑盒攻击迁移性降低了，证明使用大量数据进行训练可以减小过拟合并提高迁移性的假设是正确的。</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/17/npc5NCajtmWSHPF.png"
+alt="Table 5: Ablation study of the proposed framework. Results are sparsity(%) and fooling rate(%) on different models (fooling rate is not studied if sparsity is not satisfactory). ‘*’ means white-box setting." />
+<figcaption aria-hidden="true">Table 5: Ablation study of the proposed
+framework. Results are sparsity(%) and fooling rate(%) on different
+models (fooling rate is not studied if sparsity is not satisfactory).
+‘*’ means white-box setting.</figcaption>
+</figure></li>
+</ol>
+<h3 id="结论">结论</h3>
+<p>本文提出了一种基于生成器的稀疏对抗攻击框架。在相同的稀疏性条件下，该方法比现有的现有方法具有更强的可迁移性，推理速度更快。根据经验，我们观察到，当对大规模ImageNet攻击时，我们的方法产生最先进的结果。我们的工作阐明了可转移的基于<span
+class="math inline">\(l_0\)</span>的稀疏对抗样本的存在，并说明了最先进的白盒稀疏攻击方法倾向于找到修改像素数量最少但不具有迁移性的对抗样本。这两种类型的稀疏对抗攻击对于分析dnn的漏洞和评估安全风险(如在物理世界中创建可转移的对抗补丁来欺骗自动驾驶汽车)同样重要。</p>
+<h3 id="思考">思考</h3>
+<p>方法的局限或问题：</p>
+<ol type="1">
+<li>用的损失函数是C&amp;W的loss，与人脸识别中通常使用的特征图的余弦值或L2dis不同。</li>
+<li>直觉上觉得，这个方法只适用于黑盒模型训练数据已知的情况。①如果黑盒模型训练数据未知（这里想强调的是类别不知道），则无法使用C&amp;W
+loss，无法使用logits。②如果训练数据未知，那么学出的样本到对抗样本之间的映射，是不是有domain
+shift。</li>
+</ol>
+<p>几个想法：</p>
+<ol type="1">
+<li>在训练数据未知的情况下。如果使用大量数据进行预训练，并且在单张图片上进行fine
+tune的效果如何？</li>
+<li>如何将这个方法迁移到人脸识别系统的攻击上。这个方法是否与对抗补丁有联系。</li>
+<li>提出的随机化量化方法很有趣，模型性能与p的关系是什么呢。当Q被量化为0,1时，阻断反向传播，这时Dec2参数不更新，并按照测试条件更新Dec1参数；当Q不被量化时，允许梯度的传递，这时Dec2参数进行更新（既有让结果趋近0或1，也有生成效果更好的对抗样本），同时Dec1也在更新参数，只不过设定是训练条件下。</li>
+</ol>
 ]]></content>
       <categories>
         <category>论文阅读</category>
