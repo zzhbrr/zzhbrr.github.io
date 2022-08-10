@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-loading-bar.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zzhbrr.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="ICCV2021 通过生成对抗性身份掩码来进行人脸加密">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文阅读-Towards Face Encryption by Generating Adversarial Identity Masks">
+<meta property="og:url" content="https://zzhbrr.github.io/2022/08/10/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Towards-Face-Encryption-by-Generating-Adversarial-Identity-Masks/index.html">
+<meta property="og:site_name" content="zZh的小窝">
+<meta property="og:description" content="ICCV2021 通过生成对抗性身份掩码来进行人脸加密">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/08/10/BcuE7rg8sJtYlid.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/10/QdI3BFlnt9bfcaU.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/10/SPwBcjQpzCO76x9.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/10/qnULCo71T6NBJQe.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/10/1XoWjtNMTlAhe5E.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/10/AhuXM7jQiG2clIZ.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/10/JdpEbksvx4NIuzD.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/10/raghNGbADY6CRK9.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/10/aLrfnheZ1dpA2Pl.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/10/JXEQBy2O9GDasLH.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/10/w94Bl3jXrYDW7u5.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/10/lqAyG4D5mgU1cap.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/10/OB7uYsRGUxILmnP.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/10/hwkUrXtg5Qd9eEB.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/10/9Z6mcAjf2JSBMWV.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/10/m7Z8sdeGl1Tha93.png">
+<meta property="og:image" content="https://s2.loli.net/2022/08/10/OvrLQ5qYIHcUaJ2.png">
+<meta property="article:published_time" content="2022-08-10T07:52:34.000Z">
+<meta property="article:modified_time" content="2022-08-10T15:44:11.365Z">
+<meta property="article:author" content="zZhBr">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="论文阅读">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2022/08/10/BcuE7rg8sJtYlid.png">
+
+<link rel="canonical" href="https://zzhbrr.github.io/2022/08/10/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Towards-Face-Encryption-by-Generating-Adversarial-Identity-Masks/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>论文阅读-Towards Face Encryption by Generating Adversarial Identity Masks | zZh的小窝</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">zZh的小窝</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">靡不有初 鲜克有终</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>留言板</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zzhbrr.github.io/2022/08/10/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Towards-Face-Encryption-by-Generating-Adversarial-Identity-Masks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zZhBr">
+      <meta itemprop="description" content="向梦想中自己的样子疯狂努力！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zZh的小窝">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          论文阅读-Towards Face Encryption by Generating Adversarial Identity Masks
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-10 15:52:34 / 修改时间：23:44:11" itemprop="dateCreated datePublished" datetime="2022-08-10T15:52:34+08:00">2022-08-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">论文阅读</span></a>
+                </span>
+                  >
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E5%AF%B9%E6%8A%97%E6%94%BB%E5%87%BB/" itemprop="url" rel="index"><span itemprop="name">对抗攻击</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/08/10/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Towards-Face-Encryption-by-Generating-Adversarial-Identity-Masks/" class="post-meta-item leancloud_visitors" data-flag-title="论文阅读-Towards Face Encryption by Generating Adversarial Identity Masks" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/08/10/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Towards-Face-Encryption-by-Generating-Adversarial-Identity-Masks/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/08/10/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Towards-Face-Encryption-by-Generating-Adversarial-Identity-Masks/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>12k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>11 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center>
+ICCV2021 通过生成对抗性身份掩码来进行人脸加密
+</center>
+<span id="more"></span>
+<p>题目：Towards Face Encryption by Generating Adversarial Identity
+Masks</p>
+<p>作者：Xiao Yang, Yinpeng Dong, Tianyu Pang, Hang Su, Jun Zhu, Yuefeng
+Chen, Hui Xue</p>
+<p>链接：<a
+target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/ICCV2021/papers/Yang_Towards_Face_Encryption_by_Generating_Adversarial_Identity_Masks_ICCV_2021_paper.pdf">文章链接</a></p>
+<p>开源代码链接：<a
+target="_blank" rel="noopener" href="https://github.com/ShawnXYang/TIP-IM">代码链接</a></p>
+<hr />
+<h2 id="摘要翻译">1 摘要翻译</h2>
+<p>随着数以亿计的个人数据通过社交媒体和网络共享，数据的隐私和安全问题越来越受到关注。为了减少面部照片泄露身份信息的情况，已作出了一些尝试，例如利用图像模糊处理技术。然而，目前的大多数结果不是<strong>对可感知性不满意</strong>，就是对人脸识别系统<strong>攻击低效</strong>。我们在本文中的目标是开发一种技术，可以加密个人照片，这样它们可以保护用户不受未经授权的人脸识别系统的影响，但在视觉上仍然与人类的原始版本相同。为此，我们提出了一种有针对性的身份保护迭代方法<strong>target
+identity-protection iterative
+method(TIP-IM)</strong>来生成对抗性的身份面具，该面具可以叠加在人脸图像上，这样就可以在<strong>不牺牲视觉质量</strong>的情况下隐藏身份。大量实验表明，在实际测试场景下，TIP-IM对各种最先进的人脸识别模型提供了95%以上的保护成功率。此外，我们还展示了我们的方法在一个商业API服务上的实际和有效的适用性。</p>
+<h3 id="基本问题">基本问题</h3>
+<ul>
+<li>论文解决的问题：为人脸图像生成不可感知的、有效的隐私保护掩码。</li>
+</ul>
+<h2 id="introduction">2 Introduction</h2>
+<figure>
+<img src="https://s2.loli.net/2022/08/10/BcuE7rg8sJtYlid.png"
+alt="Figure 1. An illustrative example of targeted identity protection. When users share a photo xr on social media (e.g., Twitter, Facebook, etc.), unauthorized applications could scrabble this identity y0 based on face recognition systems, resulting in the privacy leakage of personal information. Thus we provide an effective identity mask tool to generate a protected image xp, which can conceal the corresponding identity by misleading the malicious systems to predict it as a wrong target identity yt in an authorized or virtual target set, which can be provided by the service providers." />
+<figcaption aria-hidden="true">Figure 1. An illustrative example of
+targeted identity protection. When users share a photo xr on social
+media (e.g., Twitter, Facebook, etc.), unauthorized applications could
+scrabble this identity y0 based on face recognition systems, resulting
+in the privacy leakage of personal information. Thus we provide an
+effective identity mask tool to generate a protected image xp, which can
+conceal the corresponding identity by misleading the malicious systems
+to predict it as a wrong target identity yt in an authorized or virtual
+target set, which can be provided by the service providers.</figcaption>
+</figure>
+<p>社交媒体和网络的蓬勃发展带来了大量的个人数据(如照片)被公开分享。随着深度神经网络的日益普及，这些技术极大地提高了人脸识别系统处理个人数据的能力，但作为副产品，也增加了个人信息隐私泄露的潜在风险。例如，未经授权的第三方可能会在未经许可的情况下抓取和识别社交媒体(如Twitter,
+Facebook,
+LinkedIn等)上共享的照片。因此，在不影响用户体验的前提下，为用户提供一种有效的方式来保护其隐私信息不被未经授权的系统识别和泄露是必要的。<strong>（提出人脸隐私保护的必要性）</strong></p>
+<p>过去的几年见证了人脸加密在安全和计算机视觉领域的进步。在现有的技术中，<strong>基于模糊的方法</strong>得到了广泛的研究。传统的模糊处理技术，如模糊化、像素化、暗化和遮挡，可能在可感知性上令人满意或能有效地对抗识别系统。<strong>生成对抗网络(GANs)</strong>的最新进展为生成更真实的图像进行模糊处理提供了一种很有吸引力的方法。但由于对某些有判别力的特征进行了夸张和抑制，得到的模糊图像在视觉外观上与原始图像有显著差异，偶尔会产生带有伪影的不自然的输出图像。<strong>（用模糊方法进行人脸加密）</strong></p>
+<p>最近的研究发现，<strong>对抗样本</strong>通过在原始图像上叠加对抗性扰动，可以逃避FR系统的识别。它成为了一种很有吸引力的方式来应用对抗扰动来隐藏一个人的身份，即使是在更严格的限制下<strong>模仿</strong>一些被授权的或生成的人脸图像(例如，由社交媒体服务提供)。它提供了一种可能的解决方案来指定输出，这可能会<strong>避免侵犯他人的隐私</strong>（图像被识别为任意身份）。尽管如此，应该注意到，尽管现有方法(如PGD和MIM)产生的对抗扰动的强度变化很小(如[0,255]中每个像素的强度变化为12或16)，但由于Fig.2所示的伪影，它们仍然可能<strong>牺牲视觉质量</strong>，并且有研究指出，ℓp-范数限制的对抗扰动不能很好地适应人类感知。此外，目前的对抗攻击主要依赖于目标系统的<strong>白盒模型</strong>或大量的<strong>模型查询</strong>，这在现实场景中(如社交媒体上的未经授权的人脸识别系统)难以实现身份保护。<strong>（用对抗样本进行人脸加密及不足）</strong></p>
+<p>在本文中，我们从普通用户的角度考虑了一些有价值的问题，并提出了缓解真实社交媒体中个人照片身份泄露的建议。我们特别关注<strong>face
+identification</strong>，这是人脸识别中一个典型的子任务，其目标是在一个未知的gallery
+identity
+set中识别真实的人脸图像，我们的目标是<strong>将真实的人脸图像识别为一个unknown
+gallery identity
+set</strong>，因为它可以被未经授权的应用程序用于识别用户的身份信息。如Fig.1所示，人脸加密是为了阻止恶意应用程序的自动推理能力，使其预测服务提供商错误的被授权的授权或虚拟目标。一般来说，人们对人脸识别系统不可知，不可能直接访问查询。因此，我们需要针对代理模型生成对抗掩码，以欺骗<strong>黑盒</strong>人脸识别系统。此外，当用户在社交媒体上分享受保护的照片时，我们尽量<strong>不影响用户体验</strong>，同时对未经授权的识别系统<strong>隐藏其身份</strong>。因此，受保护的图像在视觉上也应该像相应的原始图像一样然，否则可能会引入不希望看到的伪影。<strong>（本文提出的方法的一些考虑，target
+set，黑盒，自然）</strong></p>
+<p>为了解决上述挑战，我们提出了<strong>targeted identity-protection
+iterative
+method(TIP-IM)</strong>来对黑盒人脸识别系统进行人脸加密。提出的方法生成<strong>可迁移的且不可察觉的</strong>对抗身份掩码。好的可迁移性意味着一个模型可以有效地欺骗其他黑盒人脸识别系统，同时不可感知性意味着一张由对抗身份掩码处理的照片在视觉上对人类来说是自然的。具体来说，<strong>为了确保生成的图像不会被任意误分类为其他身份，我们从互联网上收集的数据集中随机选择一组人脸图像作为我们实验中指定的目标</strong>。该方法通过一种新颖的迭代优化算法，在<strong>多目标识别</strong>的白盒和黑盒人脸系统中获得了较好的性能。<strong>（本文提出方法的具体内容，可迁移，不可感知，多目标）</strong></p>
+<p>在实际和具有挑战性的open-set测试场景下进行的大量实验表明，我们的算法对白盒人脸系统提供了95%以上的保护成功率，并且即使与各种最先进的算法相比，也比以前的方法有一定的优势。此外，我们还通过考虑一个商业API服务，在一个真实世界的实验中证明了它的有效性。我们的主要贡献总结如下:</p>
+<ul>
+<li>从用户的角度出发，我们涉及到一些有价值的考虑，以保护隐私免受未经授权的身份识别系统的侵害，包括<strong>target
+protection、natural output、black-box system和unknown gallery
+set</strong>。</li>
+<li>我们提出了targeted identity-protection iterative
+method(TIP-IM)来生成对抗身份掩码，该方法考虑了<strong>多目标集</strong>，并引入了一种<strong>新的优化机制</strong>来保证在不同场景下的有效性。</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/08/10/QdI3BFlnt9bfcaU.png" alt="Figure 2. Illustration of different perturbations under the l∞ norm. More examples are presented in Appendix D." style="zoom:67%;" /></p>
+<h2 id="adversarial-identity-mask">3 Adversarial Identity Mask</h2>
+<p>用<span class="math inline">\(f(\mathbf{x} ):\chi \to
+\mathcal{R}^d\)</span> 表示一个人脸识别系统，对一个人脸图像<span
+class="math inline">\(\mathbf{x}\in \mathcal{X}\subset
+\mathcal{R}^n\)</span>提取在<span
+class="math inline">\(\mathcal{R}^d\)</span>内固定长度的特征表示。给定度量<span
+class="math inline">\(\mathcal{D}_f(\mathbf{x}_1,
+\mathbf{x}_2)=||f(\mathbf{x}_1)-f(\mathbf{x}_2)||_2^2\)</span>来描述两张人脸图像的特征距离。人脸识别是识别一个probe图像和一个人脸图像集合<span
+class="math inline">\(\mathcal{G}=\{\mathbf{x}_1^g,
+\dots,\mathbf{x}_m^g\}\)</span>，并返回其中与probe图像特征距离最近的图像的身份。</p>
+<p>在本文中，我们从用户的角度考虑了一些有价值的因素，以保护用户的照片不受非法人脸识别系统的影响。具体来说，为了隐藏用户图像<span
+class="math inline">\(\mathbf{x}^r\)</span>的真实身份<span
+class="math inline">\(y\)</span>，我们通过在<span
+class="math inline">\(\mathbf{x}^r\)</span>上添加一个对抗性身份掩码<span
+class="math inline">\(\mathbf{m}^a\)</span>来生成一个被保护的图像<span
+class="math inline">\(\mathbf{x}^p\)</span>，可以表示为<span
+class="math inline">\(\mathbf{x}^p=\mathbf{x}^r+\mathbf{m}^a\)</span>，来使人脸识别系统将<span
+class="math inline">\(\mathbf{x}^p\)</span>识别为不同的被授权的身份或者生成图像对应的虚拟的身份。与指定一个目标身份来生成保护图像不同，我们选择一个身份集合<span
+class="math inline">\(\mathcal{T}=\{y_1, \dots,
+y_k\}\)</span>，我们使人人脸识别系统将被保护图像识别为<span
+class="math inline">\(\mathcal{T}\)</span>中的任意一个目标身份，这样可以使身份保护更容易实现。</p>
+<p>正式的说，使<span class="math inline">\(\mathcal{G}_y=\{x|x\in
+\mathcal{G}, \mathcal{O}(\mathbf{x})=y\}\)</span>表示包含<span
+class="math inline">\(\mathcal{G}\)</span>中所有属于<span
+class="math inline">\(\mathbf{x}^r\)</span>的真实身份<span
+class="math inline">\(y\)</span>的所有人脸图像的集合，其中<span
+class="math inline">\(\mathcal{O}\)</span>的作用是给出图像的ground-truth，并且<span
+class="math inline">\(\mathcal{G}_\mathcal{T}=\cup _{q\le i \le k}
+\mathcal{G}_{y_i}\)</span>表示gallery set <span
+class="math inline">\(\mathcal{G}\)</span>中包含的所有属于<span
+class="math inline">\(\mathcal{T}\)</span>的目标身份的图像的集合。为了隐藏<span
+class="math inline">\(\mathbf{x}^r\)</span>的身份，生成的保护图像<span
+class="math inline">\(\mathbf{x}^p\)</span>要满足约束 <span
+class="math display">\[
+\exist \mathbf{x}^t\in \mathcal{G}_\mathcal{T}, \forall \mathbf{x}\in
+\mathcal{G}_y:\mathcal{D}_f(\mathbf{x}^p,
+\mathbf{x})&gt;\mathcal{D}_f(\mathbf{x}^p,
+\mathbf{x}^t)     \,\,\,\,\,\,(1)
+\]</span>
+与之前研究的设定相比，我们从一般用户的角度考虑了更多的实际问题，主要体现在以下三个方面：</p>
+<ul>
+<li><p><strong>Naturalness</strong></p>
+<p>为了使被保护图像与原始图像难以区分，通常的做法是限制保护图像与原始图像之间的ℓp
+(p =
+2，∞等)范数。然而，ℓp范数下的扰动不能自然地很好地拟合人类的感知。因此，我们要求受保护图像除了ℓp范数界的约束外，还要看起来自然，使其<strong>约束于真实图像的数据流形</strong>，从而达到人眼无法察觉的效果。我们使用一个<strong>目标函数</strong>来提高被保护图像的自然度。</p></li>
+<li><p><strong>Unawareness of gallery set</strong></p>
+<p>对于一个真实的人脸识别系统，我们不知道它的gallery set <span
+class="math inline">\(\mathcal{G}\)</span>，这也表明不可能直接求解上式(1)，而以前的工作假设gallery
+set可以访问或者是closed-set设定。为了解决这个问题，我们使用<strong>替代人脸图像</strong>进行优化。具体的，我们收集图像集<strong><span
+class="math inline">\(\tilde{\mathcal{G}_\mathcal{T}}\)</span></strong>，包含目标身份<span
+class="math inline">\(\mathcal{T}\)</span>的人脸图像作为 <span
+class="math inline">\(\mathcal{G}_\mathcal{T}\)</span>的替代，并且使用<span
+class="math inline">\(\{\mathbf{x}^r\}\)</span>而不是<span
+class="math inline">\(\mathcal{G}_y\)</span>。使用替代图像的合理性在于，一个身份的人脸表征是相似的，因此优化后的与替代图像相似的受保护图像的表征也可以接近gallery
+set中属于相同目标身份的图像。</p></li>
+<li><p><strong>Unknown face system</strong></p>
+<p>在实践中，我们也不知道人脸识别模型，包括它的架构、参数和梯度。以前的方法依赖于对目标模型的白盒访问，这在真实的身份保护场景中是不切实际的。因此，我们采用<strong>代理白盒模型</strong>来生成受保护的图像，以提高对抗式掩码对未知人脸系统的<strong>可迁移性</strong>。</p></li>
+</ul>
+<h2 id="methodology">4 Methodology</h2>
+<h3 id="problem-formulation">4.1 Problem Formulation</h3>
+<p>将目标隐私保护函数定义为：</p>
+<p><img src="https://s2.loli.net/2022/08/10/SPwBcjQpzCO76x9.png" style="zoom:67%;" /></p>
+<p>其中，<span class="math inline">\(\mathbf{x}^t\in
+\tilde{\mathcal{G}_\mathcal{T}}\)</span>，并且<span
+class="math inline">\(\mathcal{L}_{iden}\)</span>
+是一个相对的识别损失，是生成的<span
+class="math inline">\(\mathbf{x}^p\)</span>在特征空间上增加与<span
+class="math inline">\(\mathbf{x}^r\)</span>的距离，缩小与<span
+class="math inline">\(\mathbf{x}^t\)</span>的距离。$_{nat}$ 是使<span
+class="math inline">\(\mathbf{x}^p\)</span>看起来自然的限制条件。同时也限制了<span
+class="math inline">\(l_p\,\,norm\)</span>。</p>
+<p>本文中使用<strong>maximum mean discrepancy(MMD)</strong> 作为<span
+class="math inline">\(\mathcal{L}_{nat}\)</span>，因为它是一种有效的非参数和可微的度量，能够比较两个数据分布和评估生成的图像的不可感知性。即给定两个数据集合<span
+class="math inline">\(\mathbf{X}^p=\{\mathbf{x}_1^p, \dots,
+\mathbf{x}_2^p\}\)</span> 和 <span
+class="math inline">\(\mathbf{X}^r=\{\mathbf{x}_1^r, \dots,
+\mathbf{x}_2^r\}\)</span>，由N个生成的图像和N个真实的图像组成，MMD通过下式算两个分布的差异：</p>
+<p><img src="https://s2.loli.net/2022/08/10/qnULCo71T6NBJQe.png" /></p>
+<p>其中<span
+class="math inline">\(\phi(·)\)</span>将数据映射到再生核希尔伯特空间中(RKHS)。</p>
+<p>通过最小化生成分布的样本<span
+class="math inline">\(\mathbf{X}^p\)</span>和真实数据分布的样本<span
+class="math inline">\(\mathbf{X}^r\)</span>之间的MMD，我们可以将<span
+class="math inline">\(\mathbf{X}^p\)</span>约束在真实数据分布的流形上，这意味着<span
+class="math inline">\(\mathbf{X}^p\)</span>中被保护的图像将像真实的图像一样自然。</p>
+<p>由于MMD是一种可微的度量，并且定义在batch上，因此我们将MMD集成到Eq.(2)中，并用batch-based的公式重写目标为：</p>
+<p><img src="https://s2.loli.net/2022/08/10/1XoWjtNMTlAhe5E.png" style="zoom:67%;" /></p>
+<p>其中，<span class="math inline">\(\mathbf{x}_i^t\in
+\tilde{\mathcal{G}_\mathcal{T}}\)</span>，是<span
+class="math inline">\(\mathbf{x}_i^t\)</span>对应的那个目标图像，
+并且<span
+class="math inline">\(\gamma\)</span>是平衡两个loss的超参数。</p>
+<h3 id="target-identity-protection-iterative-method">4.2 Target
+Identity-Protection Iterative Method</h3>
+<p>上一节给定了<span
+class="math inline">\(\mathcal{L}(\mathbf{X}^p)\)</span>的表达式，所以通过最小化<span
+class="math inline">\(\mathcal{L}(\mathbf{X}^p)\)</span>即可生成一个batch被保护图像<span
+class="math inline">\(\mathbf{X}^p\)</span>。并且通过fast
+gradient方法做多次迭代，最小化<span
+class="math inline">\(\mathcal{L}(\mathbf{X}^p)\)</span>。即通过下式生成：</p>
+<p><img src="https://s2.loli.net/2022/08/10/AhuXM7jQiG2clIZ.png" style="zoom:67%;" /></p>
+<p>其中<span
+class="math inline">\(\mathbf{X}^p_t\)</span>是迭代了t次的被保护图像，<span
+class="math inline">\(\Pi\)</span>是投影函数，将图像投影到<span
+class="math inline">\(l_p\)</span>范数边界，
+Normalize是用来归一化梯度的（如在无穷范数中的符号函数，在l2范数中的l2归一化）。共进行<span
+class="math inline">\(T\)</span>次迭代。</p>
+<p>为了防止受保护图像陷入局部极小值，并提高其对其他黑箱人脸识别模型的可迁移性，我们将动量技术引入迭代过程。</p>
+<h3 id="search-optimal-xt-via-greedy-insertion">4.3 Search Optimal <span
+class="math inline">\(x^t\)</span> via Greedy Insertion</h3>
+<p>下面的问题就是，如果<span
+class="math inline">\(\tilde{\mathcal{G}_\mathcal{T}}\)</span>中不只有一张目标图片，那么就为获得更好的性能提供了更多潜在的优化方向。因此，本文开发了一种优化算法，在生成受保护图像的同时搜索最优目标。具体来说，对于式(5)中<span
+class="math inline">\(T\)</span>次迭代的迭代过程，我们在<span
+class="math inline">\(\tilde{\mathcal{G}_\mathcal{T}}\)</span>中为每一个受保护图像每次迭代选择一个代表目标进行更新，这属于子集选择问题。</p>
+<blockquote>
+<p><strong>定义.</strong> <span
+class="math inline">\(S_t\)</span>表示每次迭代在<span
+class="math inline">\(\tilde{\mathcal{G}_\mathcal{T}}\)</span>中选择的目标的集合直到第<span
+class="math inline">\(t\)</span>次迭代。令<span
+class="math inline">\(F\)</span>表示一个映射函数，从集合到一个实数增益值（越大越好）。对于<span
+class="math inline">\(\mathbf{x}^t\in
+\tilde{\mathcal{G}_\mathcal{T}}\)</span>，我们定义<span
+class="math inline">\(\Delta(\mathbf{x}^t|S_t)=F(S_t\cup
+\{\mathbf{x^t}\})-F(S_t)\)</span>为<span
+class="math inline">\(F\)</span>在<span
+class="math inline">\(S_t\)</span>时给定<span
+class="math inline">\(\mathbf{x}^t\)</span>的边际效益。</p>
+</blockquote>
+<p>形式上，随着迭代循环中迭代次数的增加，如果边际增益单调减少，那么f将属于<strong>子模函数族</strong>。对于子模函数问题，用贪心算法可以求得近似解。但本问题不是严格的子模函数，不过之前的研究表明问题不大。于是本问题也使用了贪心插入的策略。</p>
+<p>我们采用贪婪插入算法进行近似子模优化，该算法计算每个对象在每次迭代时从目标集中获得的收益，并根据定义将收益最大的对象集成到当前子集<span
+class="math inline">\(S_t\)</span>中：</p>
+<p><img src="https://s2.loli.net/2022/08/10/JdpEbksvx4NIuzD.png" style="zoom:67%;" /></p>
+<p>下面定义映射函数<span
+class="math inline">\(F\)</span>。具体的，映射F定义为，先在之前用了<span
+class="math inline">\(S_t\)</span>内的targets做了t次迭代的结果上进行一步迭代，得到被保护的图像<span
+class="math inline">\(\mathbf{x}^p\)</span>，再用<span
+class="math inline">\(G\)</span>函数计算增益值。</p>
+<p>合适的增益函数G应当选择最小化<span
+class="math inline">\(\mathcal{L}_{iden}(\mathbf{x}^t,
+\mathbf{x}^p)\)</span>最有效的图像。要注意的是<span
+class="math inline">\(G\)</span>必须是正值（为什么），并且越大代表效果越好。于是定义了一个基于特征相似度的增益函数：</p>
+<p><img src="https://s2.loli.net/2022/08/10/raghNGbADY6CRK9.png" style="zoom:67%;" /></p>
+<p>每次迭代时，算法倾向于选择一个在特征子空间里更接近真实图像的目标。</p>
+<p>贪心插入算法流程如下：</p>
+<p><img src="https://s2.loli.net/2022/08/10/aLrfnheZ1dpA2Pl.png" /></p>
+<p>中间迭代的时候只用<span
+class="math inline">\(\mathcal{L}_{iden}(\mathbf{x}^t,
+\mathbf{x}^p)\)</span>做损失函数是因为，之前定义的损失需要一个batch进行计算，但是贪心插入的时候是针对一个图像的，没有batch。</p>
+<h2 id="experiments">5 Experiments</h2>
+<h3 id="experiments-settings">5.1 Experiments Settings</h3>
+<h4 id="datasets">Datasets</h4>
+<p>在LFW和MegFace数据集上进行实验。为了接近真实的测试场景，我们涉及到一些额外的考虑因素。</p>
+<ol type="1">
+<li><strong>practical gallery set</strong>:
+首先选择500个不同的身份做被保护的身份。同时随机对每个身份选择1张做probe
+image，并将同身份的其他图像在加入gallery set。</li>
+<li><strong>target identities</strong>:
+随机在MS-Celeb-!M数据集中选择10个身份作为<span
+class="math inline">\(\mathcal{T}\)</span>，每个身份选择一张图片形成<span
+class="math inline">\(\tilde{\mathcal{G}_\mathcal{T}}\)</span>，剩下的图像加入gallery
+set中，保证训练是的图像在gallery set中不可知。</li>
+<li><strong>additional identities</strong>: 像gallery
+set中添加额外的500个身份，模拟真实的测试场景。</li>
+</ol>
+<h4 id="target-models">Target models</h4>
+<p>选择不同backbones和不同loss的模型。MTCNN用来检测人脸，并对齐为112x112的图像。只有一个模型被用于训练，剩下的作为黑盒模型。所用的模型如下表：</p>
+<figure>
+<img src="https://s2.loli.net/2022/08/10/JXEQBy2O9GDasLH.png"
+alt="Table 2. Chosen target models that lie in various settings, including different architectures and training objectives." />
+<figcaption aria-hidden="true">Table 2. Chosen target models that lie in
+various settings, including different architectures and training
+objectives.</figcaption>
+</figure>
+<h4 id="compared-methods">Compared Methods</h4>
+<p>许多之前的人脸加密动作都是single-target的。<strong>MIM</strong>将动量引入迭代过程，<strong>DIM</strong>和TIM通过输入多样化来增加迁移性。但注意TIM只专注于规避防御模型，并且在实验上也比MIM和DIM取得更差的性能。</p>
+<p>由于原始DIM在迭代优化中只支持单目标攻击，因此我们在内部最小化中通过对同一目标集的动态赋值实现了DIM的多目标版本，命名为<strong>MT-DIM</strong>。</p>
+<p>此外，我们还研究了其他多目标优化方法的影响。如将式子(7)改写为<span
+class="math inline">\(G_1(\mathbf{x})=log(1+\sum_{\mathbf{x}^t\in\tilde{\mathcal{G}_\mathcal{T}}}exp(\mathcal{D}_f(\mathbf{x},
+\mathbf{x}^r)-\mathcal{D}_f(\mathbf{x},
+\mathbf{x}^t)))\)</span>，这个方法命名为 <strong>Center-Opt</strong>.
+这个方法使被保护图像向目标身份特征空间的中心更新。</p>
+<p>MT-TIM, Center-Opt和本文的方法都是multi-target optimization
+methods，single-target methods之用一张图片做更新。</p>
+<p>设置迭代次数为50， 学习率为1.5， 扰动大小最大为12在无穷范数下。</p>
+<h4 id="evaluation-metrics">Evaluation Metrics</h4>
+<p>为了综合评估<strong>保护成功率</strong>，我们汇报Rank-N target
+identity success rate（<strong>Rank-N-T</strong>）和untarget identity
+success rate（<strong>Rank-N-UT</strong>）。</p>
+<p>Rank-N-T表示在gallery set中与<span
+class="math inline">\(\mathbf{x}\)</span>前N相似的，至少有1张属于target
+identity， Rank-N-UT表示前N相似的没有与<span
+class="math inline">\(\mathbf{x}\)</span>相同身份的。</p>
+<p>为了检验所生成的受保护图像的<strong>不可感知性</strong>，我们采用标准的量化指标<strong>峰值信噪比(PSNR
+)</strong>和<strong>结构相似度(SSIM)</strong>，以及<strong>人脸区域的MMD</strong>。对于SSIM和PSNR，值越大表示图像质量越好，而MMD值越小表示性能越好。</p>
+<h3 id="effectiveness-of-black-box-face-encryption">5.2 Effectiveness of
+Black-box Face Encryption</h3>
+<figure>
+<img src="https://s2.loli.net/2022/08/10/w94Bl3jXrYDW7u5.png"
+alt="Table 3. Rank-1-T and Rank-5-T (%) of black-box identity protection against different models on LFW. ∗ indicates white-box results." />
+<figcaption aria-hidden="true">Table 3. Rank-1-T and Rank-5-T (%) of
+black-box identity protection against different models on LFW. ∗
+indicates white-box results.</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2022/08/10/lqAyG4D5mgU1cap.png"
+alt="Table 4. Rank-1-UT and Rank-5-UT (%) of black-box identity protection against different models on LFW. ∗ indicates white-box attacks." />
+<figcaption aria-hidden="true">Table 4. Rank-1-UT and Rank-5-UT (%) of
+black-box identity protection against different models on LFW. ∗
+indicates white-box attacks.</figcaption>
+</figure>
+<p><img src="https://s2.loli.net/2022/08/10/OB7uYsRGUxILmnP.png" alt="Figure 3. Comparison of SSIM for different methods." style="zoom: 80%;" /></p>
+<p>Tab.3
+显示，在各种方法SSIM值很相近的情况下(Fig.3.)，本文的方法在R-N-T的表现上比其他方法好很多。与singel-target方法DIM相比，MT-DIM获得了更好的性能，表明多目标设置可获得更好的黑箱迁移性。并且不同的multi-target方法表现也有差异，如本文提出的TIP-IM好于Center-Opt。</p>
+<p>Tab.4 显示，本文的方法也能保证最佳的效果。</p>
+<p>并且实验发现，10张target图片已经足够了，目标数量的小幅增加可以获得更好的性能，尽管需要略微的时间成本。</p>
+<p>我们从StyleGAN中指定一些生成的图像作为目标图像。结果表明，该算法仍然具有良好的身份保护黑箱性能。在实际应用中，我们可以任意指定可用和授权的目标身份集或生成的人脸图像，我们的算法适用于任何目标集。</p>
+<h3 id="naturalness">5.3 Naturalness</h3>
+<p>为验证本文方法能否控制自然度，对不同的系数<span
+class="math inline">\(\gamma\)</span>进行枚举。Tab.5显示了不同的人脸识别模型(包括ArcFace、MobileFace和ResNet50)在PSNR、SSIM和MMD三个不同指标下的评价结果。随着γ的增加，生成的图像的视觉质量越来越好，这也与Fig4中的示例一致。因此，根据<span
+class="math inline">\(\gamma\)</span>系数的不同，我们可以控制生成保护图像的自然程度。当<span
+class="math inline">\(\gamma\)</span>增加时，图像看起来更自然，而在一定程度上，身份保护往往会失败。</p>
+<figure>
+<img src="https://s2.loli.net/2022/08/10/hwkUrXtg5Qd9eEB.png"
+alt="Table 5. The average PSNR (db), SSIM, and MMD of the protected images generated by TIP-IM with different γ." />
+<figcaption aria-hidden="true">Table 5. The average PSNR (db), SSIM, and
+MMD of the protected images generated by TIP-IM with different
+γ.</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2022/08/10/9Z6mcAjf2JSBMWV.png"
+alt="Figure 4. Experiments on how different γ affects the performance. Green hook refers to successful targeted identity protection while red hook refers to failure, which also implies a trade-off on effectiveness and naturalness. Best view when zoom in." />
+<figcaption aria-hidden="true">Figure 4. Experiments on how different γ
+affects the performance. Green hook refers to successful targeted
+identity protection while red hook refers to failure, which also implies
+a trade-off on effectiveness and naturalness. Best view when zoom
+in.</figcaption>
+</figure>
+<p>Fig.5
+显示了不同的人脸识别模型(包括ArcFace、MobileFace和ResNet50)在PSNR、SSIM和MMD三个不同指标下的评价结果。随着<span
+class="math inline">\(\gamma\)</span>的增加，SSIM值也在增加，Rank-1-T精度呈现下降趋势，这意味着适当的<span
+class="math inline">\(\gamma\)</span>对可转移性和自然性至关重要。</p>
+<figure>
+<img src="https://s2.loli.net/2022/08/10/m7Z8sdeGl1Tha93.png"
+alt="Figure 5. Rank-1-T score and SSIM of protected images generated by TIP-IM with different γ against different models." />
+<figcaption aria-hidden="true">Figure 5. Rank-1-T score and SSIM of
+protected images generated by TIP-IM with different γ against different
+models.</figcaption>
+</figure>
+<h3 id="effectiveness-on-a-real-world-application">5.4 Effectiveness on
+a Real-World Application</h3>
+<p>将提出的TIP-IM应用于腾讯AI开放平台提供的商业人脸搜索API上，测试身份保护性能。为了模拟隐私数据场景，我们使用上面描述的同一个图库集。在该平台中，我们从上述probe
+set中选择20个probe faces，基于相似度排序进行人脸搜索。所有20个probe
+faces都可以在Rank1被识别。然后从probe
+faces生成相应的受保护图像，进行人脸搜索。对于返回排名，有6个目标身份在排名1和16个目标身份在排名5。注意，具有相同身份的人脸相似度也呈现不同程度的下降，这也说明了黑箱人脸系统的有效性，如图6所示为两个示例。</p>
+<figure>
+<img src="https://s2.loli.net/2022/08/10/OvrLQ5qYIHcUaJ2.png"
+alt="Figure 6. Examples of face encryption on the real-world face recognition API. We separately use real and protected faces by TIP-IM as probes to do face search and show top three results by similarity. Blue boxes represent the faces with same identities as probe faces and green boxes imply the faces belonging to targeted identities. Similarity scores with probe face are marked in yellow." />
+<figcaption aria-hidden="true">Figure 6. Examples of face encryption on
+the real-world face recognition API. We separately use real and
+protected faces by TIP-IM as probes to do face search and show top three
+results by similarity. Blue boxes represent the faces with same
+identities as probe faces and green boxes imply the faces belonging to
+targeted identities. Similarity scores with probe face are marked in
+yellow.</figcaption>
+</figure>
+<h2 id="conclusion">6 Conclusion</h2>
+<p>在本文中，我们通过在社交媒体中模拟真实的身份识别系统来研究身份保护问题。大量实验表明，所提出的TIP-IM方法在不影响社交媒体用户体验的同时，能够保护用户的私人信息不被未经授权的身份识别系统暴露。</p>
+<hr />
+<h2 id="总结和思考">总结和思考</h2>
+<ol type="1">
+<li>文章提出的multi-target方法，多一些target选择，可以显著增加迁移性和成功率，这对于人脸隐私保护来说，是很有用的。人脸隐私保护，只要认不出来就行了，可以使用de-identification，也可以使用target，而使用target方法，可以避免一些无辜的人身份被窃取。</li>
+<li>文章提出的控制自然度，是用MMD放在损失函数中来实现的，用MMD来逼迫生成图像和原始图像分布相同。在读GAP文章的时候就在想有没有其他方法将生成图像控制在真实数据分布的流形上，GAP是用训练好的StyleGAN来隐式实现的，本文是用目标函数中加入正则化项来显式实现的。用MMD，但没有使用人脸的特殊性，如特殊特征什么的。</li>
+<li>为什么Tab.4没有Center-Opt算法的数据了？</li>
+<li>次模函数那块。前面的定义与submodular高度相似，submodular问题是NP-hard问题，但是可以用文中类似的贪心方法求近似解。（我觉得把本文中的F定义为次模函数有点牵强，毕竟每次更新所用的图像不一定是不同的。用其他近似方法求解可能会得到更好的效果）。用其他的方法，贪心的，亦或是其他启发式的算法，是不是可以提升性能呢。</li>
+<li>是否可以类似于OPOM，提供多张输入图片，来提升性能。</li>
+<li>是否可以不人工指定target图像，而是根据什么准则、在什么条件下生成target？</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢阅读-------------</div>
+    
+</div>
+  
+</div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 深度学习</a>
+              <a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" rel="tag"><i class="fa fa-tag"></i> 论文阅读</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/03/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-OPOM-Customized-Invisible-Cloak-towards-Face-Privacy-Protection/" rel="prev" title="[论文阅读] OPOM: Customized Invisible Cloak towards Face Privacy Protection">
+      <i class="fa fa-chevron-left"></i> [论文阅读] OPOM: Customized Invisible Cloak towards Face Privacy Protection
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81%E7%BF%BB%E8%AF%91"><span class="nav-number">1.</span> <span class="nav-text">1 摘要翻译</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">基本问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">2 Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#adversarial-identity-mask"><span class="nav-number">3.</span> <span class="nav-text">3 Adversarial Identity Mask</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#methodology"><span class="nav-number">4.</span> <span class="nav-text">4 Methodology</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#problem-formulation"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 Problem Formulation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#target-identity-protection-iterative-method"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 Target
+Identity-Protection Iterative Method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#search-optimal-xt-via-greedy-insertion"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 Search Optimal \(x^t\) via Greedy Insertion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments"><span class="nav-number">5.</span> <span class="nav-text">5 Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#experiments-settings"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 Experiments Settings</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#datasets"><span class="nav-number">5.1.1.</span> <span class="nav-text">Datasets</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#target-models"><span class="nav-number">5.1.2.</span> <span class="nav-text">Target models</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#compared-methods"><span class="nav-number">5.1.3.</span> <span class="nav-text">Compared Methods</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#evaluation-metrics"><span class="nav-number">5.1.4.</span> <span class="nav-text">Evaluation Metrics</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#effectiveness-of-black-box-face-encryption"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 Effectiveness of
+Black-box Face Encryption</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#naturalness"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 Naturalness</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#effectiveness-on-a-real-world-application"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 Effectiveness on
+a Real-World Application</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conclusion"><span class="nav-number">6.</span> <span class="nav-text">6 Conclusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E5%92%8C%E6%80%9D%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">总结和思考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zZhBr"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">zZhBr</p>
+  <div class="site-description" itemprop="description">向梦想中自己的样子疯狂努力！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zzhbrr" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zzhbrr" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1376447388@qq.com" title="E-Mail → mailto:1376447388@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">true</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">74k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:08</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'LwPA3YYjR79z4KVjpTUbE7sO-gzGzoHsz',
+      appKey     : 'znhl6YoHSnBwGqSD5ofRNUmK',
+      placeholder: "请在此输入你的留言",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
