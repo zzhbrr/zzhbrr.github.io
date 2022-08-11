@@ -2063,7 +2063,7 @@ tune的效果如何？</li>
       </tags>
   </entry>
   <entry>
-    <title>论文阅读-Towards Face Encryption by Generating Adversarial Identity Masks</title>
+    <title>[论文阅读] Towards Face Encryption by Generating Adversarial Identity Masks</title>
     <url>/2022/08/10/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Towards-Face-Encryption-by-Generating-Adversarial-Identity-Masks/</url>
     <content><![CDATA[<center>
 ICCV2021 通过生成对抗性身份掩码来进行人脸加密
@@ -2075,7 +2075,7 @@ Masks</p>
 Chen, Hui Xue</p>
 <p>链接：<a
 href="https://openaccess.thecvf.com/content/ICCV2021/papers/Yang_Towards_Face_Encryption_by_Generating_Adversarial_Identity_Masks_ICCV_2021_paper.pdf">文章链接</a></p>
-<p>开源代码链接：<a
+<p>代码链接：<a
 href="https://github.com/ShawnXYang/TIP-IM">代码链接</a></p>
 <hr />
 <h2 id="摘要翻译">1 摘要翻译</h2>
@@ -2158,7 +2158,7 @@ class="math inline">\(\mathcal{T}\)</span>的目标身份的图像的集合。�
 class="math inline">\(\mathbf{x}^r\)</span>的身份，生成的保护图像<span
 class="math inline">\(\mathbf{x}^p\)</span>要满足约束 <span
 class="math display">\[
-\exist \mathbf{x}^t\in \mathcal{G}_\mathcal{T}, \forall \mathbf{x}\in
+\exists \mathbf{x}^t\in \mathcal{G}_\mathcal{T}, \forall \mathbf{x}\in
 \mathcal{G}_y:\mathcal{D}_f(\mathbf{x}^p,
 \mathbf{x})&gt;\mathcal{D}_f(\mathbf{x}^p,
 \mathbf{x}^t)     \,\,\,\,\,\,(1)
@@ -2397,9 +2397,104 @@ yellow.</figcaption>
 <li>文章提出的multi-target方法，多一些target选择，可以显著增加迁移性和成功率，这对于人脸隐私保护来说，是很有用的。人脸隐私保护，只要认不出来就行了，可以使用de-identification，也可以使用target，而使用target方法，可以避免一些无辜的人身份被窃取。</li>
 <li>文章提出的控制自然度，是用MMD放在损失函数中来实现的，用MMD来逼迫生成图像和原始图像分布相同。在读GAP文章的时候就在想有没有其他方法将生成图像控制在真实数据分布的流形上，GAP是用训练好的StyleGAN来隐式实现的，本文是用目标函数中加入正则化项来显式实现的。用MMD，但没有使用人脸的特殊性，如特殊特征什么的。</li>
 <li>为什么Tab.4没有Center-Opt算法的数据了？</li>
-<li>次模函数那块。前面的定义与submodular高度相似，submodular问题是NP-hard问题，但是可以用文中类似的贪心方法求近似解。（我觉得把本文中的F定义为次模函数有点牵强，毕竟每次更新所用的图像不一定是不同的。用其他近似方法求解可能会得到更好的效果）。用其他的方法，贪心的，亦或是其他启发式的算法，是不是可以提升性能呢。</li>
+<li>次模函数那块。前面的定义与submodular高度相似，submodular问题是NP-hard问题，但是可以用文中类似的贪心方法求近似解。（我觉得把本文中的F定义为次模函数有点牵强，毕竟每次更新所用的图像不一定是不同的。用其他近似方法求解可能会得到更好的效果）。用其他的方法，贪心的，亦或是其他启发式的算法，是不是可以提升性能呢。（而且计算增益的时候，是不考虑自然度的）</li>
 <li>是否可以类似于OPOM，提供多张输入图片，来提升性能。</li>
 <li>是否可以不人工指定target图像，而是根据什么准则、在什么条件下生成target？</li>
+</ol>
+<hr />
+<h2 id="其他参考资料">其他参考资料</h2>
+<ol type="1">
+<li>MMD：https://zhuanlan.zhihu.com/p/163839117</li>
+<li>定量评价图像生成质量：http://www.360doc.com/content/20/1127/03/72629698_948146939.shtml</li>
+<li>SSIM：https://blog.csdn.net/qq_42951560/article/details/115463083</li>
+<li>PSNR：https://blog.csdn.net/weixin_29732003/article/details/122569893</li>
+</ol>
+]]></content>
+      <categories>
+        <category>论文阅读</category>
+        <category>对抗攻击</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>论文阅读</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>[论文阅读] LowKey: Leveraging Adversarial Attacks to Protect Social Media Users from Facial Recognition</title>
+    <url>/2022/08/11/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-LowKey-Leveraging-Adversarial-Attacks-to-Protect-Social-Media-Users-from-Facial-Recognition/</url>
+    <content><![CDATA[<center>
+ICLR2021 LowKey: 利用对抗攻击保护社交媒体用户免于人脸识别
+</center>
+<span id="more"></span>
+<p>题目：LowKey: Leveraging Adversarial Attacks to Protect Social Media
+Users from Facial Recognition</p>
+<p>作者：Valeriia Cherepanova, Micah Goldblum, Harrison Foley, Shiyuan
+Duan, John P. Dickerson, Gavin Taylor, Tom Goldstein</p>
+<p>链接：<a href="https://arxiv.org/pdf/2101.07922.pdf">文章链接</a></p>
+<hr />
+<h2 id="摘要翻译">1 摘要翻译</h2>
+<p>人脸识别系统越来越多地被私营企业、政府机构以及消费者服务和大规模监控项目的承包商使用。这些系统通常是通过抓取社交媒体资料来获取用户图片。对抗扰动已经被提出用来绕过面部识别系统。然而，现有的方法在大规模系统和商业api上失败了。我们开发了我们自己的对抗性滤波器，它占了整个图像处理流程，并且对包括人脸检测和大规模数据库在内的工业级流程非常有效。此外，我们发布了一个易于使用的网络工具，显著降低了Amazon
+Rekognition和Microsoft
+Azure人脸识别API的准确性，将它们的准确性降低到1%以下。</p>
+<h3 id="基本问题">基本问题</h3>
+<ul>
+<li>解决问题：首个提出利用对抗样本思路保护人脸隐私</li>
+<li><strong>贡献</strong>：
+<ol type="1">
+<li>我们设计了一种针对人脸识别模型的<strong>黑盒对抗攻击</strong>。我们的算法移动gallery
+faces的特征空间表示，使它们不匹配相应的probe图像，同时<strong>保持图像质量</strong>。</li>
+<li>我们<strong>在商业黑盒api(包括Amazon Rekognition和Microsoft Azure
+Face)上测试方法的性能</strong>，这些api的内部工作原理尚未公开。我们与现有的数据投毒替代方案Fawkes进行了全面的比较，我们发现，Fawkes在每个实验中都是无效的，但我们的方法始终阻止了面部识别。</li>
+<li>我们发布了一个<strong>简单易用的网络工具LowKey</strong>。</li>
+</ol></li>
+<li>相似方案， Fawkes的问题
+<ul>
+<li>Fawkes假设人脸识别从业者根据每个人的数据训练他们的模型。</li>
+<li>作者主要使用图像分类器。相比之下，商业系统使用FR特定的head和loss进行训练，而不是分类器使用的标准交叉熵损失</li>
+<li>作者在非常小的数据集上进行评估，且该系统只使用top-1精确度进行评估。</li>
+<li>虽然原论文描述了人眼无法察觉Fawkes的扰动，但实验表明，情况恰恰相反</li>
+<li>Fawkes还没有发布应用程序或网络工具</li>
+</ul></li>
+</ul>
+<h2 id="method">2 Method</h2>
+<p>为了提高黑盒迁移性，使用集成模型攻击。对于每个集成的模型，目标函数都考虑与原图的特征空间的差距，包括使用和不使用高斯模糊。同时使用LPIPS来作为感知相似度损失。</p>
+<p><img src="https://s2.loli.net/2022/08/11/bSFRfpcLXZm7MJ1.png" /></p>
+<p>其中<span class="math inline">\(x\)</span>是原图像，<span
+class="math inline">\(x&#39;\)</span>是扰动图像，<span
+class="math inline">\(f_i\)</span>表示第i个模型，<span
+class="math inline">\(G\)</span>是高斯平滑函数，<span
+class="math inline">\(A\)</span>表示人脸检测和人脸对齐为112x112图像。</p>
+<p>使用迭代符号梯度上升方法求解。</p>
+<p>集成模型是IR-152和ResNet-152，用ArcFace和CosFace做损失训练的4个模型。</p>
+<h2 id="experiments">3 Experiments</h2>
+<h3 id="experiments-setting">3.1 Experiments Setting</h3>
+<p>文中的实验是使用FaceScrub数据集，去除接近重复的图像，选择每个身份的1/10的图像作为probe
+images，剩下的图像插入gallery
+set中。随机选择100个身份使用LowKey保护，模拟大规模用户中少量使用LowKey做隐私保护的用户。</p>
+<h3 id="在商业api上实验">3.2 在商业API上实验</h3>
+<p>略过，效果比Fawkes好很多</p>
+<h3 id="补充实验">3.3 补充实验</h3>
+<h4 id="ensemble-and-transferability">Ensemble and Transferability</h4>
+<p>使用不同模型做白盒和黑盒进行实验，发现集成模型具有更好的黑盒迁移性。</p>
+<h4 id="gaussian-smoothing">Gaussian Smoothing</h4>
+<p>我们在我们的目标函数中加入高斯平滑作为预处理步骤，以使我们的扰动更平滑和更稳健。直觉上，这提高了被攻击图像的有效性，即使应用了去噪滤波器。加入模糊，可以迫使对抗扰动是基于低频的图像修改，而不是“噪声”。</p>
+<p>生成的图像也表明，扰动变得平滑，且没有尖锐线条和高频的振荡。</p>
+<p>并且实验表明，加入了高斯平滑后，在Rank-50精度上与不加高斯平滑一样好，但是却更有鲁棒性。</p>
+<h4 id="run-time">Run-time</h4>
+<p>生成一张用2080TI要32s，略过。</p>
+<h4 id="robustness-to-image-compression">Robustness to Image
+Compression</h4>
+<p>如jpg格式保存图像会有压缩损失。实验表明会略微降低性能，但是攻击仍然十分有效。</p>
+<h4 id="scalability-to-all-image-sizes">Scalability to All Image
+Sizes</h4>
+<p>对不同大小图像的保护能力也很重要，因为在生成对抗扰动的时候，将人脸缩放到了112x112大小，恢复的时候，若原始人脸过大或过小，都会导致攻击能力大幅下降。</p>
+<p>实验也验证了这个结果。</p>
+<h2 id="discussion">Discussion</h2>
+<p>在这项工作中，我们开发了一个工具，以保护用户免受未经授权的面部识别。我们的工具在用户图片上传到社交媒体之前对其进行预处理。这些预处理后的图像对于第三方机构收集来进行面部识别是无用的。虽然我们已经证明了<strong>LowKey对于商业黑箱api是非常有效的</strong>，但它不能100%地保护用户，可能会被专门设计的健壮系统所绕过。因此，我们希望用户在公开个人信息时仍保持谨慎。<strong>一个有趣的未来方向是生产更具美感的对抗性过滤器，以促进该工具的更广泛使用。</strong>然而，可能没有免费的午餐，如果没有可见的干扰，人们无法欺骗最先进的面部识别系统。最后，我们注意到，我们推广这一工具的目标之一是提高人们对面部识别及其引发的道德问题的更广泛认识。可以在lowkey.umiacs.umd.edu网址找到LowKey工具。</p>
+<h2 id="总结与思考">总结与思考</h2>
+<ol type="1">
+<li>本方法生成的图像质量还是太差，使用LPIPS作为可感知性损失，有没有其他更好的方法代替。</li>
+<li>如何解决大图像攻击效果不佳的问题？</li>
 </ol>
 ]]></content>
       <categories>

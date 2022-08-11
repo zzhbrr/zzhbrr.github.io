@@ -24,7 +24,7 @@
 
   <meta name="description" content="ICCV2021 通过生成对抗性身份掩码来进行人脸加密">
 <meta property="og:type" content="article">
-<meta property="og:title" content="论文阅读-Towards Face Encryption by Generating Adversarial Identity Masks">
+<meta property="og:title" content="[论文阅读] Towards Face Encryption by Generating Adversarial Identity Masks">
 <meta property="og:url" content="https://zzhbrr.github.io/2022/08/10/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Towards-Face-Encryption-by-Generating-Adversarial-Identity-Masks/index.html">
 <meta property="og:site_name" content="zZh的小窝">
 <meta property="og:description" content="ICCV2021 通过生成对抗性身份掩码来进行人脸加密">
@@ -47,7 +47,7 @@
 <meta property="og:image" content="https://s2.loli.net/2022/08/10/m7Z8sdeGl1Tha93.png">
 <meta property="og:image" content="https://s2.loli.net/2022/08/10/OvrLQ5qYIHcUaJ2.png">
 <meta property="article:published_time" content="2022-08-10T07:52:34.000Z">
-<meta property="article:modified_time" content="2022-08-10T15:44:11.365Z">
+<meta property="article:modified_time" content="2022-08-11T09:56:28.782Z">
 <meta property="article:author" content="zZhBr">
 <meta property="article:tag" content="深度学习">
 <meta property="article:tag" content="论文阅读">
@@ -67,7 +67,7 @@
   };
 </script>
 
-  <title>论文阅读-Towards Face Encryption by Generating Adversarial Identity Masks | zZh的小窝</title>
+  <title>[论文阅读] Towards Face Encryption by Generating Adversarial Identity Masks | zZh的小窝</title>
   
 
 
@@ -235,7 +235,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          论文阅读-Towards Face Encryption by Generating Adversarial Identity Masks
+          [论文阅读] Towards Face Encryption by Generating Adversarial Identity Masks
         </h1>
 
         <div class="post-meta">
@@ -244,10 +244,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-08-10 15:52:34 / 修改时间：23:44:11" itemprop="dateCreated datePublished" datetime="2022-08-10T15:52:34+08:00">2022-08-10</time>
+              <time title="创建时间：2022-08-10 15:52:34" itemprop="dateCreated datePublished" datetime="2022-08-10T15:52:34+08:00">2022-08-10</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-11 17:56:28" itemprop="dateModified" datetime="2022-08-11T17:56:28+08:00">2022-08-11</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -263,7 +269,7 @@
             </span>
 
           
-            <span id="/2022/08/10/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Towards-Face-Encryption-by-Generating-Adversarial-Identity-Masks/" class="post-meta-item leancloud_visitors" data-flag-title="论文阅读-Towards Face Encryption by Generating Adversarial Identity Masks" title="阅读次数">
+            <span id="/2022/08/10/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Towards-Face-Encryption-by-Generating-Adversarial-Identity-Masks/" class="post-meta-item leancloud_visitors" data-flag-title="[论文阅读] Towards Face Encryption by Generating Adversarial Identity Masks" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -319,7 +325,7 @@ Masks</p>
 Chen, Hui Xue</p>
 <p>链接：<a
 target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/ICCV2021/papers/Yang_Towards_Face_Encryption_by_Generating_Adversarial_Identity_Masks_ICCV_2021_paper.pdf">文章链接</a></p>
-<p>开源代码链接：<a
+<p>代码链接：<a
 target="_blank" rel="noopener" href="https://github.com/ShawnXYang/TIP-IM">代码链接</a></p>
 <hr />
 <h2 id="摘要翻译">1 摘要翻译</h2>
@@ -402,7 +408,7 @@ class="math inline">\(\mathcal{T}\)</span>的目标身份的图像的集合。�
 class="math inline">\(\mathbf{x}^r\)</span>的身份，生成的保护图像<span
 class="math inline">\(\mathbf{x}^p\)</span>要满足约束 <span
 class="math display">\[
-\exist \mathbf{x}^t\in \mathcal{G}_\mathcal{T}, \forall \mathbf{x}\in
+\exists \mathbf{x}^t\in \mathcal{G}_\mathcal{T}, \forall \mathbf{x}\in
 \mathcal{G}_y:\mathcal{D}_f(\mathbf{x}^p,
 \mathbf{x})&gt;\mathcal{D}_f(\mathbf{x}^p,
 \mathbf{x}^t)     \,\,\,\,\,\,(1)
@@ -641,9 +647,17 @@ yellow.</figcaption>
 <li>文章提出的multi-target方法，多一些target选择，可以显著增加迁移性和成功率，这对于人脸隐私保护来说，是很有用的。人脸隐私保护，只要认不出来就行了，可以使用de-identification，也可以使用target，而使用target方法，可以避免一些无辜的人身份被窃取。</li>
 <li>文章提出的控制自然度，是用MMD放在损失函数中来实现的，用MMD来逼迫生成图像和原始图像分布相同。在读GAP文章的时候就在想有没有其他方法将生成图像控制在真实数据分布的流形上，GAP是用训练好的StyleGAN来隐式实现的，本文是用目标函数中加入正则化项来显式实现的。用MMD，但没有使用人脸的特殊性，如特殊特征什么的。</li>
 <li>为什么Tab.4没有Center-Opt算法的数据了？</li>
-<li>次模函数那块。前面的定义与submodular高度相似，submodular问题是NP-hard问题，但是可以用文中类似的贪心方法求近似解。（我觉得把本文中的F定义为次模函数有点牵强，毕竟每次更新所用的图像不一定是不同的。用其他近似方法求解可能会得到更好的效果）。用其他的方法，贪心的，亦或是其他启发式的算法，是不是可以提升性能呢。</li>
+<li>次模函数那块。前面的定义与submodular高度相似，submodular问题是NP-hard问题，但是可以用文中类似的贪心方法求近似解。（我觉得把本文中的F定义为次模函数有点牵强，毕竟每次更新所用的图像不一定是不同的。用其他近似方法求解可能会得到更好的效果）。用其他的方法，贪心的，亦或是其他启发式的算法，是不是可以提升性能呢。（而且计算增益的时候，是不考虑自然度的）</li>
 <li>是否可以类似于OPOM，提供多张输入图片，来提升性能。</li>
 <li>是否可以不人工指定target图像，而是根据什么准则、在什么条件下生成target？</li>
+</ol>
+<hr />
+<h2 id="其他参考资料">其他参考资料</h2>
+<ol type="1">
+<li>MMD：https://zhuanlan.zhihu.com/p/163839117</li>
+<li>定量评价图像生成质量：http://www.360doc.com/content/20/1127/03/72629698_948146939.shtml</li>
+<li>SSIM：https://blog.csdn.net/qq_42951560/article/details/115463083</li>
+<li>PSNR：https://blog.csdn.net/weixin_29732003/article/details/122569893</li>
 </ol>
 
     </div>
@@ -677,7 +691,10 @@ yellow.</figcaption>
     <a href="/2022/08/03/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-OPOM-Customized-Invisible-Cloak-towards-Face-Privacy-Protection/" rel="prev" title="[论文阅读] OPOM: Customized Invisible Cloak towards Face Privacy Protection">
       <i class="fa fa-chevron-left"></i> [论文阅读] OPOM: Customized Invisible Cloak towards Face Privacy Protection
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/08/11/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-LowKey-Leveraging-Adversarial-Attacks-to-Protect-Social-Media-Users-from-Facial-Recognition/" rel="next" title="[论文阅读] LowKey: Leveraging Adversarial Attacks to Protect Social Media Users from Facial Recognition">
+      [论文阅读] LowKey: Leveraging Adversarial Attacks to Protect Social Media Users from Facial Recognition <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -740,7 +757,7 @@ yellow.</figcaption>
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81%E7%BF%BB%E8%AF%91"><span class="nav-number">1.</span> <span class="nav-text">1 摘要翻译</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">基本问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">2 Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#adversarial-identity-mask"><span class="nav-number">3.</span> <span class="nav-text">3 Adversarial Identity Mask</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#methodology"><span class="nav-number">4.</span> <span class="nav-text">4 Methodology</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#problem-formulation"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 Problem Formulation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#target-identity-protection-iterative-method"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 Target
 Identity-Protection Iterative Method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#search-optimal-xt-via-greedy-insertion"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 Search Optimal \(x^t\) via Greedy Insertion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments"><span class="nav-number">5.</span> <span class="nav-text">5 Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#experiments-settings"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 Experiments Settings</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#datasets"><span class="nav-number">5.1.1.</span> <span class="nav-text">Datasets</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#target-models"><span class="nav-number">5.1.2.</span> <span class="nav-text">Target models</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#compared-methods"><span class="nav-number">5.1.3.</span> <span class="nav-text">Compared Methods</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#evaluation-metrics"><span class="nav-number">5.1.4.</span> <span class="nav-text">Evaluation Metrics</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#effectiveness-of-black-box-face-encryption"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 Effectiveness of
 Black-box Face Encryption</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#naturalness"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 Naturalness</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#effectiveness-on-a-real-world-application"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 Effectiveness on
-a Real-World Application</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conclusion"><span class="nav-number">6.</span> <span class="nav-text">6 Conclusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E5%92%8C%E6%80%9D%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">总结和思考</span></a></li></ol></div>
+a Real-World Application</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conclusion"><span class="nav-number">6.</span> <span class="nav-text">6 Conclusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E5%92%8C%E6%80%9D%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">总结和思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">8.</span> <span class="nav-text">其他参考资料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -756,7 +773,7 @@ a Real-World Application</span></a></li></ol></li><li class="nav-item nav-level-
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -813,12 +830,12 @@ a Real-World Application</span></a></li></ol></li><li class="nav-item nav-level-
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">74k</span>
+    <span title="站点总字数">77k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:08</span>
+    <span title="站点阅读时长">1:10</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
