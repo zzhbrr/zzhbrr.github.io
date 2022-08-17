@@ -2466,6 +2466,8 @@ class="math inline">\(G\)</span>是高斯平滑函数，<span
 class="math inline">\(A\)</span>表示人脸检测和人脸对齐为112x112图像。</p>
 <p>使用迭代符号梯度上升方法求解。</p>
 <p>集成模型是IR-152和ResNet-152，用ArcFace和CosFace做损失训练的4个模型。</p>
+<p><strong>注意，LowKey是通过更改gallery
+set中的图像来实现上传真实图像的人脸隐私保护的。</strong></p>
 <h2 id="experiments">3 Experiments</h2>
 <h3 id="experiments-setting">3.1 Experiments Setting</h3>
 <p>文中的实验是使用FaceScrub数据集，去除接近重复的图像，选择每个身份的1/10的图像作为probe
