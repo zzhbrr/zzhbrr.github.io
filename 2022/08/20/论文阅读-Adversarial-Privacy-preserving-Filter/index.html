@@ -24,22 +24,21 @@
     var CONFIG = {"hostname":"zzhbrr.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="一些题目的思路">
+  <meta name="description" content="ACM MM2020 对抗性隐私保护滤波器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="没有代码的题解们">
-<meta property="og:url" content="https://zzhbrr.github.io/2021/11/03/%E6%B2%A1%E6%9C%89%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A2%98%E8%A7%A3%E4%BB%AC/index.html">
+<meta property="og:title" content="[论文阅读] Adversarial Privacy-preserving Filter">
+<meta property="og:url" content="https://zzhbrr.github.io/2022/08/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Adversarial-Privacy-preserving-Filter/index.html">
 <meta property="og:site_name" content="zZh的小窝">
-<meta property="og:description" content="一些题目的思路">
+<meta property="og:description" content="ACM MM2020 对抗性隐私保护滤波器">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://i.loli.net/2021/11/03/ipqUDS7CvhPxYVm.png">
-<meta property="article:published_time" content="2021-11-03T14:14:25.000Z">
-<meta property="article:modified_time" content="2021-11-03T14:29:13.193Z">
+<meta property="article:published_time" content="2022-08-20T14:03:52.000Z">
+<meta property="article:modified_time" content="2022-08-20T15:46:22.959Z">
 <meta property="article:author" content="zZhBr">
-<meta property="article:tag" content="题解">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="论文阅读">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2021/11/03/ipqUDS7CvhPxYVm.png">
 
-<link rel="canonical" href="https://zzhbrr.github.io/2021/11/03/%E6%B2%A1%E6%9C%89%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A2%98%E8%A7%A3%E4%BB%AC/">
+<link rel="canonical" href="https://zzhbrr.github.io/2022/08/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Adversarial-Privacy-preserving-Filter/">
 
 
 <script id="page-configurations">
@@ -52,7 +51,7 @@
   };
 </script>
 
-  <title>没有代码的题解们 | zZh的小窝</title>
+  <title>[论文阅读] Adversarial Privacy-preserving Filter | zZh的小窝</title>
   
 
 
@@ -207,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://zzhbrr.github.io/2021/11/03/%E6%B2%A1%E6%9C%89%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A2%98%E8%A7%A3%E4%BB%AC/">
+    <link itemprop="mainEntityOfPage" href="https://zzhbrr.github.io/2022/08/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Adversarial-Privacy-preserving-Filter/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -220,7 +219,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          没有代码的题解们
+          [论文阅读] Adversarial Privacy-preserving Filter
         </h1>
 
         <div class="post-meta">
@@ -231,7 +230,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-11-03 22:14:25 / 修改时间：22:29:13" itemprop="dateCreated datePublished" datetime="2021-11-03T22:14:25+08:00">2021-11-03</time>
+              <time title="创建时间：2022-08-20 22:03:52 / 修改时间：23:46:22" itemprop="dateCreated datePublished" datetime="2022-08-20T22:03:52+08:00">2022-08-20</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -239,16 +238,16 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">论文阅读</span></a>
                 </span>
                   >
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Algorithm/Solutions/" itemprop="url" rel="index"><span itemprop="name">Solutions</span></a>
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E5%AF%B9%E6%8A%97%E6%94%BB%E5%87%BB/" itemprop="url" rel="index"><span itemprop="name">对抗攻击</span></a>
                 </span>
             </span>
 
           
-            <span id="/2021/11/03/%E6%B2%A1%E6%9C%89%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A2%98%E8%A7%A3%E4%BB%AC/" class="post-meta-item leancloud_visitors" data-flag-title="没有代码的题解们" title="阅读次数">
+            <span id="/2022/08/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Adversarial-Privacy-preserving-Filter/" class="post-meta-item leancloud_visitors" data-flag-title="[论文阅读] Adversarial Privacy-preserving Filter" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -264,8 +263,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/11/03/%E6%B2%A1%E6%9C%89%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A2%98%E8%A7%A3%E4%BB%AC/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/11/03/%E6%B2%A1%E6%9C%89%E4%BB%A3%E7%A0%81%E7%9A%84%E9%A2%98%E8%A7%A3%E4%BB%AC/" itemprop="commentCount"></span>
+    <a title="valine" href="/2022/08/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Adversarial-Privacy-preserving-Filter/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/08/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Adversarial-Privacy-preserving-Filter/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -275,14 +274,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>267</span>
+              <span>3.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -294,29 +293,131 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <center>
-一些题目的思路
-</center>
+        <p>ACM MM2020 对抗性隐私保护滤波器</p>
 <span id="more"></span>
-<h3 id="cf980d-perfect-groups">CF980D Perfect Groups</h3>
-<p><strong>分类：</strong></p>
-<p>[数学，思维]</p>
-<p><strong>题意：</strong></p>
-<p><img src="https://i.loli.net/2021/11/03/ipqUDS7CvhPxYVm.png" /></p>
-<p><strong>思路：</strong></p>
-<p>首先想到，往一个组内添加一个新元素会有什么性质。</p>
-<p>假设组内原有数中有<span class="math inline">\(a\)</span>和<span
-class="math inline">\(b\)</span>，并且有<span
-class="math inline">\(a\times b=k_1^2\)</span>，对于新考虑的数<span
-class="math inline">\(c\)</span>，<span
-class="math inline">\(c\)</span>跟<span
-class="math inline">\(b\)</span>的关系是<span
-class="math inline">\(b\times c=k_2^2\)</span>，那么可以得到<span
-class="math inline">\(a\times c=\frac{b^2}{k_1^2\times
-k_2^2}\)</span>，即<span class="math inline">\(a\)</span>和<span
-class="math inline">\(c\)</span>相乘也是平方数。</p>
-<p>于是对于一个连续的序列，我们直接用一个并查集维护连通块即可。</p>
-<p>中间会有一些细节，比如0.</p>
+<p>题目：Adversarial Privacy-preserving Filter</p>
+<p>作者：<a
+target="_blank" rel="noopener" href="https://arxiv.org/search/cs?searchtype=author&amp;query=Zhang%2C+J">Jiaming
+Zhang</a>, <a
+target="_blank" rel="noopener" href="https://arxiv.org/search/cs?searchtype=author&amp;query=Sang%2C+J">Jitao
+Sang</a>, <a
+target="_blank" rel="noopener" href="https://arxiv.org/search/cs?searchtype=author&amp;query=Zhao%2C+X">Xian
+Zhao</a>, <a
+target="_blank" rel="noopener" href="https://arxiv.org/search/cs?searchtype=author&amp;query=Huang%2C+X">Xiaowen
+Huang</a>, <a
+target="_blank" rel="noopener" href="https://arxiv.org/search/cs?searchtype=author&amp;query=Sun%2C+Y">Yanfeng
+Sun</a>, <a
+target="_blank" rel="noopener" href="https://arxiv.org/search/cs?searchtype=author&amp;query=Hu%2C+Y">Yongli
+Hu</a></p>
+<p>链接：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2007.12861.pdf">论文链接</a>，
+<a
+target="_blank" rel="noopener" href="https://github.com/adversarial-for-goodness/APF">代码链接</a></p>
+<hr />
+<h1 id="摘要翻译">1 摘要翻译</h1>
+<p>人脸识别在实际应用中得到了广泛的应用，在恶意使用人脸图像和潜在的隐私问题方面受到了广泛的讨论，例如欺骗支付系统和造成个人破坏。在线照片共享服务在无意中成为了恶意爬虫和人脸识别应用程序的主要存储库。这项工作旨在开发一种隐私保护解决方案，称为对抗性隐私保护滤波器(APF)，以保护在线共享的人脸图像不被恶意使用。我们提出了一种<strong>端云协同</strong>对抗攻击解决方案，以满足<strong>隐私、实用和不可访问</strong>的要求。具体而言，该解决方案包括三个模块:(1)<strong>image-specific
+gradient
+generation</strong>，通过压缩探针模型提取用户端的image-specific梯度;
+(2)<strong>adversarial gradient
+transfer</strong>，对服务器云中的image-specific gradient进行微调;
+(3)<strong>universal adversarial perturbation
+enhancement</strong>，附加与图像无关的扰动来得到最终的对抗噪声。在三个数据集上的大量实验验证了该方法的有效性和高效性。还发布了一个原型应用程序，以供进一步评估。我们希望该端云协同攻击框架能够从用户端解决在线多媒体共享的隐私保护问题。</p>
+<h3 id="基本问题">基本问题</h3>
+<ul>
+<li>解决的问题：生成保护隐私、实用、不可访问的人脸隐私保护掩码</li>
+</ul>
+<h2 id="introduction">2 Introduction</h2>
+<p>本文旨在在不影响用户分享照片体验的前提下，保护用户的肖像隐私。生成保护人脸隐私掩码需要考虑的要求：</p>
+<ol type="1">
+<li><strong>privacy</strong>.
+用户的身份信息无法从向社交媒体共享的人脸图像中识别出来。</li>
+<li><strong>utility</strong>. 面部图像的质量不能被破坏</li>
+</ol>
+<p>​
+对抗攻击能满足以上两点要求。虽然对抗样本可以保证照片在共享服务上的隐私保护，但在生成对抗样本时仍然存在隐私泄露的风险。由于大多数对抗攻击解决方案都涉及复杂的模型和大量的计算操作，通常都是将原始人脸图像上传到服务器进行处理。这不可避免地将原始人脸图像暴露给第三方应用程序，使它们在传输过程和云计算中都容易受到攻击。因此有第3个要求</p>
+<ol start="3" type="1">
+<li><strong>non-accessibility</strong>.
+原始的人脸图像只能在用户端访问。</li>
+</ol>
+<p>为解决以上3个要求，文章提出了一个端云协作的对抗攻击方法，其中原始人脸图像只用于提取image-specific
+gradient，接着在云服务端进行微调生成最终的对抗扰动。端云协同解决方案成功地解决了<strong>终端计算量不足与云中的隐私泄露风险之间的矛盾</strong>。此外，为了提高云中生成的对抗扰动的攻击性能，我们进一步引入与image-independent的<strong>通用对抗扰动进行增强</strong>，结果表明，该增强方法在加速训练收敛和增强攻击能力方面都是有效的。</p>
+<p>文章贡献如下：</p>
+<ul>
+<li>我们<strong>设计了一个对抗性隐私保护过滤器</strong>，在不影响用户的照片共享体验的情况下，保护用户的肖像隐私，免受恶意人脸识别破解者的攻击。对抗性攻击自然满足了隐私性和实用性两个基本要求。</li>
+<li>我们提出了一个<strong>端云协作对抗攻击框架</strong>，该框架解决了额外的不可访问性要求，以保证原始图像只能被用户自己的设备端访问。这种两阶段攻击与传统的一阶段攻击的<strong>兼容性能</strong>也为理解对抗性攻击问题提供了一个新的视角。</li>
+<li>我们<strong>将通用对抗扰动与image-dependent扰动相结合</strong>，以提高隐私保护能力。这提出了利用对抗样本的另一种方法。</li>
+<li>我们进行了<strong>大量的实验</strong>，以验证所提出的解决方案框架的有效性和效率。进一步开发了一种对抗性隐私保护过滤器的原型，并发布进行评估。</li>
+</ul>
+<figure>
+<img
+src="https://raw.githubusercontent.com/zzhbrr/Images/main/202208202257138.png?token=ATUOZVNFKXOBFSRQNOOCEB3DAD3IS"
+alt="Figure 1: Schematic illustration of the proposed adversarial privacy-preserving filter. Given a face image, the synthetic adversarial image is expected to fool the malicious face recognition algorithm." />
+<figcaption aria-hidden="true">Figure 1: Schematic illustration of the
+proposed adversarial privacy-preserving filter. Given a face image, the
+synthetic adversarial image is expected to fool the malicious face
+recognition algorithm.</figcaption>
+</figure>
+<h2 id="methodology">3 Methodology</h2>
+<h3 id="问题定义">3.1 问题定义</h3>
+<p>给定原始图像<span
+class="math inline">\(x\)</span>，假设人脸识别模型是<span
+class="math inline">\(f_\theta\)</span>，生成<span
+class="math inline">\(l\)</span>维的特征向量<span
+class="math inline">\(f_\theta(x)\)</span>。且<span
+class="math inline">\(x_e\)</span>表示对应的“注册图像”，当距离<span
+class="math inline">\(d(f_\theta(x),
+f_\theta(x_e))\)</span>小于某个阈值时，就表明是相同身份，否则是不同身份。</p>
+<p>本文的主要目的是生成不可见的对抗噪声<span
+class="math inline">\(s\)</span>，使对抗样本<span
+class="math inline">\(x+s\)</span>与<span
+class="math inline">\(x\)</span>在人类的视角下很像，但在人脸识别模型<span
+class="math inline">\(f_\theta\)</span>下不是同一个身份。</p>
+<h3 id="总体框架">3.2 总体框架</h3>
+<p><img
+src="D:\zzhbrrBlog\source_posts\论文阅读-Adversarial-Privacy-preserving-Filter.assets\image-20220820230709251.png" /></p>
+<p>隐私保护过滤器的工作流程如Fig.2所示，包括用户端、隐私保护服务器云和照片共享服务三个部分。给定一幅肖像图像，首先在用户端提取其<strong>特定于图像的梯度</strong>，然后将其发布到隐私保护服务器云进行<strong>增强</strong>，得到对抗噪声。经过增强的对抗噪声的干扰后，得到的对抗肖像图像有望欺骗照片共享服务上潜在的人脸识别系统。整个过程中，原图仅供用户端访问，防止在服务器上泄露隐私。</p>
+<p>核心解决方案是一个端云协同对抗攻击框架，由三个算法模块组成，分别部署在用户端和服务器云中:(1)Image-specific
+gradient
+generation，是通过可以在终端运行的压缩过的probe模型来获得图像梯度。(2)Adversarial
+gradient
+transfer，是将probe模型和服务器模型在云中的图像梯度进行<strong>对齐</strong>，以恢复对抗信息。(3)Universal
+adversarial
+perturbation,是附加与图像无关的通用扰动来进一步增强导出的对抗噪声。</p>
+<h3 id="image-specific-gradient-generation">3.3 Image-specific gradient
+generation</h3>
+<p>在用户端使用一个压缩模型，从原始图像中提取初步信息，然后在云中增强信息。在这个过程中可以使用多种对抗攻击方法，在这里我们只以FGSM为例。原始图像<span
+class="math inline">\(x\)</span>的image-specific gradient <span
+class="math inline">\(g\)</span>可以用以下公式提取：</p>
+<p><img
+src="D:\zzhbrrBlog\source_posts\论文阅读-Adversarial-Privacy-preserving-Filter.assets\image-20220820231547389.png" /></p>
+<p>其中，<span
+class="math inline">\(L(·)\)</span>是衡量原始图像和注册图像特征距离的损失函数：</p>
+<p><img
+src="D:\zzhbrrBlog\source_posts\论文阅读-Adversarial-Privacy-preserving-Filter.assets\image-20220820231714410.png" /></p>
+<p>其中，<span class="math inline">\(d(·)\)</span>是用欧几里得距离。</p>
+<h3 id="adversarial-gradient-transfer">3.4 Adversarial gradient
+transfer</h3>
+<p>小的probe模型在用户端提取图像梯度来生成对抗样本。但是由于终端的probe模型和云服务器模型的结构和参数不同，不能直接使用梯度。为了对probe模型和服务器模型之间的图像梯度进行对齐，我们提出梯度迁移模块<span
+class="math inline">\(T\)</span>，其定义为:</p>
+<p><img
+src="D:\zzhbrrBlog\source_posts\论文阅读-Adversarial-Privacy-preserving-Filter.assets\image-20220820231916978.png" /></p>
+<p>我们认为梯度迁移模块是一个图像到图像的网络，我们使用U-Net架构将梯度从probe模型迁移到服务器模型。具体的，我们用以下优化问题来训练梯度迁移模型：</p>
+<p><img
+src="D:\zzhbrrBlog\source_posts\论文阅读-Adversarial-Privacy-preserving-Filter.assets\image-20220820232109558.png" /></p>
+<p>其中，<span
+class="math inline">\(\tilde{g}\)</span>是用公式(1)在服务器模型上计算出来的梯度，<span
+class="math inline">\(\theta_T\)</span>是网络<span
+class="math inline">\(T\)</span>的参数。该目标函数使网络<span
+class="math inline">\(T\)</span>学习probe模型和服务器模型之间的关系。</p>
+<p>我们还设计了服务器为集成模型，将公式(4)中的<span
+class="math inline">\(\tilde{g}\)</span>改为以下的<span
+class="math inline">\(\tilde{g}_{ensemble}\)</span>即可：</p>
+<p><img
+src="D:\zzhbrrBlog\source_posts\论文阅读-Adversarial-Privacy-preserving-Filter.assets\image-20220820232433430-16610090756481.png" /></p>
+<p>其中<span class="math inline">\(\sum_{k=1}^{K}a_k=1\)</span>。</p>
+<h3 id="universal-adversarial-perturbation">3.5 Universal adversarial
+perturbation</h3>
+<p>通用对抗扰动包含了误导许多图像的分类的与image-independent的信息。这启发我们整合图像特定信息和图像无关信息来增强对抗扰动的性能</p>
+<p>。</p>
 
     </div>
 
@@ -336,7 +437,8 @@ class="math inline">\(c\)</span>相乘也是平方数。</p>
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag"><i class="fa fa-tag"></i> 题解</a>
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 深度学习</a>
+              <a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" rel="tag"><i class="fa fa-tag"></i> 论文阅读</a>
           </div>
 
         
@@ -345,13 +447,10 @@ class="math inline">\(c\)</span>相乘也是平方数。</p>
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/10/09/Study-Diary/" rel="prev" title="Study Diary">
-      <i class="fa fa-chevron-left"></i> Study Diary
+    <a href="/2022/08/11/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-LowKey-Leveraging-Adversarial-Attacks-to-Protect-Social-Media-Users-from-Facial-Recognition/" rel="prev" title="[论文阅读] LowKey: Leveraging Adversarial Attacks to Protect Social Media Users from Facial Recognition">
+      <i class="fa fa-chevron-left"></i> [论文阅读] LowKey: Leveraging Adversarial Attacks to Protect Social Media Users from Facial Recognition
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/12/06/%E4%BB%A3%E6%95%B0%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/" rel="next" title="代数系统笔记">
-      代数系统笔记 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -411,7 +510,10 @@ class="math inline">\(c\)</span>相乘也是平方数。</p>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#cf980d-perfect-groups"><span class="nav-number">1.</span> <span class="nav-text">CF980D Perfect Groups</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81%E7%BF%BB%E8%AF%91"><span class="nav-number">1.</span> <span class="nav-text">1 摘要翻译</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="nav-number">1.0.1.</span> <span class="nav-text">基本问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">2 Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#methodology"><span class="nav-number">1.2.</span> <span class="nav-text">3 Methodology</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">3.1 问题定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E4%BD%93%E6%A1%86%E6%9E%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">3.2 总体框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#image-specific-gradient-generation"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.3 Image-specific gradient
+generation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#adversarial-gradient-transfer"><span class="nav-number">1.2.4.</span> <span class="nav-text">3.4 Adversarial gradient
+transfer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#universal-adversarial-perturbation"><span class="nav-number">1.2.5.</span> <span class="nav-text">3.5 Universal adversarial
+perturbation</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
