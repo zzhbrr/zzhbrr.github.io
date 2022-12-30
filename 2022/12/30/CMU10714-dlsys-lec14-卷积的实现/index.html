@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+<meta name="google-site-verification" content="lbMSqYFWU_wKX8n-Dl6aMOsrKxskT1QnmPSQPvyUy0s" />
+<meta name="baidu-site-verification" content="code-FRBQcJUj7g" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-loading-bar.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zzhbrr.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本节介绍了卷积的不同实现方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMU10714 dlsys lec14 卷积的实现">
+<meta property="og:url" content="https://zzhbrr.github.io/2022/12/30/CMU10714-dlsys-lec14-%E5%8D%B7%E7%A7%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:site_name" content="zZh的小窝">
+<meta property="og:description" content="本节介绍了卷积的不同实现方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302226218.png?token=ATUOZVMXKNQKGUDPNSYBMOTDV32WA">
+<meta property="og:image" content="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302226677.png?token=ATUOZVOURVL7M5X7YCSHQC3DV32WG">
+<meta property="og:image" content="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302226450.png?token=ATUOZVNV3QVHXY4E46U2UBTDV32WU">
+<meta property="og:image" content="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302227087.png?token=ATUOZVO2CYC6BO522LIDX4DDV32XO">
+<meta property="og:image" content="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302227231.png?token=ATUOZVJFCHTTKDO3QDZQLMLDV32XQ">
+<meta property="og:image" content="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302227387.png?token=ATUOZVMY6TTJOE6J7EOXJ53DV32XY">
+<meta property="article:published_time" content="2022-12-30T12:47:23.000Z">
+<meta property="article:modified_time" content="2022-12-30T14:27:21.468Z">
+<meta property="article:author" content="zZhBr">
+<meta property="article:tag" content="深度学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302226218.png?token=ATUOZVMXKNQKGUDPNSYBMOTDV32WA">
+
+<link rel="canonical" href="https://zzhbrr.github.io/2022/12/30/CMU10714-dlsys-lec14-%E5%8D%B7%E7%A7%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>CMU10714 dlsys lec14 卷积的实现 | zZh的小窝</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">zZh的小窝</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">靡不有初 鲜克有终</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>留言板</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zzhbrr.github.io/2022/12/30/CMU10714-dlsys-lec14-%E5%8D%B7%E7%A7%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zZhBr">
+      <meta itemprop="description" content="向梦想中自己的样子疯狂努力！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zZh的小窝">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CMU10714 dlsys lec14 卷积的实现
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-30 20:47:23 / 修改时间：22:27:21" itemprop="dateCreated datePublished" datetime="2022-12-30T20:47:23+08:00">2022-12-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CMU10714/" itemprop="url" rel="index"><span itemprop="name">CMU10714</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/12/30/CMU10714-dlsys-lec14-%E5%8D%B7%E7%A7%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="post-meta-item leancloud_visitors" data-flag-title="CMU10714 dlsys lec14 卷积的实现" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/12/30/CMU10714-dlsys-lec14-%E5%8D%B7%E7%A7%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/12/30/CMU10714-dlsys-lec14-%E5%8D%B7%E7%A7%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center>本节介绍了卷积的不同实现方法。</center>
+
+<span id="more"></span>
+<h3 id="存储结构"><a href="#存储结构" class="headerlink" title="存储结构"></a>存储结构</h3><p>首先需要明确tensor在内存中是如何存储的。我们假设被卷积的图像高度为$H$，宽度为$W$，通道数为$C_{in}$，卷积核的大小为$K\times K$，卷积的输出通道数为$C_{out}$。同时还有批量维度，$N$。</p>
+<p>图像的表示方法为<code>float Z[N][H][W][C_in]</code>，这种表示方法称为NHWC格式，pytorch中的存储格式是NCHW，只考虑每张图片计算速度，我们的这种表示更好，但对大批量卷积pytorch的格式友好。</p>
+<p>卷积核的表示方法为<code>float W[K][K][C_in][C_out]</code>。可以将卷积核视为$K\times K$ 个 $C_{in}\times C_{out}$矩阵的矩阵（其实本来就是这样）。注意pytorch其实使用了<code>[C_out][C_in][K][K]</code>的格式。</p>
+<h3 id="Baseline"><a href="#Baseline" class="headerlink" title="Baseline"></a>Baseline</h3><p>首先写一个参考答案，直接使用Pytorch实现，目的是检查我们代码的正确性，以及比较时间。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv_reference</span>(<span class="params">Z, weight</span>):</span></span><br><span class="line">    <span class="comment"># NHWC -&gt; NCHW</span></span><br><span class="line">    z_torch = torch.tensor(Z).permute(<span class="number">0</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="comment"># KKIO -&gt; OIKK</span></span><br><span class="line">    W_torch = torch.tensor(weight).permute(<span class="number">3</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">    out = nn.functional.conv2d(z_torch, W_torch)</span><br><span class="line">    <span class="keyword">return</span> out.permute(<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>).contiguous().numpy()</span><br><span class="line"></span><br><span class="line">Z = np.random.randn(<span class="number">10</span>, <span class="number">32</span>, <span class="number">32</span>, <span class="number">8</span>)</span><br><span class="line">W = np.random.randn(<span class="number">3</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">16</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="暴力循环"><a href="#暴力循环" class="headerlink" title="暴力循环"></a>暴力循环</h3><p>最简单的实现卷积的方法就是直接嵌套for循环了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv_naive</span>(<span class="params">Z, weight</span>):</span></span><br><span class="line">    N, H, W, C_in = Z.shape</span><br><span class="line">    K, _, _, C_out = weight.shape</span><br><span class="line"></span><br><span class="line">    out = np.zeros((N, H-K+<span class="number">1</span>, W-K+<span class="number">1</span>, C_out))</span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> <span class="built_in">range</span>(N):</span><br><span class="line">        <span class="keyword">for</span> c_in <span class="keyword">in</span> <span class="built_in">range</span>(C_in):</span><br><span class="line">            <span class="keyword">for</span> c_out <span class="keyword">in</span> <span class="built_in">range</span>(C_out):</span><br><span class="line">                <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(H-K+<span class="number">1</span>):</span><br><span class="line">                    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(W-K+<span class="number">1</span>):</span><br><span class="line">                        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(K):</span><br><span class="line">                            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(K):</span><br><span class="line">                                out[n, y, x, c_out] += Z[n, y+i, x+j, c_in] * weight[i, j, c_in, c_out]</span><br><span class="line">    <span class="keyword">return</span> out</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>但对于Z为(10, 32, 32, 8)，W为(3, 3, 8, 16)。</p>
+<p>暴力循环的时间：</p>
+<p><img src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302226218.png?token=ATUOZVMXKNQKGUDPNSYBMOTDV32WA" alt="image-20221230210534066"></p>
+<p>Pytorch的时间：</p>
+<p><img src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302226677.png?token=ATUOZVOURVL7M5X7YCSHQC3DV32WG" alt="image-20221230222117748"></p>
+<p>。。。</p>
+<h3 id="使用矩阵乘法"><a href="#使用矩阵乘法" class="headerlink" title="使用矩阵乘法"></a>使用矩阵乘法</h3><p>首先设想卷积核大小为$1\times 1$的时候，卷积操作就是矩阵乘法：将图片每个位置的长为$C_{in}$的向量，乘以大小为$C_{in}\times C_{out}$的矩阵。</p>
+<p>如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Z = np.random.randn(<span class="number">10</span>, <span class="number">32</span>, <span class="number">32</span>, <span class="number">8</span>)</span><br><span class="line">W1 = np.random.randn(<span class="number">1</span>, <span class="number">1</span>, <span class="number">8</span>, <span class="number">16</span>)</span><br><span class="line">out2 = Z @ W1</span><br><span class="line"><span class="built_in">print</span>(np.linalg.norm(out-out2))</span><br><span class="line">---</span><br><span class="line"><span class="number">1.0738548044478649e-14</span></span><br></pre></td></tr></table></figure>
+<p>于是推广到$K\times K$的卷积核，实际上是卷积核“中”每个“矩阵”与原始图像对应位置的那些向量做矩阵乘法，然后将得到的向量相加。</p>
+<p>于是可以这么实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv_matrix_mul</span>(<span class="params">Z, weight</span>):</span></span><br><span class="line">    N, H, W, C_in = Z.shape</span><br><span class="line">    K, _, _, C_out = weight.shape</span><br><span class="line"></span><br><span class="line">    out = np.zeros((N, H-K+<span class="number">1</span>, W-K+<span class="number">1</span>, C_out))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(K):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(K): <span class="comment"># 迭代卷积核的每个位置</span></span><br><span class="line">            out += Z[:, i:i+H-K+<span class="number">1</span>, j:j+W-K+<span class="number">1</span>, :] @ weight[i, j] <span class="comment"># 将图像上的向量与卷积核的特定矩阵做乘法的结果加到对应的位置上</span></span><br><span class="line">    <span class="keyword">return</span> out</span><br></pre></td></tr></table></figure>
+<p>这个实现方法用时为：</p>
+<p><img src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302226450.png?token=ATUOZVNV3QVHXY4E46U2UBTDV32WU" alt="image-20221230211820908"></p>
+<p>还是比Pytorch要慢</p>
+<h3 id="使用im2col实现卷积"><a href="#使用im2col实现卷积" class="headerlink" title="使用im2col实现卷积"></a>使用im2col实现卷积</h3><h4 id="另一种矩阵乘法的视角"><a href="#另一种矩阵乘法的视角" class="headerlink" title="另一种矩阵乘法的视角"></a>另一种矩阵乘法的视角</h4><p>回顾上一节课，考虑简单的1D卷积，输入维度为5，padding为1，卷积核大小为3时，有</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix} 0&  x_1& x_2 & x_3 & x_4 & x_5 &0\end{bmatrix} * \begin{bmatrix} w_1& w_2& w_3\end{bmatrix}=\begin{bmatrix} z_1& z_2 & z_3 & z_4 & z_5\end{bmatrix}</script><p>可以写成两个矩阵相乘的形式：</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}z_1 \\z_2 \\z_3 \\z_4 \\z_5\end{bmatrix}=\begin{bmatrix}
+ 0 & x_1 & x_2\\
+ x_1 & x_2 &x_3 \\
+ x_2 & x_3 & x_4\\
+ x_3 & x_4 & x_5\\
+ x_4 & x_5 & 0
+\end{bmatrix} \times \begin{bmatrix}w_1 \\w_2 \\ w_3\end{bmatrix}</script><p>虽然这样做看起来很浪费空间，但现实中大家都是这么实现的（。</p>
+<p>而且这么表示卷积，可以方便地进行求导，解释一下，不想看的可以直接看下一节：</p>
+<p>令$z=conv(x, W)$，我们要计算partial adjoints: $\bar{v}\frac{\partial z}{\partial W}$和$\bar{v}\frac{\partial z}{\partial x}$，因为$\bar{v}$已经在反向过程中已知了，所以就是要求$\frac{\partial z}{\partial W}$和$\frac{\partial z}{\partial x}$。</p>
+<p>首先有一个简单的问题，对于$x\in \R^n, W\in \R^{m\times n},z=Wx$ ，则$\frac{\partial z}{\partial x}=W$，则x的partial adjoint为$W^T\bar{v}$，即反向时候只需要计算W的转置即可。</p>
+<p>我们发现卷积可以写成上面的矩阵与向量相乘的形式，于是我们可以知道</p>
+<script type="math/tex; mode=display">
+\frac{\partial z}{\partial w} =\begin{bmatrix}
+ 0 & x_1 & x_2\\
+ x_1 & x_2 &x_3 \\
+ x_2 & x_3 & x_4\\
+ x_3 & x_4 & x_5\\
+ x_4 & x_5 & 0
+\end{bmatrix}^T</script><p>on the other hand，卷积也可以写成</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}z_1 \\z_2 \\z_3 \\z_4 \\z_5\end{bmatrix}=\begin{bmatrix}
+ w_2 & w_3 & 0&0&0\\
+ w_1 & w_2 & w_3&0&0 \\
+ 0&w_1 & w_2 & w_3&0\\
+ 0&0&w_1 & w_2 & w_3\\
+ 0&0&0&w_1 & w_2 
+\end{bmatrix} \times \begin{bmatrix}x_1 \\x_2 \\ x_3 \\ x_4\\x_5\end{bmatrix}</script><p>于是</p>
+<script type="math/tex; mode=display">
+\frac{\partial z}{\partial x} =\begin{bmatrix}
+ w_2 & w_3 & 0&0&0\\
+ w_1 & w_2 & w_3&0&0 \\
+ 0&w_1 & w_2 & w_3&0\\
+ 0&0&w_1 & w_2 & w_3\\
+ 0&0&0&w_1 & w_2 
+\end{bmatrix}^T = \begin{bmatrix}
+ w_2 & w_1 & 0&0&0\\
+ w_3 & w_2 & w_1&0&0 \\
+ 0&w_3 & w_2 & w_1&0\\
+ 0&0&w_3 & w_2 & w_1\\
+ 0&0&0&w_3 & w_2 
+\end{bmatrix}</script><p>而$\bar{v}\frac{\partial z}{\partial x}$ 其实就是对$\bar{v}$用转置卷积核$w^T$卷积！</p>
+<h4 id="神奇函数：as-strided"><a href="#神奇函数：as-strided" class="headerlink" title="神奇函数：as_strided"></a>神奇函数：as_strided</h4><p>通常情况下，一个$M\times N$的矩阵在底层是以row major方法以一维的形式存储的，即一行一行存储，扩展到多维的数组$A\times B\times C$，则是按照由后向前的order存储。通过strides的方法来获取多维的元素。如在<code>float A[M][N]</code>中，它的stride为$(N, 1)$，如果我们想获取$A[3][2]$，则是获取一维数组的第$3 \times N + 2$个元素。</p>
+<p>进一步的，我们想更好利用CPU的缓存机制，方便向量化的操作，我们要把矩阵分为<code>TILE x TILE</code>的小块（如TILE=4）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">float</span> A[M/TILE][n/TILE][TILE][TILE]</span><br></pre></td></tr></table></figure>
+<p>我们就可以在小块上进行高效操作，因为A的<code>TILE x TILE</code>的块在内存中是连续排布的。</p>
+<p>如将一个<code>6 x 6</code>的矩阵</p>
+<p><img src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302227087.png?token=ATUOZVO2CYC6BO522LIDX4DDV32XO" alt="image-20221230215117273"></p>
+<p>划分为TILE=2的小块，结果应该是这样：</p>
+<p><img src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302227231.png?token=ATUOZVJFCHTTKDO3QDZQLMLDV32XQ" alt="image-20221230215156098"></p>
+<p>我们需要使用numpy中一个非常神奇的函数：<code>np.lib.stride_tricks.as_strided()</code>来实现。</p>
+<p>这个函数可以让我们指定数组的shape和strides，但不修改底层数据，最终我们只需要用<code>np.ascontiguousarray()</code>来使内存连续排布即可。</p>
+<p>首先看一下我们目的的矩阵大小是什么，我们选取了TILE=2，所以最终的shape应该是$3\times 3\times 2 \times 2$。</p>
+<p>接下来我们看一下strides是多少，strides需要与shape相同，对于第一维，我们每次增加都想下降两行，如现在我们指在1，那么第一维加1后，我们应该指在13，所以第一维的stride为12；而第二维，每次增加1都想向左移两位，所以第二维的stride为2；第三维每次增加1都想下降一行，所以第三维stride为6；对于最后一位，每增加1只向右移动1个即可，所以stride=1，</p>
+<p>于是我们可以构造矩阵B</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy.lib.stride_tricks <span class="keyword">import</span> as_strided</span><br><span class="line">B = as_strided(A, shape=(<span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">2</span>), strides=np.array((<span class="number">12</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">1</span>))*<span class="number">4</span>) <span class="comment"># *4是因为strides的单位是Byte</span></span><br></pre></td></tr></table></figure>
+<p>然后将B重新排列</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C = np.ascontiguousarray(B)</span><br></pre></td></tr></table></figure>
+<p>就得到了内存紧凑 我们想要的数组。</p>
+<h4 id="使用im2col实现卷积-1"><a href="#使用im2col实现卷积-1" class="headerlink" title="使用im2col实现卷积"></a>使用im2col实现卷积</h4><p>首先看输出通道为1的二维卷积核在通道数为1的二维图片上做卷积的操作，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A = np.arange(<span class="number">36</span>, dtype=np.float32).reshape(<span class="number">6</span>, <span class="number">6</span>)</span><br><span class="line">W = np.arange(<span class="number">9</span>, dtype=np.float32).reshape(<span class="number">3</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<p>我们按照上面的做法，将原始形状为$[6][6]$的A变化成为$[2][2][3][3]$的矩阵：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">B = np.lib.stride_trices.as_strided(A, shape=(<span class="number">4</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">3</span>), strides=<span class="number">4</span> * (np.array((<span class="number">6</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">1</span>))))</span><br></pre></td></tr></table></figure>
+<p>然后把B拍平，与同样拍平的W做乘法，再reshape到正常大小：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(B.reshape(<span class="number">16</span>, <span class="number">9</span>) @ W.reshape(<span class="number">9</span>)).reshape(<span class="number">4</span>, <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+<p>这样就可以实现卷积了！</p>
+<p>但注意reshape的操作隐式的调用了<code>ascontinugousarray</code>，也就意味着我们并不能节省内存的开销，该开的还是得开。</p>
+<p>按照以上思想，可以实现卷积如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv_im2col</span>(<span class="params">Z, weight</span>):</span></span><br><span class="line">    N, H, W, C_in = Z.shape</span><br><span class="line">    K, _, _, C_out = weight.shape</span><br><span class="line">    Ns, Hs, Ws, Cs = Z.strides</span><br><span class="line">    </span><br><span class="line">    inner_dim = K * K * C_in</span><br><span class="line">    A = as_strided(Z, shape=(N, H-K+<span class="number">1</span>, W-K+<span class="number">1</span>, K, K, C_in),</span><br><span class="line">                   strides=(Ns, Hs, Ws, Hs, Ws, Cs)).reshape(-<span class="number">1</span>, inner_dim)</span><br><span class="line">    out = A @ weight.reshape(-<span class="number">1</span>, C_out)</span><br><span class="line">    <span class="keyword">return</span> out.reshape(N, H-K+<span class="number">1</span>, W-K+<span class="number">1</span>, C_out)</span><br></pre></td></tr></table></figure>
+<p>这样用时为</p>
+<p><img src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302227387.png?token=ATUOZVMY6TTJOE6J7EOXJ53DV32XY" alt="image-20221230222126364"></p>
+
+    </div>
+
+    
+    
+    
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢阅读-------------</div>
+    
+</div>
+  
+</div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 深度学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Adversarial-Privacy-preserving-Filter/" rel="prev" title="[论文阅读] Adversarial Privacy-preserving Filter">
+      <i class="fa fa-chevron-left"></i> [论文阅读] Adversarial Privacy-preserving Filter
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">存储结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Baseline"><span class="nav-number">2.</span> <span class="nav-text">Baseline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9A%B4%E5%8A%9B%E5%BE%AA%E7%8E%AF"><span class="nav-number">3.</span> <span class="nav-text">暴力循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">使用矩阵乘法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8im2col%E5%AE%9E%E7%8E%B0%E5%8D%B7%E7%A7%AF"><span class="nav-number">5.</span> <span class="nav-text">使用im2col实现卷积</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%A6%E4%B8%80%E7%A7%8D%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95%E7%9A%84%E8%A7%86%E8%A7%92"><span class="nav-number">5.1.</span> <span class="nav-text">另一种矩阵乘法的视角</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A5%9E%E5%A5%87%E5%87%BD%E6%95%B0%EF%BC%9Aas-strided"><span class="nav-number">5.2.</span> <span class="nav-text">神奇函数：as_strided</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8im2col%E5%AE%9E%E7%8E%B0%E5%8D%B7%E7%A7%AF-1"><span class="nav-number">5.3.</span> <span class="nav-text">使用im2col实现卷积</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zZhBr"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">zZhBr</p>
+  <div class="site-description" itemprop="description">向梦想中自己的样子疯狂努力！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zzhbrr" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zzhbrr" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1376447388@qq.com" title="E-Mail → mailto:1376447388@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">true</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">85k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:17</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'LwPA3YYjR79z4KVjpTUbE7sO-gzGzoHsz',
+      appKey     : 'znhl6YoHSnBwGqSD5ofRNUmK',
+      placeholder: "请在此输入你的留言",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
