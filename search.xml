@@ -2674,19 +2674,11 @@ C_{out}\)</span>矩阵的矩阵（其实本来就是这样）。注意pytorch其
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv_naive</span>(<span class="params">Z, weight</span>):</span></span><br><span class="line">    N, H, W, C_in = Z.shape</span><br><span class="line">    K, _, _, C_out = weight.shape</span><br><span class="line"></span><br><span class="line">    out = np.zeros((N, H-K+<span class="number">1</span>, W-K+<span class="number">1</span>, C_out))</span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> <span class="built_in">range</span>(N):</span><br><span class="line">        <span class="keyword">for</span> c_in <span class="keyword">in</span> <span class="built_in">range</span>(C_in):</span><br><span class="line">            <span class="keyword">for</span> c_out <span class="keyword">in</span> <span class="built_in">range</span>(C_out):</span><br><span class="line">                <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(H-K+<span class="number">1</span>):</span><br><span class="line">                    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(W-K+<span class="number">1</span>):</span><br><span class="line">                        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(K):</span><br><span class="line">                            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(K):</span><br><span class="line">                                out[n, y, x, c_out] += Z[n, y+i, x+j, c_in] * weight[i, j, c_in, c_out]</span><br><span class="line">    <span class="keyword">return</span> out</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>但对于Z为(10, 32, 32, 8)，W为(3, 3, 8, 16)。</p>
 <p>暴力循环的时间：</p>
-<figure>
-<img
-src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212310940265.png"
-alt="image-20221231002544422" />
-<figcaption aria-hidden="true">image-20221231002544422</figcaption>
-</figure>
+<p><img
+src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212310940265.png" /></p>
 <p>Pytorch的时间：</p>
-<figure>
-<img
-src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212310940487.png"
-alt="image-20221230222117748" />
-<figcaption aria-hidden="true">image-20221230222117748</figcaption>
-</figure>
+<p><img
+src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212310940487.png" /></p>
 <p>。。。</p>
 <h3 id="使用矩阵乘法">使用矩阵乘法</h3>
 <p>首先设想卷积核大小为<span class="math inline">\(1\times
@@ -2700,12 +2692,8 @@ K\)</span>的卷积核，实际上是卷积核“中”每个“矩阵”与原�
 <p>于是可以这么实现：</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv_matrix_mul</span>(<span class="params">Z, weight</span>):</span></span><br><span class="line">    N, H, W, C_in = Z.shape</span><br><span class="line">    K, _, _, C_out = weight.shape</span><br><span class="line"></span><br><span class="line">    out = np.zeros((N, H-K+<span class="number">1</span>, W-K+<span class="number">1</span>, C_out))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(K):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(K): <span class="comment"># 迭代卷积核的每个位置</span></span><br><span class="line">            out += Z[:, i:i+H-K+<span class="number">1</span>, j:j+W-K+<span class="number">1</span>, :] @ weight[i, j] <span class="comment"># 将图像上的向量与卷积核的特定矩阵做乘法的结果加到对应的位置上</span></span><br><span class="line">    <span class="keyword">return</span> out</span><br></pre></td></tr></table></figure>
 <p>这个实现方法用时为：</p>
-<figure>
-<img
-src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212310940924.png"
-alt="image-20221231002632685" />
-<figcaption aria-hidden="true">image-20221231002632685</figcaption>
-</figure>
+<p><img
+src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212310940924.png" /></p>
 <p>还是比Pytorch要慢</p>
 <h3 id="使用im2col实现卷积">使用im2col实现卷积</h3>
 <h4 id="另一种矩阵乘法的视角">另一种矩阵乘法的视角</h4>
@@ -2788,19 +2776,11 @@ class="math inline">\(3 \times N + 2\)</span>个元素。</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">float</span> A[M/TILE][n/TILE][TILE][TILE]</span><br></pre></td></tr></table></figure>
 <p>我们就可以在小块上进行高效操作，因为A的<code>TILE x TILE</code>的块在内存中是连续排布的。</p>
 <p>如将一个<code>6 x 6</code>的矩阵</p>
-<figure>
-<img
-src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212310940327.png"
-alt="image-20221231002645467" />
-<figcaption aria-hidden="true">image-20221231002645467</figcaption>
-</figure>
+<p><img
+src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212310940327.png" /></p>
 <p>划分为TILE=2的小块，结果应该是这样：</p>
-<figure>
-<img
-src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212310940357.png"
-alt="image-20221231002652207" />
-<figcaption aria-hidden="true">image-20221231002652207</figcaption>
-</figure>
+<p><img
+src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212310940357.png" /></p>
 <p>我们需要使用numpy中一个非常神奇的函数：<code>np.lib.stride_tricks.as_strided()</code>来实现。</p>
 <p>这个函数可以让我们指定数组的shape和strides，但不修改底层数据，最终我们只需要用<code>np.ascontiguousarray()</code>来使内存连续排布即可。</p>
 <p>首先看一下我们目的的矩阵大小是什么，我们选取了TILE=2，所以最终的shape应该是<span
@@ -2825,12 +2805,8 @@ class="math inline">\([2][2][3][3]\)</span>的矩阵：</p>
 <p>按照以上思想，可以实现卷积如下：</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv_im2col</span>(<span class="params">Z, weight</span>):</span></span><br><span class="line">    N, H, W, C_in = Z.shape</span><br><span class="line">    K, _, _, C_out = weight.shape</span><br><span class="line">    Ns, Hs, Ws, Cs = Z.strides</span><br><span class="line">    </span><br><span class="line">    inner_dim = K * K * C_in</span><br><span class="line">    A = as_strided(Z, shape=(N, H-K+<span class="number">1</span>, W-K+<span class="number">1</span>, K, K, C_in),</span><br><span class="line">                   strides=(Ns, Hs, Ws, Hs, Ws, Cs)).reshape(-<span class="number">1</span>, inner_dim)</span><br><span class="line">    out = A @ weight.reshape(-<span class="number">1</span>, C_out)</span><br><span class="line">    <span class="keyword">return</span> out.reshape(N, H-K+<span class="number">1</span>, W-K+<span class="number">1</span>, C_out)</span><br></pre></td></tr></table></figure>
 <p>这样用时为</p>
-<figure>
-<img
-src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212310940743.png"
-alt="image-20221231002615014" />
-<figcaption aria-hidden="true">image-20221231002615014</figcaption>
-</figure>
+<p><img
+src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212310940743.png" /></p>
 ]]></content>
       <categories>
         <category>CMU10714</category>
