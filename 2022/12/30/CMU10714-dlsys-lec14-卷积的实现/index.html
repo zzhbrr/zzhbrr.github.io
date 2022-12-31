@@ -31,18 +31,11 @@
 <meta property="og:site_name" content="zZh的小窝">
 <meta property="og:description" content="本节介绍了卷积的不同实现方法。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302226218.png?token=ATUOZVMXKNQKGUDPNSYBMOTDV32WA">
-<meta property="og:image" content="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302226677.png?token=ATUOZVOURVL7M5X7YCSHQC3DV32WG">
-<meta property="og:image" content="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302226450.png?token=ATUOZVNV3QVHXY4E46U2UBTDV32WU">
-<meta property="og:image" content="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302227087.png?token=ATUOZVO2CYC6BO522LIDX4DDV32XO">
-<meta property="og:image" content="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302227231.png?token=ATUOZVJFCHTTKDO3QDZQLMLDV32XQ">
-<meta property="og:image" content="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302227387.png?token=ATUOZVMY6TTJOE6J7EOXJ53DV32XY">
 <meta property="article:published_time" content="2022-12-30T12:47:23.000Z">
-<meta property="article:modified_time" content="2022-12-30T14:27:21.468Z">
+<meta property="article:modified_time" content="2022-12-31T01:15:17.418Z">
 <meta property="article:author" content="zZhBr">
 <meta property="article:tag" content="深度学习">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302226218.png?token=ATUOZVMXKNQKGUDPNSYBMOTDV32WA">
 
 <link rel="canonical" href="https://zzhbrr.github.io/2022/12/30/CMU10714-dlsys-lec14-%E5%8D%B7%E7%A7%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/">
 
@@ -234,10 +227,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-12-30 20:47:23 / 修改时间：22:27:21" itemprop="dateCreated datePublished" datetime="2022-12-30T20:47:23+08:00">2022-12-30</time>
+              <time title="创建时间：2022-12-30 20:47:23" itemprop="dateCreated datePublished" datetime="2022-12-30T20:47:23+08:00">2022-12-30</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-31 09:15:17" itemprop="dateModified" datetime="2022-12-31T09:15:17+08:00">2022-12-31</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -276,14 +275,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.9k</span>
+              <span>5.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -295,96 +294,154 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <center>本节介绍了卷积的不同实现方法。</center>
-
+        <center>
+本节介绍了卷积的不同实现方法。
+</center>
 <span id="more"></span>
-<h3 id="存储结构"><a href="#存储结构" class="headerlink" title="存储结构"></a>存储结构</h3><p>首先需要明确tensor在内存中是如何存储的。我们假设被卷积的图像高度为$H$，宽度为$W$，通道数为$C_{in}$，卷积核的大小为$K\times K$，卷积的输出通道数为$C_{out}$。同时还有批量维度，$N$。</p>
+<h3 id="存储结构">存储结构</h3>
+<p>首先需要明确tensor在内存中是如何存储的。我们假设被卷积的图像高度为<span
+class="math inline">\(H\)</span>，宽度为<span
+class="math inline">\(W\)</span>，通道数为<span
+class="math inline">\(C_{in}\)</span>，卷积核的大小为<span
+class="math inline">\(K\times K\)</span>，卷积的输出通道数为<span
+class="math inline">\(C_{out}\)</span>。同时还有批量维度，<span
+class="math inline">\(N\)</span>。</p>
 <p>图像的表示方法为<code>float Z[N][H][W][C_in]</code>，这种表示方法称为NHWC格式，pytorch中的存储格式是NCHW，只考虑每张图片计算速度，我们的这种表示更好，但对大批量卷积pytorch的格式友好。</p>
-<p>卷积核的表示方法为<code>float W[K][K][C_in][C_out]</code>。可以将卷积核视为$K\times K$ 个 $C_{in}\times C_{out}$矩阵的矩阵（其实本来就是这样）。注意pytorch其实使用了<code>[C_out][C_in][K][K]</code>的格式。</p>
-<h3 id="Baseline"><a href="#Baseline" class="headerlink" title="Baseline"></a>Baseline</h3><p>首先写一个参考答案，直接使用Pytorch实现，目的是检查我们代码的正确性，以及比较时间。</p>
+<p>卷积核的表示方法为<code>float W[K][K][C_in][C_out]</code>。可以将卷积核视为<span
+class="math inline">\(K\times K\)</span> 个 <span
+class="math inline">\(C_{in}\times
+C_{out}\)</span>矩阵的矩阵（其实本来就是这样）。注意pytorch其实使用了<code>[C_out][C_in][K][K]</code>的格式。</p>
+<h3 id="baseline">Baseline</h3>
+<p>首先写一个参考答案，直接使用Pytorch实现，目的是检查我们代码的正确性，以及比较时间。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv_reference</span>(<span class="params">Z, weight</span>):</span></span><br><span class="line">    <span class="comment"># NHWC -&gt; NCHW</span></span><br><span class="line">    z_torch = torch.tensor(Z).permute(<span class="number">0</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="comment"># KKIO -&gt; OIKK</span></span><br><span class="line">    W_torch = torch.tensor(weight).permute(<span class="number">3</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">    out = nn.functional.conv2d(z_torch, W_torch)</span><br><span class="line">    <span class="keyword">return</span> out.permute(<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>).contiguous().numpy()</span><br><span class="line"></span><br><span class="line">Z = np.random.randn(<span class="number">10</span>, <span class="number">32</span>, <span class="number">32</span>, <span class="number">8</span>)</span><br><span class="line">W = np.random.randn(<span class="number">3</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">16</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="暴力循环"><a href="#暴力循环" class="headerlink" title="暴力循环"></a>暴力循环</h3><p>最简单的实现卷积的方法就是直接嵌套for循环了。</p>
+<h3 id="暴力循环">暴力循环</h3>
+<p>最简单的实现卷积的方法就是直接嵌套for循环了。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv_naive</span>(<span class="params">Z, weight</span>):</span></span><br><span class="line">    N, H, W, C_in = Z.shape</span><br><span class="line">    K, _, _, C_out = weight.shape</span><br><span class="line"></span><br><span class="line">    out = np.zeros((N, H-K+<span class="number">1</span>, W-K+<span class="number">1</span>, C_out))</span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> <span class="built_in">range</span>(N):</span><br><span class="line">        <span class="keyword">for</span> c_in <span class="keyword">in</span> <span class="built_in">range</span>(C_in):</span><br><span class="line">            <span class="keyword">for</span> c_out <span class="keyword">in</span> <span class="built_in">range</span>(C_out):</span><br><span class="line">                <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(H-K+<span class="number">1</span>):</span><br><span class="line">                    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(W-K+<span class="number">1</span>):</span><br><span class="line">                        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(K):</span><br><span class="line">                            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(K):</span><br><span class="line">                                out[n, y, x, c_out] += Z[n, y+i, x+j, c_in] * weight[i, j, c_in, c_out]</span><br><span class="line">    <span class="keyword">return</span> out</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>但对于Z为(10, 32, 32, 8)，W为(3, 3, 8, 16)。</p>
 <p>暴力循环的时间：</p>
-<p><img src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302226218.png?token=ATUOZVMXKNQKGUDPNSYBMOTDV32WA" alt="image-20221230210534066"></p>
+<p><img
+src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212310911214.png?token=ATUOZVN6TRO74K453SOTUDDDV6GJC" /></p>
 <p>Pytorch的时间：</p>
-<p><img src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302226677.png?token=ATUOZVOURVL7M5X7YCSHQC3DV32WG" alt="image-20221230222117748"></p>
+<p><img
+src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212310913587.png?token=ATUOZVMKPTKEKOXU2UWVE2DDV6GN4" /></p>
 <p>。。。</p>
-<h3 id="使用矩阵乘法"><a href="#使用矩阵乘法" class="headerlink" title="使用矩阵乘法"></a>使用矩阵乘法</h3><p>首先设想卷积核大小为$1\times 1$的时候，卷积操作就是矩阵乘法：将图片每个位置的长为$C_{in}$的向量，乘以大小为$C_{in}\times C_{out}$的矩阵。</p>
+<h3 id="使用矩阵乘法">使用矩阵乘法</h3>
+<p>首先设想卷积核大小为<span class="math inline">\(1\times
+1\)</span>的时候，卷积操作就是矩阵乘法：将图片每个位置的长为<span
+class="math inline">\(C_{in}\)</span>的向量，乘以大小为<span
+class="math inline">\(C_{in}\times C_{out}\)</span>的矩阵。</p>
 <p>如</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Z = np.random.randn(<span class="number">10</span>, <span class="number">32</span>, <span class="number">32</span>, <span class="number">8</span>)</span><br><span class="line">W1 = np.random.randn(<span class="number">1</span>, <span class="number">1</span>, <span class="number">8</span>, <span class="number">16</span>)</span><br><span class="line">out2 = Z @ W1</span><br><span class="line"><span class="built_in">print</span>(np.linalg.norm(out-out2))</span><br><span class="line">---</span><br><span class="line"><span class="number">1.0738548044478649e-14</span></span><br></pre></td></tr></table></figure>
-<p>于是推广到$K\times K$的卷积核，实际上是卷积核“中”每个“矩阵”与原始图像对应位置的那些向量做矩阵乘法，然后将得到的向量相加。</p>
+<p>于是推广到<span class="math inline">\(K\times
+K\)</span>的卷积核，实际上是卷积核“中”每个“矩阵”与原始图像对应位置的那些向量做矩阵乘法，然后将得到的向量相加。</p>
 <p>于是可以这么实现：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv_matrix_mul</span>(<span class="params">Z, weight</span>):</span></span><br><span class="line">    N, H, W, C_in = Z.shape</span><br><span class="line">    K, _, _, C_out = weight.shape</span><br><span class="line"></span><br><span class="line">    out = np.zeros((N, H-K+<span class="number">1</span>, W-K+<span class="number">1</span>, C_out))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(K):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(K): <span class="comment"># 迭代卷积核的每个位置</span></span><br><span class="line">            out += Z[:, i:i+H-K+<span class="number">1</span>, j:j+W-K+<span class="number">1</span>, :] @ weight[i, j] <span class="comment"># 将图像上的向量与卷积核的特定矩阵做乘法的结果加到对应的位置上</span></span><br><span class="line">    <span class="keyword">return</span> out</span><br></pre></td></tr></table></figure>
 <p>这个实现方法用时为：</p>
-<p><img src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302226450.png?token=ATUOZVNV3QVHXY4E46U2UBTDV32WU" alt="image-20221230211820908"></p>
+<p><img
+src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212310913548.png?token=ATUOZVI5GTKYNRNW5CF3PHTDV6GOW" /></p>
 <p>还是比Pytorch要慢</p>
-<h3 id="使用im2col实现卷积"><a href="#使用im2col实现卷积" class="headerlink" title="使用im2col实现卷积"></a>使用im2col实现卷积</h3><h4 id="另一种矩阵乘法的视角"><a href="#另一种矩阵乘法的视角" class="headerlink" title="另一种矩阵乘法的视角"></a>另一种矩阵乘法的视角</h4><p>回顾上一节课，考虑简单的1D卷积，输入维度为5，padding为1，卷积核大小为3时，有</p>
-<script type="math/tex; mode=display">
-\begin{bmatrix} 0&  x_1& x_2 & x_3 & x_4 & x_5 &0\end{bmatrix} * \begin{bmatrix} w_1& w_2& w_3\end{bmatrix}=\begin{bmatrix} z_1& z_2 & z_3 & z_4 & z_5\end{bmatrix}</script><p>可以写成两个矩阵相乘的形式：</p>
-<script type="math/tex; mode=display">
+<h3 id="使用im2col实现卷积">使用im2col实现卷积</h3>
+<h4 id="另一种矩阵乘法的视角">另一种矩阵乘法的视角</h4>
+<p>回顾上一节课，考虑简单的1D卷积，输入维度为5，padding为1，卷积核大小为3时，有
+<span class="math display">\[
+\begin{bmatrix} 0&amp;  x_1&amp; x_2 &amp; x_3 &amp; x_4 &amp; x_5
+&amp;0\end{bmatrix} * \begin{bmatrix} w_1&amp; w_2&amp;
+w_3\end{bmatrix}=\begin{bmatrix} z_1&amp; z_2 &amp; z_3 &amp; z_4 &amp;
+z_5\end{bmatrix}
+\]</span> 可以写成两个矩阵相乘的形式： <span class="math display">\[
 \begin{bmatrix}z_1 \\z_2 \\z_3 \\z_4 \\z_5\end{bmatrix}=\begin{bmatrix}
- 0 & x_1 & x_2\\
- x_1 & x_2 &x_3 \\
- x_2 & x_3 & x_4\\
- x_3 & x_4 & x_5\\
- x_4 & x_5 & 0
-\end{bmatrix} \times \begin{bmatrix}w_1 \\w_2 \\ w_3\end{bmatrix}</script><p>虽然这样做看起来很浪费空间，但现实中大家都是这么实现的（。</p>
+0 &amp; x_1 &amp; x_2\\
+x_1 &amp; x_2 &amp;x_3 \\
+x_2 &amp; x_3 &amp; x_4\\
+x_3 &amp; x_4 &amp; x_5\\
+x_4 &amp; x_5 &amp; 0
+\end{bmatrix} \times \begin{bmatrix}w_1 \\w_2 \\ w_3\end{bmatrix}
+\]</span> 虽然这样做看起来很浪费空间，但现实中大家都是这么实现的（。</p>
 <p>而且这么表示卷积，可以方便地进行求导，解释一下，不想看的可以直接看下一节：</p>
-<p>令$z=conv(x, W)$，我们要计算partial adjoints: $\bar{v}\frac{\partial z}{\partial W}$和$\bar{v}\frac{\partial z}{\partial x}$，因为$\bar{v}$已经在反向过程中已知了，所以就是要求$\frac{\partial z}{\partial W}$和$\frac{\partial z}{\partial x}$。</p>
-<p>首先有一个简单的问题，对于$x\in \R^n, W\in \R^{m\times n},z=Wx$ ，则$\frac{\partial z}{\partial x}=W$，则x的partial adjoint为$W^T\bar{v}$，即反向时候只需要计算W的转置即可。</p>
-<p>我们发现卷积可以写成上面的矩阵与向量相乘的形式，于是我们可以知道</p>
-<script type="math/tex; mode=display">
+<p>令<span class="math inline">\(z=conv(x,
+W)\)</span>，我们要计算partial adjoints: <span
+class="math inline">\(\bar{v}\frac{\partial z}{\partial
+W}\)</span>和<span class="math inline">\(\bar{v}\frac{\partial
+z}{\partial x}\)</span>，因为<span
+class="math inline">\(\bar{v}\)</span>已经在反向过程中已知了，所以就是要求<span
+class="math inline">\(\frac{\partial z}{\partial W}\)</span>和<span
+class="math inline">\(\frac{\partial z}{\partial x}\)</span>。</p>
+<p>首先有一个简单的问题，对于<span class="math inline">\(x\in \R^n, W\in
+\R^{m\times n},z=Wx\)</span> ，则<span
+class="math inline">\(\frac{\partial z}{\partial
+x}=W\)</span>，则x的partial adjoint为<span
+class="math inline">\(W^T\bar{v}\)</span>，即反向时候只需要计算W的转置即可。</p>
+<p>我们发现卷积可以写成上面的矩阵与向量相乘的形式，于是我们可以知道
+<span class="math display">\[
 \frac{\partial z}{\partial w} =\begin{bmatrix}
- 0 & x_1 & x_2\\
- x_1 & x_2 &x_3 \\
- x_2 & x_3 & x_4\\
- x_3 & x_4 & x_5\\
- x_4 & x_5 & 0
-\end{bmatrix}^T</script><p>on the other hand，卷积也可以写成</p>
-<script type="math/tex; mode=display">
+0 &amp; x_1 &amp; x_2\\
+x_1 &amp; x_2 &amp;x_3 \\
+x_2 &amp; x_3 &amp; x_4\\
+x_3 &amp; x_4 &amp; x_5\\
+x_4 &amp; x_5 &amp; 0
+\end{bmatrix}^T
+\]</span> on the other hand，卷积也可以写成 <span
+class="math display">\[
 \begin{bmatrix}z_1 \\z_2 \\z_3 \\z_4 \\z_5\end{bmatrix}=\begin{bmatrix}
- w_2 & w_3 & 0&0&0\\
- w_1 & w_2 & w_3&0&0 \\
- 0&w_1 & w_2 & w_3&0\\
- 0&0&w_1 & w_2 & w_3\\
- 0&0&0&w_1 & w_2 
-\end{bmatrix} \times \begin{bmatrix}x_1 \\x_2 \\ x_3 \\ x_4\\x_5\end{bmatrix}</script><p>于是</p>
-<script type="math/tex; mode=display">
+w_2 &amp; w_3 &amp; 0&amp;0&amp;0\\
+w_1 &amp; w_2 &amp; w_3&amp;0&amp;0 \\
+0&amp;w_1 &amp; w_2 &amp; w_3&amp;0\\
+0&amp;0&amp;w_1 &amp; w_2 &amp; w_3\\
+0&amp;0&amp;0&amp;w_1 &amp; w_2
+\end{bmatrix} \times \begin{bmatrix}x_1 \\x_2 \\ x_3 \\
+x_4\\x_5\end{bmatrix}
+\]</span> 于是 <span class="math display">\[
 \frac{\partial z}{\partial x} =\begin{bmatrix}
- w_2 & w_3 & 0&0&0\\
- w_1 & w_2 & w_3&0&0 \\
- 0&w_1 & w_2 & w_3&0\\
- 0&0&w_1 & w_2 & w_3\\
- 0&0&0&w_1 & w_2 
+w_2 &amp; w_3 &amp; 0&amp;0&amp;0\\
+w_1 &amp; w_2 &amp; w_3&amp;0&amp;0 \\
+0&amp;w_1 &amp; w_2 &amp; w_3&amp;0\\
+0&amp;0&amp;w_1 &amp; w_2 &amp; w_3\\
+0&amp;0&amp;0&amp;w_1 &amp; w_2
 \end{bmatrix}^T = \begin{bmatrix}
- w_2 & w_1 & 0&0&0\\
- w_3 & w_2 & w_1&0&0 \\
- 0&w_3 & w_2 & w_1&0\\
- 0&0&w_3 & w_2 & w_1\\
- 0&0&0&w_3 & w_2 
-\end{bmatrix}</script><p>而$\bar{v}\frac{\partial z}{\partial x}$ 其实就是对$\bar{v}$用转置卷积核$w^T$卷积！</p>
-<h4 id="神奇函数：as-strided"><a href="#神奇函数：as-strided" class="headerlink" title="神奇函数：as_strided"></a>神奇函数：as_strided</h4><p>通常情况下，一个$M\times N$的矩阵在底层是以row major方法以一维的形式存储的，即一行一行存储，扩展到多维的数组$A\times B\times C$，则是按照由后向前的order存储。通过strides的方法来获取多维的元素。如在<code>float A[M][N]</code>中，它的stride为$(N, 1)$，如果我们想获取$A[3][2]$，则是获取一维数组的第$3 \times N + 2$个元素。</p>
+w_2 &amp; w_1 &amp; 0&amp;0&amp;0\\
+w_3 &amp; w_2 &amp; w_1&amp;0&amp;0 \\
+0&amp;w_3 &amp; w_2 &amp; w_1&amp;0\\
+0&amp;0&amp;w_3 &amp; w_2 &amp; w_1\\
+0&amp;0&amp;0&amp;w_3 &amp; w_2
+\end{bmatrix}
+\]</span> 而<span class="math inline">\(\bar{v}\frac{\partial
+z}{\partial x}\)</span> 其实就是对<span
+class="math inline">\(\bar{v}\)</span>用转置卷积核<span
+class="math inline">\(w^T\)</span>卷积！</p>
+<h4 id="神奇函数as_strided">神奇函数：as_strided</h4>
+<p>通常情况下，一个<span class="math inline">\(M\times
+N\)</span>的矩阵在底层是以row
+major方法以一维的形式存储的，即一行一行存储，扩展到多维的数组<span
+class="math inline">\(A\times B\times
+C\)</span>，则是按照由后向前的order存储。通过strides的方法来获取多维的元素。如在<code>float A[M][N]</code>中，它的stride为<span
+class="math inline">\((N, 1)\)</span>，如果我们想获取<span
+class="math inline">\(A[3][2]\)</span>，则是获取一维数组的第<span
+class="math inline">\(3 \times N + 2\)</span>个元素。</p>
 <p>进一步的，我们想更好利用CPU的缓存机制，方便向量化的操作，我们要把矩阵分为<code>TILE x TILE</code>的小块（如TILE=4）</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">float</span> A[M/TILE][n/TILE][TILE][TILE]</span><br></pre></td></tr></table></figure>
 <p>我们就可以在小块上进行高效操作，因为A的<code>TILE x TILE</code>的块在内存中是连续排布的。</p>
 <p>如将一个<code>6 x 6</code>的矩阵</p>
-<p><img src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302227087.png?token=ATUOZVO2CYC6BO522LIDX4DDV32XO" alt="image-20221230215117273"></p>
+<p><img
+src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212310913522.png?token=ATUOZVLSXXGXG7RZCWYTBFTDV6GPS" /></p>
 <p>划分为TILE=2的小块，结果应该是这样：</p>
-<p><img src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302227231.png?token=ATUOZVJFCHTTKDO3QDZQLMLDV32XQ" alt="image-20221230215156098"></p>
+<p><img
+src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212310913379.png?token=ATUOZVJMHZFACXZ6RMHCBMLDV6GPW" /></p>
 <p>我们需要使用numpy中一个非常神奇的函数：<code>np.lib.stride_tricks.as_strided()</code>来实现。</p>
 <p>这个函数可以让我们指定数组的shape和strides，但不修改底层数据，最终我们只需要用<code>np.ascontiguousarray()</code>来使内存连续排布即可。</p>
-<p>首先看一下我们目的的矩阵大小是什么，我们选取了TILE=2，所以最终的shape应该是$3\times 3\times 2 \times 2$。</p>
+<p>首先看一下我们目的的矩阵大小是什么，我们选取了TILE=2，所以最终的shape应该是<span
+class="math inline">\(3\times 3\times 2 \times 2\)</span>。</p>
 <p>接下来我们看一下strides是多少，strides需要与shape相同，对于第一维，我们每次增加都想下降两行，如现在我们指在1，那么第一维加1后，我们应该指在13，所以第一维的stride为12；而第二维，每次增加1都想向左移两位，所以第二维的stride为2；第三维每次增加1都想下降一行，所以第三维stride为6；对于最后一位，每增加1只向右移动1个即可，所以stride=1，</p>
 <p>于是我们可以构造矩阵B</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy.lib.stride_tricks <span class="keyword">import</span> as_strided</span><br><span class="line">B = as_strided(A, shape=(<span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">2</span>), strides=np.array((<span class="number">12</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">1</span>))*<span class="number">4</span>) <span class="comment"># *4是因为strides的单位是Byte</span></span><br></pre></td></tr></table></figure>
 <p>然后将B重新排列</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C = np.ascontiguousarray(B)</span><br></pre></td></tr></table></figure>
 <p>就得到了内存紧凑 我们想要的数组。</p>
-<h4 id="使用im2col实现卷积-1"><a href="#使用im2col实现卷积-1" class="headerlink" title="使用im2col实现卷积"></a>使用im2col实现卷积</h4><p>首先看输出通道为1的二维卷积核在通道数为1的二维图片上做卷积的操作，</p>
+<h4 id="使用im2col实现卷积-1">使用im2col实现卷积</h4>
+<p>首先看输出通道为1的二维卷积核在通道数为1的二维图片上做卷积的操作，</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A = np.arange(<span class="number">36</span>, dtype=np.float32).reshape(<span class="number">6</span>, <span class="number">6</span>)</span><br><span class="line">W = np.arange(<span class="number">9</span>, dtype=np.float32).reshape(<span class="number">3</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-<p>我们按照上面的做法，将原始形状为$[6][6]$的A变化成为$[2][2][3][3]$的矩阵：</p>
+<p>我们按照上面的做法，将原始形状为<span
+class="math inline">\([6][6]\)</span>的A变化成为<span
+class="math inline">\([2][2][3][3]\)</span>的矩阵：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">B = np.lib.stride_trices.as_strided(A, shape=(<span class="number">4</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">3</span>), strides=<span class="number">4</span> * (np.array((<span class="number">6</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">1</span>))))</span><br></pre></td></tr></table></figure>
 <p>然后把B拍平，与同样拍平的W做乘法，再reshape到正常大小：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(B.reshape(<span class="number">16</span>, <span class="number">9</span>) @ W.reshape(<span class="number">9</span>)).reshape(<span class="number">4</span>, <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
@@ -393,7 +450,8 @@
 <p>按照以上思想，可以实现卷积如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv_im2col</span>(<span class="params">Z, weight</span>):</span></span><br><span class="line">    N, H, W, C_in = Z.shape</span><br><span class="line">    K, _, _, C_out = weight.shape</span><br><span class="line">    Ns, Hs, Ws, Cs = Z.strides</span><br><span class="line">    </span><br><span class="line">    inner_dim = K * K * C_in</span><br><span class="line">    A = as_strided(Z, shape=(N, H-K+<span class="number">1</span>, W-K+<span class="number">1</span>, K, K, C_in),</span><br><span class="line">                   strides=(Ns, Hs, Ws, Hs, Ws, Cs)).reshape(-<span class="number">1</span>, inner_dim)</span><br><span class="line">    out = A @ weight.reshape(-<span class="number">1</span>, C_out)</span><br><span class="line">    <span class="keyword">return</span> out.reshape(N, H-K+<span class="number">1</span>, W-K+<span class="number">1</span>, C_out)</span><br></pre></td></tr></table></figure>
 <p>这样用时为</p>
-<p><img src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212302227387.png?token=ATUOZVMY6TTJOE6J7EOXJ53DV32XY" alt="image-20221230222126364"></p>
+<p><img
+src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212310913891.png?token=ATUOZVO54UHMOOSRPHTHMS3DV6GQO" /></p>
 
     </div>
 
@@ -485,7 +543,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">存储结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Baseline"><span class="nav-number">2.</span> <span class="nav-text">Baseline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9A%B4%E5%8A%9B%E5%BE%AA%E7%8E%AF"><span class="nav-number">3.</span> <span class="nav-text">暴力循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">使用矩阵乘法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8im2col%E5%AE%9E%E7%8E%B0%E5%8D%B7%E7%A7%AF"><span class="nav-number">5.</span> <span class="nav-text">使用im2col实现卷积</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%A6%E4%B8%80%E7%A7%8D%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95%E7%9A%84%E8%A7%86%E8%A7%92"><span class="nav-number">5.1.</span> <span class="nav-text">另一种矩阵乘法的视角</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A5%9E%E5%A5%87%E5%87%BD%E6%95%B0%EF%BC%9Aas-strided"><span class="nav-number">5.2.</span> <span class="nav-text">神奇函数：as_strided</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8im2col%E5%AE%9E%E7%8E%B0%E5%8D%B7%E7%A7%AF-1"><span class="nav-number">5.3.</span> <span class="nav-text">使用im2col实现卷积</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">存储结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#baseline"><span class="nav-number">2.</span> <span class="nav-text">Baseline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9A%B4%E5%8A%9B%E5%BE%AA%E7%8E%AF"><span class="nav-number">3.</span> <span class="nav-text">暴力循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">使用矩阵乘法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8im2col%E5%AE%9E%E7%8E%B0%E5%8D%B7%E7%A7%AF"><span class="nav-number">5.</span> <span class="nav-text">使用im2col实现卷积</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%A6%E4%B8%80%E7%A7%8D%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95%E7%9A%84%E8%A7%86%E8%A7%92"><span class="nav-number">5.1.</span> <span class="nav-text">另一种矩阵乘法的视角</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A5%9E%E5%A5%87%E5%87%BD%E6%95%B0as_strided"><span class="nav-number">5.2.</span> <span class="nav-text">神奇函数：as_strided</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8im2col%E5%AE%9E%E7%8E%B0%E5%8D%B7%E7%A7%AF-1"><span class="nav-number">5.3.</span> <span class="nav-text">使用im2col实现卷积</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -558,12 +616,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">85k</span>
+    <span title="站点总字数">86k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:17</span>
+    <span title="站点阅读时长">1:18</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
