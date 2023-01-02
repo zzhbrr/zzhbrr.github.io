@@ -2762,7 +2762,8 @@ w_3 &amp; w_2 &amp; w_1&amp;0&amp;0 \\
 \]</span> 而<span class="math inline">\(\bar{v}\frac{\partial
 z}{\partial x}\)</span> 其实就是对<span
 class="math inline">\(\bar{v}\)</span>用转置卷积核<span
-class="math inline">\(w^T\)</span>卷积！</p>
+class="math inline">\(w_{flipped}\)</span> （<span
+class="math inline">\([w_3,w_2,w_1]\)</span>）卷积！</p>
 <h4 id="神奇函数as_strided">神奇函数：as_strided</h4>
 <p>通常情况下，一个<span class="math inline">\(M\times
 N\)</span>的矩阵在底层是以row
