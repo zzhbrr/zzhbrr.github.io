@@ -2816,4 +2816,50 @@ src="https://raw.githubusercontent.com/zzhbrr/Images/main/202212310940743.png" /
         <tag>深度学习</tag>
       </tags>
   </entry>
+  <entry>
+    <title>win11使用docker安装ubuntu22.04</title>
+    <url>/2023/01/07/win11%E4%BD%BF%E7%94%A8docker%E5%AE%89%E8%A3%85ubuntu22-04%E4%B8%94%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0vscode/</url>
+    <content><![CDATA[<center>
+win11使用Docker安装Ubuntu22.04
+</center>
+<span id="more"></span>
+<p>最近需要用Ubuntu22.04做一些事情，但是双系统是20.04不想动，又觉得wsl存储占用过多，于是想使用Docker。</p>
+<h3 id="拉取ubuntu镜像并创建容器">1.拉取Ubuntu镜像并创建容器</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 拉取ubuntu镜像</span></span><br><span class="line">docker pull ubuntu</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建容器</span></span><br><span class="line">docker run --name ubuntu22.04 -it -p 2060:22 ubuntu bash</span><br></pre></td></tr></table></figure>
+<p>将容器22端口映射到主机的2060端口</p>
+<h3 id="安装ssh">2.安装ssh</h3>
+<p>进入容器之后，开放22端口</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 更新安装包</span></span><br><span class="line">apt update</span><br><span class="line">apt upgrade</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装ssh</span></span><br><span class="line">apt install openssh-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装vim</span></span><br><span class="line">apt install vim </span><br></pre></td></tr></table></figure>
+<p>之后修改/etc/ssh/sshd_config中PermitRootLogin为yes</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+<p>如下图：</p>
+<p><img src="D:\zzhbrrBlog\source\_posts\win11使用docker安装ubuntu22-04且使用本地vscode.assets\image-20230107205938198.png" style="zoom: 67%;" /></p>
+<p>然后启动ssh服务，修改root密码</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">service ssh start</span><br><span class="line"></span><br><span class="line">passwd</span><br></pre></td></tr></table></figure>
+<p>安装ufw，并开放22端口</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install ufw</span><br><span class="line">ufw allow 22</span><br></pre></td></tr></table></figure>
+<p>如这一步报错，退出容器，然后在进入容器命令中加入<code>--privileged</code>。</p>
+<p>如：<code>docker exec --privileged -it &#123;container_id&#125; /bin/bash</code></p>
+<h3 id="ssh连接">ssh连接</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -p 2060 root@192.168.3.189</span><br></pre></td></tr></table></figure>
+<p>注意ip地址是本机的ip地址。然后输入密码可以连接上。</p>
+<h3 id="问题">问题</h3>
+<p>如果每次重启容器需要重新启动ssh服务，可以把<code>service ssh start</code>写入<code>~/.bashrc</code>内，每次启动容器可以自动执行了。</p>
+<p>参考博客：</p>
+<p><a
+href="https://www.bilibili.com/read/cv16481470">二、docker安装Ubuntu22.04最新系统
+- 哔哩哔哩 (bilibili.com)</a></p>
+<p><a
+href="https://cloud.tencent.com/developer/article/1454777">SSH连接报错:Permission
+denied, please try again.的解决方法 - 腾讯云开发者社区-腾讯云
+(tencent.com)</a></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
 </search>
